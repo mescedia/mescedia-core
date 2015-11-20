@@ -52,6 +52,6 @@ In order to get the full picture you might refer to the subprojects websites:
 - Smooks http://www.smooks.org
   
 or visit project website at https://www.mescedia.com
-and/or the page of recommended resources: https://www.mescedia.com/recommendations
+and/or you may have a look at some recommended resources: https://www.mescedia.com/recommendations
 
 enjoy
