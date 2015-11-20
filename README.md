@@ -50,9 +50,9 @@
   
    In order to get the full picture you might refer to the subprojects websites: 
 
-   Apache-Karaf - https://karaf.apache.org/
-   Apache-Camel - https://camel.apache.org/
-   Smooks       - http://www.smooks.org 
+   > Apache-Karaf - https://karaf.apache.org/
+   > Apache-Camel - https://camel.apache.org/
+   > Smooks       - http://www.smooks.org 
 
    or visit project website at https://www.mescedia.com
    and/or the page of recommended resources: https://www.mescedia.com/recommendations
