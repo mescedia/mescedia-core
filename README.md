@@ -2,23 +2,27 @@
 
 mescedia is a ready to use edi server (https://en.wikipedia.org/wiki/Electronic_data_interchange)
 for processing most common edi messages formats such as CSV, XML, UN/EDIFACT, ... using open standards.
-It is build upon existing powerful, production proved open source frameworks and libraries so it is not a new invetion.
+It is build upon existing powerful, production proved open source frameworks and libraries so it is not a new invention.
  
 # setup
 
 Make sure you've downloaded and installed the smooks/unedifact project correctly ( -> https://github.com/smooks/unedifact).
 
-To build the server run:
+To build the server run
+	
 	$ mvn clean install 
 
-  change to karaf-root	
+change to karaf-root	
+
 	$ cd mescedia/ 
 
-  to start karaf  
+to start karaf
+  
 	in console: 		$ bin/karaf 
 	or  in background: 	$ bin/start  
 
-  watch the data log for detailed information: 
+  watch the data log for detailed information
+   
 	$ tail -f data/log/karaf.log  
   
   
