@@ -780,7 +780,7 @@
                                           <argument>${install.target}/apache-karaf-${karaf.version}</argument>
                                           <argument>../mescedia</argument>                                          
                                         </arguments>
-                                        <executable>/usr/bin/ln</executable>
+                                        <executable>/bin/ln</executable>
                               </configuration>
                             </execution>
                           </executions>
