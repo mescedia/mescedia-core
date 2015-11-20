@@ -1,7 +1,7 @@
 # about 
 
 mescedia is a ready to use edi server (https://en.wikipedia.org/wiki/Electronic_data_interchange)
-for processing most common edi messages formats such as CSV, XML, UN/EDIFACT, ... using open standards.
+for processing most common edi message formats such as CSV, XML, UN/EDIFACT, ... using open standards.
 It is build upon existing powerful, production proved open source frameworks and libraries so it is not a new invention.
  
 # setup
