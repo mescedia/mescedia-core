@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<INVOIC>
+    <DocumentNo>5554449</DocumentNo>
+    <DocumentDate>20140929</DocumentDate>
+    <CustomerReference>CA-3313</CustomerReference>
+    <CustomerOrderNo>CON-AA7A6</CustomerOrderNo>	
+    <SupplierOrderNo>SON-GG7M8</SupplierOrderNo>
+    <DeliveryReportNo>DON-371647</DeliveryReportNo>
+    <DeliveryNoteNo>DN-1236631</DeliveryNoteNo>
+    <GlnSupplier>3311111111012</GlnSupplier>
+    <SupplierVatID>ABF-99S82</SupplierVatID>
+    <GlnSender>3311551112014</GlnSender>
+    <GlnRecipient>6622222222208</GlnRecipient>
+    <GlnManufacturer>5533773333059</GlnManufacturer>
+    <GlnCustomer>8844444444088</GlnCustomer>
+    <CustomerVatID>VAT-CUST-22331A</CustomerVatID>
+    <GlnInvoicRecipient>8844444444024</GlnInvoicRecipient>
+    <GlnDeliveryParty>6644444444012</GlnDeliveryParty>
+    <GlnUltimateConsignee>2244444444022</GlnUltimateConsignee>
+    <Currency>EUR</Currency>
+    <VatRate>19</VatRate>
+    <DeliveryDate>20141013</DeliveryDate>
+	<OrderDate>20140822</OrderDate>
+    <Positions>
+        <Position>
+            <PositionNo>1</PositionNo>
+            <EAN>3344111121115</EAN>
+            <SupplierArticleNo>222</SupplierArticleNo>
+            <PurchasePriceNet>313.21</PurchasePriceNet>
+			<PurchasePriceGros>333.21</PurchasePriceGros>
+            <Quantity>12</Quantity>
+            <MeasureUnit>PCE</MeasureUnit>
+            <PositionAmount>211</PositionAmount>
+            <ArticleDescription>TShirt 111</ArticleDescription>
+            <CustomsNo>ZLL-1F8ZX1</CustomsNo>
+            <OriginCountry>DE</OriginCountry>
+            <Weight>12</Weight>
+        </Position>
+		<Position>           
+            <PositionNo>2</PositionNo>
+            <EAN>3344111121314</EAN>
+            <SupplierArticleNo>122</SupplierArticleNo>
+			<PurchasePriceNet>313.22</PurchasePriceNet>
+			<PurchasePriceGros>333.22</PurchasePriceGros>
+            <Quantity>11</Quantity>
+            <MeasureUnit>PCE</MeasureUnit>
+            <PositionAmount>111</PositionAmount>
+            <ArticleDescription>TShirt 2222</ArticleDescription>
+            <CustomsNo>ZLL1-1F8ZX2</CustomsNo>
+            <OriginCountry>DE</OriginCountry>
+            <Weight>18</Weight>		
+        </Position>
+		<Position>           
+            <PositionNo>3</PositionNo>
+            <EAN>3333111121333</EAN>
+            <SupplierArticleNo>13</SupplierArticleNo>
+            <PurchasePriceNet>313.33</PurchasePriceNet>
+			<PurchasePriceGros>333.33</PurchasePriceGros>
+            <Quantity>133</Quantity>
+            <MeasureUnit>PCE</MeasureUnit>
+            <PositionAmount>311</PositionAmount>
+            <ArticleDescription>TShirt 333</ArticleDescription>
+            <CustomsNo>ZLL1-1F8ZX3</CustomsNo>
+            <OriginCountry>DE</OriginCountry>
+            <Weight>13</Weight>			
+        </Position>		
+    </Positions>
+    <Sum>
+        <SumPositionAmount>391</SumPositionAmount>
+        <VatDutyAmount>713.00</VatDutyAmount>
+        <VatAmount>140.11</VatAmount>       
+        <TotalInvoicAmount>123.32</TotalInvoicAmount>
+    </Sum>
+</INVOIC>

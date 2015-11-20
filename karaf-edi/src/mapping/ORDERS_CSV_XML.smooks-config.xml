@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!--  
+	mescedia - Copyright (C) 2014 - 2015
+
+	This library is free software; you can redistribute it and/or
+	modify it under the terms of the GNU Lesser General Public License (version 3) 
+	as published by the Free Software Foundation.
+	This library is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+	See the  GNU Lesser General Public License for more details:
+	https://www.gnu.org/licenses/lgpl-3.0.txt
+-->
+
+<!-- 
+  	@author Michael Kassnel 
+  	@web    https://www.mescedia.com  
+-->
+<smooks-resource-list
+    xmlns="http://www.milyn.org/xsd/smooks-1.1.xsd"
+    xmlns:csv="http://www.milyn.org/xsd/smooks/csv-1.2.xsd"
+    xmlns:edi="http://www.milyn.org/xsd/smooks/edi-1.2.xsd"
+    xmlns:unedifact="http://www.milyn.org/xsd/smooks/unedifact-1.4.xsd"
+    xmlns:core="http://www.milyn.org/xsd/smooks/smooks-core-1.4.xsd">
+
+	<edi:reader mappingModel="mapping/ORDERS_CSV_XML.smooks-map.xml" />
+	    
+     <core:exports>
+        <core:result type="org.milyn.payload.StringResult"/>
+    </core:exports>
+    
+</smooks-resource-list>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  
+	mescedia - Copyright (C) 2014 - 2015
+
+	This library is free software; you can redistribute it and/or
+	modify it under the terms of the GNU Lesser General Public License (version 3) 
+	as published by the Free Software Foundation.
+	This library is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+	See the  GNU Lesser General Public License for more details:
+	https://www.gnu.org/licenses/lgpl-3.0.txt
+-->
+
+<!-- 
+  	@author Michael Kassnel 
+  	@web    https://www.mescedia.com
+-->
+ 
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.mescedia.edi</groupId>
+  <artifactId>main</artifactId>
+  <version>1.0</version>      
+  <packaging>pom</packaging>
+  <url>https://www.mescedia.com</url>
+  <name>mescedia :: Open Source EDI server [install] </name>
+  
+  <modules>
+    	<module>karaf-branding</module>
+	<module>unedifact-converter</module>
+ 	<module>karaf-edi</module>
+  </modules>
+
+  <repositories>
+	
+         <repository>
+            <id>localrepository</id>
+             <url>file://~/.m2/repository</url>             
+         </repository>
+         <repository>
+            <id>maven repository</id>
+            <url>http://uk.maven.org</url>
+         </repository>                 
+         <repository>
+            <id>central maven repository</id>
+            <url>http://central.maven.org</url>
+         </repository>
+    
+  </repositories>
+
+</project>

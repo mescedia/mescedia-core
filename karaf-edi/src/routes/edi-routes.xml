@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  
+	mescedia - Copyright (C) 2014 - 2015
+
+	This library is free software; you can redistribute it and/or
+	modify it under the terms of the GNU Lesser General Public License (version 3) 
+	as published by the Free Software Foundation.
+	This library is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+	See the  GNU Lesser General Public License for more details:
+	https://www.gnu.org/licenses/lgpl-3.0.txt
+-->
+
+<!-- 
+  	@author Michael Kassnel 
+  	@web    https://www.mescedia.com  
+-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:camel="http://camel.apache.org/schema/spring"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+      http://www.springframework.org/schema/beans/spring-beans-2.5.xsd 
+      http://camel.apache.org/schema/spring
+      http://camel.apache.org/schema/spring/camel-spring-2.8.5.xsd">
+ 	
+	<bean id="unedifact2xml" class="org.mescedia.edi.converter.unEdifact2Xml.UnEDIfact2XmlProcessor"/>
+	<bean id="xml2unedifact" class="org.mescedia.edi.converter.xml2unEdifact.Xml2UnEDIfactProcessor"/>
+	
+	<!-- =======================================================================. -->
+	<!-- camel dlc  ============================================================. -->
+	<!-- =======================================================================. -->
+	
+	<bean id="deadLetterErrorHandler" class="org.apache.camel.builder.DeadLetterChannelBuilder">
+		<property name="deadLetterUri"
+			value="file://./CAMEL_FS/error_route_dlc/?fileName=${date:now:yyyyMMddHHmmssSSS}-${file:name}" />
+		<property name="redeliveryPolicy" ref="RedeliveryPolicyConfig" />
+	</bean>
+	<bean id="RedeliveryPolicyConfig" class="org.apache.camel.processor.RedeliveryPolicy">
+		<property name="maximumRedeliveries" value="2" />
+		<property name="redeliveryDelay" value="1000" />
+	</bean>
+	
+	<!-- =======================================================================. -->
+	
+	<camelContext id="develop_transformation_routes" xmlns="http://camel.apache.org/schema/spring" allowUseOriginalMessage="true"
+		useMDCLogging="false" messageHistory="true" streamCache="false">
+	
+	<propertyPlaceholder id="properties" location="file:${karaf.home}/etc/mescedia.properties" />
+
+	<!-- =======================================================================. -->
+	<!-- exceptions  ===========================================================. -->
+	<!-- =======================================================================. -->		
+	<onException>
+	    <exception>org.milyn.SmooksException</exception>
+	    <redeliveryPolicy maximumRedeliveries="0" />
+	    <handled><constant>true</constant></handled>
+	    <setHeader headerName="X-MESCEDIA-STATUS-ID"><simple>3</simple></setHeader>
+	    <setHeader headerName="X-MESCEDIA-STATUS-MESSAGE"><simple>transformer Exception:${exception.message}</simple></setHeader>	    	    	    
+	    <log loggingLevel="ERROR" message="[${file:name}] org.milyn.SmooksException:${exception.message}" />	    
+	    <to uri="file://./CAMEL_FS/error?fileName=${file:name}-${date:now:yyyyMMddHHmmssSSS}-org.milyn.SmooksException&amp;fileExist=append&amp;allowNullBody=true"/>
+	</onException>
+
+	<!-- =======================================================================. -->
+	<!-- UN/EDIFACT to XML (smooks) route  =====================================. -->
+	<!-- =======================================================================. -->
+	<route id="edi2xml" errorHandlerRef="deadLetterErrorHandler" >	    
+		<from uri="file://./CAMEL_FS/EDIFACT_2_XML_IN?delay=200&amp;maxMessagesPerPoll=50&amp;delete=true&amp;readLock=changed&amp;readLockMinAge=200&amp;readLockTimeout=550&amp;readLockCheckInterval=100"/>
+			<bean ref="unedifact2xml" />
+		<to uri="file://./CAMEL_FS/EDIFACT_2_XML_OUT"/>		    
+	</route>
+	
+	<!-- =======================================================================. -->
+	<!-- XML (smooks) to UN/EDIFACT route  =====================================. -->
+	<!-- =======================================================================. -->	
+	<route id="xml2edi" errorHandlerRef="deadLetterErrorHandler" >	  
+		<from uri="file://./CAMEL_FS/XML_2_UNEDIFACT_IN?delay=200&amp;maxMessagesPerPoll=50&amp;delete=true&amp;readLock=changed&amp;readLockMinAge=200&amp;readLockTimeout=550&amp;readLockCheckInterval=100"/>					    
+		    <setHeader headerName="X_MESCEDIA_interchangeControlReference"> 	<!-- optional  -->
+		    	<constant>999</constant>
+		    </setHeader>	 				
+		    <setHeader headerName="X_MESCEDIA_bindingconfigPath"> 				<!-- required  -->
+		    	<constant>{{edifact.bindingconfigs}}</constant>
+		    </setHeader>	
+		    <bean ref="xml2unedifact" />		    
+		<to uri="file://./CAMEL_FS/XML_2_UNEDIFACT_OUT"/>
+	</route>
+	
+	<!-- =======================================================================. -->
+	<!-- ORDERS retailer / supplier processing routes ==========================. -->
+	<!-- =======================================================================. -->
+	<route id="orders_csv_to_unedifact" errorHandlerRef="deadLetterErrorHandler">
+		<from uri="file://./CAMEL_FS/ORDERS_CSV_IN?delay=200&amp;maxMessagesPerPoll=50&amp;delete=false&amp;readLock=changed&amp;readLockMinAge=200&amp;readLockTimeout=550&amp;readLockCheckInterval=100"/>
+		
+			<log message="1. transform CSV ORDERS to XML .... "/>
+			<convertBodyTo type="String"/>	
+			<to uri="smooks://file:{{path.mappings}}/ORDERS_CSV_XML.smooks-config.xml"/>		  
+			
+			<log message="2. transform XML ORDERS to SMOOKSXML .... "/>		  
+			<to uri="xslt://file:{{path.mappings}}/ORDERS_XML_SMOOKSXML_V01.xslt?saxon=true"/>		  
+			
+			<log message="3. transform SMOOKSXML ORDERS to UN/EDIFACT .... "/>
+			<setHeader headerName="X_MESCEDIA_bindingconfigPath"> 				<!-- required  -->
+				  <constant>{{edifact.bindingconfigs}}</constant>
+			  </setHeader>	
+			<bean ref="xml2unedifact" />			
+			  
+			<log message="${body}"/>
+			
+		<to uri="file://./CAMEL_FS/ORDERS_UNEDIFACT_OUT"/>
+	</route>
+	
+	<!-- orders file transport ==================================================. -->	
+	<route id="orders_unedifact_to_supplier" errorHandlerRef="deadLetterErrorHandler">
+		<from uri="file://./CAMEL_FS/ORDERS_UNEDIFACT_OUT?delay=200&amp;maxMessagesPerPoll=50&amp;delete=false&amp;readLock=changed&amp;readLockMinAge=200&amp;readLockTimeout=550&amp;readLockCheckInterval=100"/>
+			<log message="ORDERS (file) transport  "/>
+		<to uri="file://./CAMEL_FS/ORDERS_UNEDIFACT_IN"/>
+	</route>
+	
+	<route id="orders_unedifact_to_xml" errorHandlerRef="deadLetterErrorHandler">
+		<from uri="file://./CAMEL_FS/ORDERS_UNEDIFACT_IN?delay=200&amp;maxMessagesPerPoll=50&amp;delete=false&amp;readLock=changed&amp;readLockMinAge=200&amp;readLockTimeout=550&amp;readLockCheckInterval=100"/>	
+			<log message="1. transform EDIFACT ORDERS-D96A to XML (smooks)  ..."/>	  
+			<bean ref="unedifact2xml" />
+			
+			<log message="2. transform SMOOKSXML to XML (supplier) ..."/>	 		  
+			<to uri="xslt://file:{{path.mappings}}/ORDERS_SMOOKSXML_XML_V01.xslt?saxon=true"/>	
+			
+			<log message="${body}"/>
+		<to uri="file://./CAMEL_FS/ORDERS_XML_OUT?fileName=${file:name}-${date:now:yyyyMMddHHmmssSSS}"/>	
+	</route>
+	
+	<!-- =======================================================================. -->
+	<!-- INVOIC supplier / retailer processing routes ==========================. -->
+	<!-- =======================================================================. -->
+	<route id="invoic_xml_to_unedifact" errorHandlerRef="deadLetterErrorHandler">	  
+		<from uri="file://./CAMEL_FS/INVOIC_XML_IN?delay=200&amp;maxMessagesPerPoll=50&amp;delete=false&amp;readLock=changed&amp;readLockMinAge=200&amp;readLockTimeout=550&amp;readLockCheckInterval=100"/>
+		
+			<log message="1. transform XML INVOIC to SMOOKSXML .... "/>		
+			<to uri="xslt://file:{{path.mappings}}/INVOIC_XML_SMOOKSXML_V01.xslt?saxon=true"/>	
+			
+			<log message="2. transform SMOOKSXML INVOIC to UN/EDIFACT .... "/>				
+			<setHeader headerName="X_MESCEDIA_interchangeControlReference"> 	<!-- optional - otherwise random value set  -->
+					<constant>99999</constant>
+			</setHeader>	 				
+			<setHeader headerName="X_MESCEDIA_bindingconfigPath"> 				<!-- required  -->
+				  <constant>{{edifact.bindingconfigs}}</constant>
+			</setHeader>
+			<bean ref="xml2unedifact" />
+			
+			<log message="${body}"/>
+		
+		<to uri="file://./CAMEL_FS/INVOIC_UNEDIFACT_OUT"/>	  
+	</route>
+	
+	<!-- invoic file transport ==================================================. -->	
+	<route id="invoic_unedifact_to_retailer" errorHandlerRef="deadLetterErrorHandler">
+		<from uri="file://./CAMEL_FS/INVOIC_UNEDIFACT_OUT?delay=200&amp;maxMessagesPerPoll=50&amp;delete=false&amp;readLock=changed&amp;readLockMinAge=200&amp;readLockTimeout=550&amp;readLockCheckInterval=100"/>
+			<log message="INVOIC (file) transport  "/>		
+		<to uri="file://./CAMEL_FS/INVOIC_UNEDIFACT_IN"/>
+	</route>
+		
+	<route id="invoic_unedifact_to_csv" errorHandlerRef="deadLetterErrorHandler">
+		<from uri="file://./CAMEL_FS/INVOIC_UNEDIFACT_IN?delay=200&amp;maxMessagesPerPoll=50&amp;delete=false&amp;readLock=changed&amp;readLockMinAge=200&amp;readLockTimeout=550&amp;readLockCheckInterval=100"/>
+				
+			<log message="1. transform UNEDIFACT INVOIC-D96A to SMOOKSXML"/>	  
+			<bean ref="unedifact2xml" />
+			
+			<log message="2. transform SMOOKSXML INVOIC to CSV"/>	  		
+			<to uri="xslt://file:{{path.mappings}}/INVOIC_SMOOKSXML_CSV_V01.xslt?saxon=true"/>	
+		  
+			<log message="${body}"/>	
+			
+		<to uri="file://./CAMEL_FS/INVOIC_CSV_OUT?fileName=${file:name}-${date:now:yyyyMMddHHmmssSSS}"/>
+	</route>
+	
+	<!-- =======================================================================. -->
+	
+</camelContext>
+</beans>

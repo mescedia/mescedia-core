@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  
+	mescedia - Copyright (C) 2014 - 2015
+
+	This library is free software; you can redistribute it and/or
+	modify it under the terms of the GNU Lesser General Public License (version 3) 
+	as published by the Free Software Foundation.
+	This library is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+	See the  GNU Lesser General Public License for more details:
+	https://www.gnu.org/licenses/lgpl-3.0.txt
+-->
+
+<!-- 
+  	@author Michael Kassnel 
+  	@web    https://www.mescedia.com  
+-->
+<medi:edimap xmlns:medi="http://www.milyn.org/schema/edi-message-mapping-1.0.xsd">
+
+	<medi:description name="Orders" version="1.0" />
+
+	<medi:delimiters segment="&#10;" field=";" component=":" sub-component="~" />
+	
+	<medi:segments xmltag="Order">
+	  	  
+	 	<medi:segment segcode="HDR" xmltag="Header">
+			<medi:field xmltag="DocumentNo" />
+			
+			<medi:field xmltag="DocumentDate" />
+			<medi:field xmltag="OrderType" />
+			<medi:field xmltag="CustomerReference" />			
+			<medi:field xmltag="CustomerOrderNo" />				
+			
+			<medi:field xmltag="GlnSender" />			
+			<medi:field xmltag="GlnRecipient" />	
+			<medi:field xmltag="GlnSupplier" />	
+			<medi:field xmltag="GlnCustomer" />	
+			<medi:field xmltag="GlnInvoicRecipient" />	
+			<medi:field xmltag="GlnDeliveryPlace" />	
+			<medi:field xmltag="Currency" />	
+			<medi:field xmltag="DeliveryDate" />	
+			<medi:field xmltag="DeliveryDateFrom" />	
+			<medi:field xmltag="DeliveryDateTo" />	
+			
+			<medi:field xmltag="nl" />
+		</medi:segment>	
+		
+  
+		<medi:segment segcode="POS" xmltag="Position" maxOccurs="-1" truncatable="true">
+			<medi:field xmltag="PositionNo"  />
+			
+			<medi:field xmltag="EAN"  />
+			<medi:field xmltag="OrderedAmount"    />
+			<medi:field xmltag="MeasureUnit" />
+			<medi:field xmltag="PurchasePrice"  />
+			<medi:field xmltag="LabelText"  />
+			<medi:field xmltag="Currency"  />
+			
+			<medi:field xmltag="nl" />
+		</medi:segment>
+				
+		
+		<medi:segment segcode="SUM" xmltag="Sum">
+			<medi:field xmltag="NumPositions"  />
+			
+			<medi:field xmltag="TotalAmountArticles"  />
+			<medi:field xmltag="TotalAmountPrice"    />
+			<medi:field xmltag="Currency" />	
+			
+			<medi:field xmltag="nl" />
+		</medi:segment>
+
+	</medi:segments>
+	
+</medi:edimap>
