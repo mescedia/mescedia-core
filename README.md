@@ -46,12 +46,12 @@ The testfiles (ORDRES.csv and INVOIC.xml) resist in $karaf.home/testfiles/ folde
 Copy them to their corresponding inbound destinations (CAMEL_FS/ORDERS_CSV_IN and CAMEL_FS/INVOIC_XML_IN) and watch 
 the data logs and output folders for results. 
   
-In order to get the full picture you might refer to the subprojects websites: 
+In order to get the full picture you may refer to the subprojects websites: 
 - Apache-Karaf https://karaf.apache.org
 - Apache-Camel https://camel.apache.org
 - Smooks http://www.smooks.org
   
 or visit project website at https://www.mescedia.com
-and/or you may have a look at some recommended resources: https://www.mescedia.com/recommendations
+and/or have a look at some recommended resources: https://www.mescedia.com/recommendations
 
 enjoy
