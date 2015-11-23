@@ -28,7 +28,7 @@ to start karaf
   
 # examples
   
-This setup includes the following example szenarios :
+This setup includes the data transformation mappings defining the following example szenarios:
 
 A retailers ERP imports INVOIC and exports ORDERS messages in CSV format. 
 His suppliers ERP on this other hand XML messages. Both retailer and supplier 
