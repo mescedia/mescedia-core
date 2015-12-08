@@ -42,7 +42,7 @@ exchange UN/EDIFACT (D96A) messages.
 You may refer to the corresponding camel-routes ($karaf.home/deploy/edi-routes.xml) and the contents of the 
 $karaf.home/mapping folder in order to understand how the message transformation works. 
 		
-The testfiles (ORDRES.csv and INVOIC.xml) resist in $karaf.home/testfiles/ folder. 
+The testfiles (ORDERS.csv and INVOIC.xml) resist in $karaf.home/testfiles/ folder. 
 Copy them to their corresponding inbound destinations (CAMEL_FS/ORDERS_CSV_IN and CAMEL_FS/INVOIC_XML_IN) and watch 
 the data logs and output folders for results. 
   
