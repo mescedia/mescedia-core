@@ -12,22 +12,35 @@ To build the server run
 	
 	$ mvn clean install 
 
-change to karaf-root	
+change to karaf-root (in this setup /path/to/mescedia-edi-server)	
 
 	$ cd mescedia/ 
 
-to start karaf
+to start karaf run
   
-	in console: 		$ bin/karaf 
-	or  in background: 	$ bin/start  
+	$ bin/karaf 	
 
-  watch the data log for detailed information
+install mescedia features in apache-karaf
+	
+	admin@edi-server $ feature:repo-add file:/path/to/mescedia-edi-server/mescedia/mescedia-features.xml
+	admin@edi-server $ feature:install mescedia  
+  
+  this might take a while ....  
+  you may want to watch the data logs for detailed information during setup 
    
-	$ tail -f data/log/karaf.log  
+	$ tail -f data/log/karaf.log
+	
+  copy 'edi-routes.xml' to deploy folder before running the examples below
+
+	$ cp /path/to/mescedia-edi-server/mescedia/edi-routes.xml /path/to/mescedia-edi-server/mescedia/deploy/  
   
   
 # examples
-  
+
+To start the server in background run  
+
+	$ bin/start
+ 
 This setup includes the data transformation mappings defining the following example szenarios:
 
 A retailers ERP imports INVOIC and exports ORDERS messages in CSV format. 
