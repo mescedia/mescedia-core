@@ -623,15 +623,6 @@
 						  <destFileName>karaf-milyn-smooks-all-${smooks.version}.jar</destFileName>
 						</artifactItem>
 						
-						<!-- 
-						<artifactItem>
-						  <groupId>org.mescedia.unedifact/</groupId>
-						  <artifactId>converter</artifactId>
-						  <version>1.0</version>
-						  <outputDirectory>${install.target}/apache-karaf-${karaf.version}/deploy</outputDirectory>
-						  <destFileName>org.mescedia.unedifact.converter-1.0.jar</destFileName>
-						</artifactItem>
-						 -->
 					  </artifactItems>
 					</configuration>
 				  </execution>
