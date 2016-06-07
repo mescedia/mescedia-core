@@ -25,12 +25,12 @@
 	<repository>mvn:org.milyn/milyn-smooks-all/1.6/xml/features</repository>
 	
 	  
-	  <feature name="mescedia" install="auto" version="0.3.2">
+	  <feature name="mescedia" install="auto" version="0.3.3">
 
 		<bundle start-level="85">wrap:mvn:mysql/mysql-connector-java/5.1.34</bundle>
 		<bundle start-level="85">mvn:commons-dbcp/commons-dbcp/1.4</bundle>
 		<bundle start-level="85">wrap:mvn:org.mvel/mvel2/2.2.4.Final</bundle>
-		<bundle start-level="85">wrap:mvn:org.mescedia.unedifact/converter/1.0</bundle>
+		<bundle start-level="85">wrap:mvn:org.mescedia.unedifact/converter/1.1.2</bundle>
 
 		<bundle start-level="90">mvn:org.milyn.edi.unedifact/d99a-mapping/1.6</bundle>
 		<bundle start-level="90">mvn:org.milyn.edi.unedifact/d99a-binding/1.6</bundle>		
