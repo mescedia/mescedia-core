@@ -17,7 +17,7 @@
   	@web    https://www.mescedia.com  
 	@email	mkassnel{at}mescedia{dot}com
 -->
-<features xmlns="http://karaf.apache.org/xmlns/features/v1.3.0" name="mescedia-0.3.2">
+<features xmlns="http://karaf.apache.org/xmlns/features/v1.3.0" name="mescedia-0.3.3">
   
 	<repository>mvn:org.apache.camel.karaf/apache-camel/2.16.3/xml/features</repository>
 	<repository>mvn:org.apache.activemq/activemq-karaf/5.12.0/xml/features</repository>
