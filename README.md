@@ -3,6 +3,8 @@
 mescedia is an extensible edi server (https://en.wikipedia.org/wiki/Electronic_data_interchange)
 for processing most common edi message formats such as CSV, XML, UN/EDIFACT, ... using open standards.
 It is build upon existing powerful, production proved open source frameworks and libraries.
+
+- - -
  
 # setup
 
@@ -34,6 +36,7 @@ install mescedia features in apache-karaf
 
 	$ cp /path/to/mescedia-edi-server/mescedia/edi-routes.xml /path/to/mescedia-edi-server/mescedia/deploy/  
   
+- - -  
   
 # examples
 
@@ -68,3 +71,5 @@ or visit project website at https://www.mescedia.com
 and/or have a look at some recommended resources: https://www.mescedia.com/recommendations
 
 enjoy
+
+- - -
