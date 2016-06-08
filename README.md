@@ -1,4 +1,4 @@
-mescedia :: open source edi (https://img.shields.io/badge/release-v--1.1.2-blue.svg)
+mescedia :: open source edi [![Release](https://img.shields.io/badge/release-v--1.1.2-blue.svg)]
 ============================
 
 # about 
