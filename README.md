@@ -1,3 +1,6 @@
+mescedia :: open source edi (https://img.shields.io/badge/release-v--1.1.2-blue.svg)
+============================
+
 # about 
 
 mescedia is an extensible edi server (https://en.wikipedia.org/wiki/Electronic_data_interchange)
