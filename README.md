@@ -1,4 +1,4 @@
-mescedia :: open source edi [![Release](https://img.shields.io/badge/release-v--1.1.2-blue.svg)](https://github.com/mescedia/mescedia-edi-server)
+mescedia :: open source edi server [![Release](https://img.shields.io/badge/release-v--1.1.2-blue.svg)](https://github.com/mescedia/mescedia-edi-server)
 ============================
 - - -
 
@@ -51,7 +51,7 @@ To start the server in background run
 This setup includes the data transformation mappings defining the following example szenarios:
 
 A retailers ERP imports INVOIC and exports ORDERS messages in CSV format. 
-His suppliers ERP on this other hand XML messages. Both retailer and supplier 
+The suppliers ERP on this other hand XML messages. Both retailer and supplier 
 exchange UN/EDIFACT (D96A) messages. 
 
 	Supplier (XML) 		UN/EDIFACT			Retailer (CSV)
@@ -66,7 +66,7 @@ The testfiles (ORDERS.csv and INVOIC.xml) resist in $karaf.home/testfiles/ folde
 Copy them to their corresponding inbound destinations (CAMEL_FS/ORDERS_CSV_IN and CAMEL_FS/INVOIC_XML_IN) and watch 
 the data logs and output folders for results. 
   
-In order to get the full picture you may refer to the subprojects websites: 
+In order to get the full picture you may refer to the sub-projects websites: 
 - Apache-Karaf https://karaf.apache.org
 - Apache-Camel https://camel.apache.org
 - Smooks http://www.smooks.org
