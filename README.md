@@ -1,6 +1,6 @@
 mescedia :: open source edi server [![Release](https://img.shields.io/badge/release-v--1.1.2-blue.svg)](https://github.com/mescedia/mescedia-edi-server)
 ============================
-- - -
+
 
 # about 
 
