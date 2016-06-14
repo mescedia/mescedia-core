@@ -6,7 +6,11 @@ mescedia :: open source edi server [![Release](https://img.shields.io/badge/rele
 
 mescedia is an extensible edi server (https://en.wikipedia.org/wiki/Electronic_data_interchange)
 for processing most common edi message formats such as CSV, XML, UN/EDIFACT, ... using open standards.
-It is build upon existing powerful, production proved open source frameworks and libraries.
+It is build upon existing powerful, production proved open source frameworks and libraries such as
+
+- Apache-Karaf https://karaf.apache.org
+- Apache-Camel https://camel.apache.org
+- Smooks http://www.smooks.org
 
 - - -
  
@@ -65,14 +69,7 @@ $karaf.home/mapping folder in order to understand how the message transformation
 The testfiles (ORDERS.csv and INVOIC.xml) resist in $karaf.home/testfiles/ folder. 
 Copy them to their corresponding inbound destinations (CAMEL_FS/ORDERS_CSV_IN and CAMEL_FS/INVOIC_XML_IN) and watch 
 the data logs and output folders for results. 
-  
-In order to get the full picture you may refer to the sub-projects websites: 
-- Apache-Karaf https://karaf.apache.org
-- Apache-Camel https://camel.apache.org
-- Smooks http://www.smooks.org
-  
-or visit project website at https://www.mescedia.com
-and/or have a look at some recommended resources: https://www.mescedia.com/recommendations
+ 
 
 enjoy
 
