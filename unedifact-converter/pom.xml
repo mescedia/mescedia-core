@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--  
-	mescedia - Copyright (C) 2014 - 2015
+	mescedia - Copyright (C) 2014 - 2016
 
 	This library is free software; you can redistribute it and/or
 	modify it under the terms of the GNU Lesser General Public License (version 3) 
@@ -54,7 +54,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		<dependency>
 			<groupId>org.apache.karaf.archetypes</groupId>
 			<artifactId>karaf-feature-archetype</artifactId>
-			<version>4.0.1</version>
+			<version>4.0.5</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.camel</groupId>
