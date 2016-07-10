@@ -6,17 +6,17 @@ mescedia :: open source edi [![Release](https://img.shields.io/badge/release-v--
 
 mescedia is an extensible edi server (https://en.wikipedia.org/wiki/Electronic_data_interchange)
 for processing most common edi message formats such as CSV, XML, UN/EDIFACT, ... using open standards.
-It is build upon existing powerful, production proved open source frameworks and libraries such as
+It is build upon existing powerful, production proved Open Source Java frameworks and libraries.
 
-- Apache-Karaf https://karaf.apache.org
-- Apache-Camel https://camel.apache.org
-- Smooks http://www.smooks.org
 
 - - -
  
-# setup
+# prerequisites
 
-Make sure you've downloaded and installed the smooks/unedifact project correctly ( -> https://github.com/smooks/unedifact).
+1. Make sure that Java is properly installed and working.
+2. Download and install the smooks/unedifact project -> https://github.com/smooks/unedifact.
+
+# setup
 
 To build the server run
 	
