@@ -65,7 +65,7 @@ Place your messages in the corresponding input folder and see results in your lo
 Refer to the camel-routes in $karaf.home/deploy/edi-routes.xml for details.  
 
  
-##### Business Message Exange Szenarios: XML [IN-OUT] UN/EDIFACT [IN-OUT] CSV 
+##### Business Message Exchange Szenarios: XML *[in-out]* UN/EDIFACT *[in-out]* CSV 
  
 All data transformation mappings which are used by the example szenarios below are attached to this project.
 
