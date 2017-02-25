@@ -4,19 +4,11 @@ mescedia :: Open Source EDI [![Version](https://img.shields.io/badge/Version-1.1
 
 ### about 
 
-<<<<<<< HEAD
-mescedia is an extensible, Java based EDI (https://en.wikipedia.org/wiki/Electronic_data_interchange) integration application
-for processing most common EDI message formats such as UN/EDIFACT, CSV, XML, Fixed-Length, ... using open standards (XSLT, XQuery, Java, ...). It is build upon existing powerful, production proved Open Source frameworks and libraries such 
-as: 
-
-* *Apache-Karaf* :: https://karaf.apache.org
-=======
 This setup is an extensible, Java based EDI (https://en.wikipedia.org/wiki/Electronic_data_interchange) integration application
 for processing most common EDI message formats such as UN/EDIFACT, CSV, XML, Fixed-Length, ... using open standards (XSLT, XQuery, Java, ...). It is build upon existing powerful, production proved Open Source frameworks and libraries such 
 as: 
 
 * *Apache-Karaf* :: https://karaf.apache.org 
->>>>>>> refs/remotes/origin/develop
 * *Apache-Camel* :: https://camel.apache.org
 * *Smooks*       :: https://www.smooks.org
 
