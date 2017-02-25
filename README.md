@@ -4,11 +4,19 @@ mescedia :: Open Source EDI [![Version](https://img.shields.io/badge/Version-1.1
 
 ### about 
 
+<<<<<<< HEAD
 mescedia is an extensible, Java based EDI (https://en.wikipedia.org/wiki/Electronic_data_interchange) integration application
 for processing most common EDI message formats such as UN/EDIFACT, CSV, XML, Fixed-Length, ... using open standards (XSLT, XQuery, Java, ...). It is build upon existing powerful, production proved Open Source frameworks and libraries such 
 as: 
 
 * *Apache-Karaf* :: https://karaf.apache.org
+=======
+This setup is an extensible, Java based EDI (https://en.wikipedia.org/wiki/Electronic_data_interchange) integration application
+for processing most common EDI message formats such as UN/EDIFACT, CSV, XML, Fixed-Length, ... using open standards (XSLT, XQuery, Java, ...). It is build upon existing powerful, production proved Open Source frameworks and libraries such 
+as: 
+
+* *Apache-Karaf* :: https://karaf.apache.org 
+>>>>>>> refs/remotes/origin/develop
 * *Apache-Camel* :: https://camel.apache.org
 * *Smooks*       :: https://www.smooks.org
 
@@ -55,8 +63,19 @@ install mescedia features in apache-karaf
 To start the server in background run  
 
 	$ bin/start
+
+##### UN/EDIFACT-TO-XML and vice versa conversions
+
+This setup includes all resources to transform UN/EDIFACT messages to XML and vice versa.  
+All message types from EDIFACT version D.93A to D.13A are currently supported. 
+
+Place your messages in the corresponding input folder and see results in your logs and output folders. 
+Refer to the camel-routes in $karaf.home/deploy/edi-routes.xml for details.  
+
  
-This setup includes the data transformation mappings defining the following example szenarios:
+##### Business Message Exchange Szenarios: XML *[in-out]* UN/EDIFACT *[in-out]* CSV 
+ 
+All data transformation mappings which are used by the example szenarios below are attached to this project.
 
 A retailers ERP imports INVOIC and exports ORDERS messages in CSV format. 
 The suppliers ERP on this other hand XML messages. Both retailer and supplier 
