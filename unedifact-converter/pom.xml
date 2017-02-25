@@ -23,7 +23,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.mescedia.unedifact</groupId>
 	<artifactId>converter</artifactId>
-	<version>1.1.2</version>
+	<version>1.1.4</version>
 	<description>mescedia::unedifact-converter</description>
 	<url>https://www.mescedia.com</url>
 	<name>mescedia :: Open Source EDI server [converter] </name>
@@ -32,7 +32,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<smooks.version>1.6</smooks.version>
-		<camel.version>2.16.3</camel.version>
+		<camel.version>2.16.4</camel.version>
 	</properties>
 
 	<dependencies>
