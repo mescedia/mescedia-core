@@ -1,4 +1,4 @@
-mescedia :: Open Source EDI [![Version](https://img.shields.io/badge/release-v--1.1.2-blue.svg)](https://github.com/mescedia/mescedia-edi-server)
+mescedia :: Open Source EDI [![Version](https://img.shields.io/badge/Version-1.1.4-blue.svg)](https://github.com/mescedia/mescedia-edi-server)
 ============================
 
 
@@ -26,9 +26,9 @@ To build the server run
 	
 	$ mvn clean install 
 
-change to karaf-root (in this setup /path/to/mescedia-edi-server)	
+change to karaf-root 	
 
-	$ cd mescedia/ 
+	$ cd karaf/ 
 
 to start karaf run
   
@@ -36,7 +36,7 @@ to start karaf run
 
 install mescedia features in apache-karaf
 	
-	admin@edi-server $ feature:repo-add file:/path/to/mescedia-edi-server/mescedia/mescedia-features.xml
+	admin@edi-server $ feature:repo-add file:./mescedia-features.xml
 	admin@edi-server $ feature:install mescedia  
   
   this might take a while ....  
@@ -46,7 +46,7 @@ install mescedia features in apache-karaf
 	
   copy 'edi-routes.xml' to deploy folder before running the examples below
 
-	$ cp /path/to/mescedia-edi-server/mescedia/edi-routes.xml /path/to/mescedia-edi-server/mescedia/deploy/  
+	$ cp ./edi-routes.xml ./deploy/  
   
 - - -  
   
