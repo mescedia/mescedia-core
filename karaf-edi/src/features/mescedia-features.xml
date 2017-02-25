@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <!--  
-	mescedia - Copyright (C) 2014 - 2016
+	mescedia - Copyright (C) 2014 - 2017
 
 	This library is free software; you can redistribute it and/or
 	modify it under the terms of the GNU Lesser General Public License (version 3) 
@@ -19,9 +19,9 @@
 -->
 <features xmlns="http://karaf.apache.org/xmlns/features/v1.3.0" name="mescedia-0.3.3">
   
-	<repository>mvn:org.apache.camel.karaf/apache-camel/2.16.3/xml/features</repository>
-	<repository>mvn:org.apache.activemq/activemq-karaf/5.12.0/xml/features</repository>
-	<repository>mvn:io.hawt/hawtio-karaf/1.4.52/xml/features</repository>
+	<repository>mvn:org.apache.camel.karaf/apache-camel/2.16.4/xml/features</repository>
+	<repository>mvn:org.apache.activemq/activemq-karaf/5.14.1/xml/features</repository>
+	<repository>mvn:io.hawt/hawtio-karaf/1.4.66/xml/features</repository>
 	<repository>mvn:org.milyn/milyn-smooks-all/1.6/xml/features</repository>
 	
 	  
@@ -30,7 +30,7 @@
 		<bundle start-level="85">wrap:mvn:mysql/mysql-connector-java/5.1.34</bundle>
 		<bundle start-level="85">mvn:commons-dbcp/commons-dbcp/1.4</bundle>
 		<bundle start-level="85">wrap:mvn:org.mvel/mvel2/2.2.4.Final</bundle>
-		<bundle start-level="85">wrap:mvn:org.mescedia.unedifact/converter/1.1.2</bundle>
+		<bundle start-level="85">wrap:mvn:org.mescedia.unedifact/converter/1.1.4</bundle>
 
 		<bundle start-level="90">mvn:org.milyn.edi.unedifact/d99a-mapping/1.6</bundle>
 		<bundle start-level="90">mvn:org.milyn.edi.unedifact/d99a-binding/1.6</bundle>		
