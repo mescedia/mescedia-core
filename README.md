@@ -24,7 +24,11 @@ as:
 
 To build the server run
 	
-	$ mvn clean install 
+	$ mvn clean install
+
+on macOS run the command with the profile option `-P macOS`
+
+	$ mvn -P macOS clean install
 
 change to karaf-root 	
 
