@@ -91,5 +91,6 @@ the data logs and output folders for results.
  
 Enjoy
 
-- - -
-BTC: 1MEscEdiAkacRStk57FFb7MAd5rYSAYF7n
+- - -  
+
+<code> Donate BTC: 1MEscEdiAkacRStk57FFb7MAd5rYSAYF7n</code>
