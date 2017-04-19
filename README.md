@@ -1,4 +1,4 @@
-mescedia :: Open Source EDI [![Version](https://img.shields.io/badge/Version-1.1.4-blue.svg)](https://github.com/mescedia/mescedia-edi-server)
+mescedia :: Open Source EDI [![Version](https://img.shields.io/badge/Version-1.1.4-blue.svg)](https://github.com/mescedia/mescedia-edi-server)  [![BTC](https://img.shields.io/badge/BTC-1MEscEdiAkacRStk57FFb7MAd5rYSAYF7n-orange.svg)]
 ============================
 
 
@@ -77,7 +77,7 @@ A retailers ERP imports INVOIC and exports ORDERS messages in CSV format.
 The suppliers ERP on this other hand XML messages. Both retailer and supplier 
 exchange UN/EDIFACT (D96A) messages. 
 
-	Supplier (XML) 		UN/EDIFACT			Retailer (CSV)
+	Supplier (XML) 		UN/EDIFACT		Retailer (CSV)
 	-------------------------------------------------------
 	ORDERS.xml   < 		ORDERS.edi  <    	ORDERS.csv
 	INVOIC.xml   > 		INVOIC.edi  > 		INVOIC.csv
@@ -89,7 +89,6 @@ The testfiles (ORDERS.csv and INVOIC.xml) resist in $karaf.home/testfiles/ folde
 Copy them to their corresponding inbound destinations (CAMEL_FS/ORDERS_CSV_IN and CAMEL_FS/INVOIC_XML_IN) and watch 
 the data logs and output folders for results. 
  
-
-enjoy
+Enjoy
 
 - - -
