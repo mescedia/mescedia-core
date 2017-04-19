@@ -1,4 +1,4 @@
-mescedia :: Open Source EDI [![Version](https://img.shields.io/badge/Version-1.1.4-blue.svg)](https://github.com/mescedia/mescedia-edi-server)  [![BTC](https://img.shields.io/badge/BTC-1MEscEdiAkacRStk57FFb7MAd5rYSAYF7n-orange.svg)]
+mescedia :: Open Source EDI [![Version](https://img.shields.io/badge/Version-1.1.4-blue.svg)](https://github.com/mescedia/mescedia-edi-server)
 ============================
 
 
@@ -92,3 +92,4 @@ the data logs and output folders for results.
 Enjoy
 
 - - -
+BTC: 1MEscEdiAkacRStk57FFb7MAd5rYSAYF7n
