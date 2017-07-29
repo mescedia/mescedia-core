@@ -1,4 +1,4 @@
-mescedia :: Open Source EDI [![Version](https://img.shields.io/badge/Version-1.1.4-blue.svg)](https://github.com/mescedia/mescedia-edi-server)
+mescedia :: Open Source EDI [![Version](https://img.shields.io/badge/Version-1.1.6-blue.svg)](https://github.com/mescedia/mescedia-edi-server)
 ============================
 
 

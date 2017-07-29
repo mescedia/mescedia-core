@@ -58,7 +58,10 @@ import org.milyn.smooks.edi.unedifact.model.r41.UNZ41;
 import org.milyn.smooks.edi.unedifact.model.r41.types.DateTime;
 import org.milyn.smooks.edi.unedifact.model.r41.types.MessageIdentifier;
 import org.milyn.smooks.edi.unedifact.model.r41.types.Party;
+import org.milyn.smooks.edi.unedifact.model.r41.types.Ref;
+import org.milyn.smooks.edi.unedifact.model.r41.types.SourceIdentifier;
 import org.milyn.smooks.edi.unedifact.model.r41.types.SyntaxIdentifier;
+import org.milyn.smooks.edi.unedifact.model.r41.types.TransferStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
@@ -70,7 +73,7 @@ public class Xml2UnEDIfactConverter {
 	private Object msgObj = null;
 	private Smooks smooks = null;
 	private JavaResult result = null;
-	private String smooksConfigPath = null;
+	private static String smooksConfigPath = "/org/mescedia/edi/bindingconfigs/unedifact"; 
 	private InputStream inputStream = null;
 	private String messageVersion = null;
 	private String xmlMiddlware = null;
@@ -83,6 +86,9 @@ public class Xml2UnEDIfactConverter {
 	private UNEdifactInterchange41 interchange =null;
 	private Party sender = null;
 	private Party recipient = null;
+	
+	private Ref recipientRef = null;
+	
 	private SyntaxIdentifier synID = null;
 	private MessageIdentifier messageIdentifier = null;
 	private long startL; 
@@ -99,6 +105,12 @@ public class Xml2UnEDIfactConverter {
 	private UNEdifactMessage41 ediMessage = null;
 	private StringWriter ediOutStream = null;
 	
+	private  TransferStatus transferStatus = null;
+	
+	private SourceIdentifier subset = null;
+	private SourceIdentifier scenario = null;
+	private SourceIdentifier implementationGuideline = null;
+	
 	private String controlRef = null;
 	private String interchangeMsg = null;
 	private String messageTag = null;
@@ -106,6 +118,8 @@ public class Xml2UnEDIfactConverter {
 	private String docIdXpath = null;
 	private String docID = null;
 	private String version = null;
+	
+	private String appRef = null ;
 	
 	private static org.milyn.smooks.edi.unedifact.model.r41.types.DateTime dt ;
 	
@@ -150,15 +164,12 @@ public class Xml2UnEDIfactConverter {
 		return instance;
 	}
 
-	public String convertToUNEdifact(String _xmlMiddleware, String _smooksConfigPath, String _interchgControlRef ) throws Exception {
+	public String convertToUNEdifact(String _xmlMiddleware,  String _interchgControlRef ) throws Exception {
 		
 		try {
-		
 			startL = System.currentTimeMillis();
 			
 			this.xmlMiddlware = _xmlMiddleware;
-			this.smooksConfigPath = _smooksConfigPath;
-			
 			this.messageVersion = null;
 			
 			// message interchange
@@ -249,7 +260,11 @@ public class Xml2UnEDIfactConverter {
 		
 		this.xpathExpressionUNB = this.xpathUNB.compile("/env:UNB/env:sender/env:codeQualifier/text()");
 		this.sender.setCodeQualifier((String) this.xpathExpressionUNB.evaluate(document, XPathConstants.STRING));	
+		//
+		this.xpathExpressionUNB = this.xpathUNB.compile("/env:UNB/env:sender/env:internalId/text()");		
+		this.sender.setInternalId((String) this.xpathExpressionUNB.evaluate(document, XPathConstants.STRING));
 		
+		//
 		this.unb.setSender(this.sender);
 		
 		this.recipient = new Party();
@@ -258,6 +273,10 @@ public class Xml2UnEDIfactConverter {
 		
 		this.xpathExpressionUNB = this.xpathUNB.compile("/env:UNB/env:recipient/env:codeQualifier/text()");
 		this.recipient.setCodeQualifier((String) this.xpathExpressionUNB.evaluate(document, XPathConstants.STRING));
+		//
+		this.xpathExpressionUNB = this.xpathUNB.compile("/env:UNB/env:recipient/env:internalId/text()");
+		this.recipient.setInternalId((String) this.xpathExpressionUNB.evaluate(document, XPathConstants.STRING));
+		//
 	    
 	    this.unb.setRecipient(recipient);
 		
@@ -272,9 +291,28 @@ public class Xml2UnEDIfactConverter {
 	    this.unb.setDate(dt);
 		
 	    this.unb.setControlRef(controlRef);
+	    
+	    //
+	    this.recipientRef = new Ref();
+	    
+	    this.xpathExpressionUNB = this.xpathUNB.compile("/env:UNB/env:recipientRef/env:ref/text()");	   
+	    this.recipientRef.setRef((String) this.xpathExpressionUNB.evaluate(document, XPathConstants.STRING));
+	    
+	    this.xpathExpressionUNB = this.xpathUNB.compile("/env:UNB/env:recipientRef/env:refQualifier/text()");
+	    this.recipientRef.setRefQualifier((String) this.xpathExpressionUNB.evaluate(document, XPathConstants.STRING));
+	    
+	    this.unb.setRecipientRef(this.recipientRef);	    
+		this.unb.setApplicationRef("MESCEDIA");
 		
-	    this.xpathExpressionUNB = this.xpathUNB.compile("/env:UNB/env:applicationRef/text()");
-		this.unb.setApplicationRef((String) this.xpathExpressionUNB.evaluate(document, XPathConstants.STRING));
+		//
+		
+		this.xpathExpressionUNB = this.xpathUNB.compile("/env:UNB/env:processingPriorityCode/text()");
+		this.unb.setProcessingPriorityCode((String) this.xpathExpressionUNB.evaluate(document, XPathConstants.STRING));
+		
+		this.xpathExpressionUNB = this.xpathUNB.compile("/env:UNB/env:ackRequest/text()");
+		this.unb.setAckRequest((String) this.xpathExpressionUNB.evaluate(document, XPathConstants.STRING));
+		
+		//
 		
 		xpathExpressionUNB = this.xpathUNB.compile("/env:UNB/env:agreementId/text()");
 		this.unb.setAgreementId((String) this.xpathExpressionUNB.evaluate(document, XPathConstants.STRING));
@@ -283,6 +321,321 @@ public class Xml2UnEDIfactConverter {
 		this.unb.setTestIndicator((String) this.xpathExpressionUNB.evaluate(document, XPathConstants.STRING)) ;	  
 
 	}
+	
+	/*
+	 * 
+		UNA:+.? '
+		UNB+UNOC:3+1111100000001:ZZZ+2222200000001:ZZZ+161018:1714+1012'
+		UNG+DESADV+5909000595767:11+8590794000000:22+170405:1059+1000045+UN+D:96A:EAN005+PASS'
+		UNH+1+DESADV:D:01B:UN:EAN007:11:12+13+14:15+16:17:18:19+20:21:22:23+24:25:26:27'
+		BGM+351+LF09879+9'
+		DTM+137:20161018123423:204'
+		DTM+2:20161018:102'
+		RFF+ON:76540056'
+		DTM+171:20161011:102'
+		RFF+DQ:LF09879'
+		NAD+SU+1111100000001::ZZZ'
+		NAD+BY+2222200000002::ZZZ'
+		NAD+DP+2222200000002::ZZZ'
+		CPS+1'
+		PAC+1++201'
+		PCI+33E'
+		GIN+BJ+321098765432101234'
+		CPS+2+1'
+		PAC+5++CT'
+		CPS+3+2'
+		PAC+1++CT'
+		PCI+33E'
+		GIN+BJ+321098765432100001'
+		LIN+1++1111111111111:SRV'
+		PIA+5+111111:BP+321312:SA'
+		QTY+12:3:PCE'
+		RFF+ON:76540056:1'
+		CNT+2:7'
+		UNT+71+1'
+		UNE+1+1000045'
+		UNZ+1+1012'
+	 * 
+	 * <env:unEdifact xmlns:env="urn:org.milyn.edi.unedifact.v41">
+			<env:UNB>
+				<env:syntaxIdentifier>
+					<env:id>UNOC</env:id>
+					<env:versionNum>3</env:versionNum>
+				</env:syntaxIdentifier>
+				<env:sender>
+					<env:id>1111100000001</env:id>
+					<env:codeQualifier>ZZZ</env:codeQualifier>
+				</env:sender>
+				<env:recipient>
+					<env:id>2222200000001</env:id>
+					<env:codeQualifier>ZZZ</env:codeQualifier>
+				</env:recipient>
+				<env:dateTime>
+					<env:date>161018</env:date>
+					<env:time>1714</env:time>
+				</env:dateTime>
+				<env:controlRef>1012</env:controlRef>
+			</env:UNB>
+			<env:group>
+				<env:UNG>
+					<env:groupId>DESADV</env:groupId>
+					<env:senderApp>
+						<env:id>5909000595767</env:id>
+						<env:codeQualifier>11</env:codeQualifier>
+					</env:senderApp>
+					<env:recipientApp>
+						<env:id>8590794000000</env:id>
+						<env:codeQualifier>22</env:codeQualifier>
+					</env:recipientApp>
+					<env:dateTime>
+						<env:date>170405</env:date>
+						<env:time>1059</env:time>
+					</env:dateTime>
+					<env:groupRef>1000045</env:groupRef>
+					<env:controllingAgencyCode>UN</env:controllingAgencyCode>
+					<env:messageVersion>
+						<env:versionNum>D</env:versionNum>
+						<env:releaseNum>96A</env:releaseNum>
+						<env:associationCode>EAN005</env:associationCode>
+					</env:messageVersion>
+					<env:applicationPassword>PASS</env:applicationPassword>
+				</env:UNG>
+				<env:interchangeMessage xmlns:c="urn:org.milyn.edi.unedifact:un:d01b:common" xmlns:desadv="urn:org.milyn.edi.unedifact:un:d01b:desadv">
+					<env:UNH>
+						<env:messageRefNum>1</env:messageRefNum>
+						<env:messageIdentifier>
+							<env:id>DESADV</env:id>
+							<env:versionNum>D</env:versionNum>
+							<env:releaseNum>01B</env:releaseNum>
+							<env:controllingAgencyCode>UN</env:controllingAgencyCode>
+							<env:associationAssignedCode>EAN007</env:associationAssignedCode>
+							<env:codeListDirVersionNum>11</env:codeListDirVersionNum>
+							<env:typeSubFunctionId>12</env:typeSubFunctionId>
+						</env:messageIdentifier>
+						<env:commonAccessRef>13</env:commonAccessRef>
+						<env:transferStatus>
+							<env:sequence>14</env:sequence>
+							<env:firstAndLast>15</env:firstAndLast>
+						</env:transferStatus>
+						<env:subset>
+							<env:id>16</env:id>
+							<env:versionNum>17</env:versionNum>
+							<env:releaseNum>18</env:releaseNum>
+							<env:controllingAgencyCode>19</env:controllingAgencyCode>
+						</env:subset>
+						<env:implementationGuideline>
+							<env:id>20</env:id>
+							<env:versionNum>21</env:versionNum>
+							<env:releaseNum>22</env:releaseNum>
+							<env:controllingAgencyCode>23</env:controllingAgencyCode>
+						</env:implementationGuideline>
+						<env:scenario>
+							<env:id>24</env:id>
+							<env:versionNum>25</env:versionNum>
+							<env:releaseNum>26</env:releaseNum>
+							<env:controllingAgencyCode>27</env:controllingAgencyCode>
+						</env:scenario>
+					</env:UNH>
+					<desadv:DESADV>
+						<desadv:BGM>
+							<c:C002>
+								<c:e1001>351</c:e1001>
+							</c:C002>
+							<c:C106>
+								<c:e1004>LF09879</c:e1004>
+							</c:C106>
+							<c:e1225>9</c:e1225>
+						</desadv:BGM>
+						<desadv:DTM>
+							<c:C507>
+								<c:e2005>137</c:e2005>
+								<c:e2380>20161018123423</c:e2380>
+								<c:e2379>204</c:e2379>
+							</c:C507>
+						</desadv:DTM>
+						<desadv:DTM>
+							<c:C507>
+								<c:e2005>2</c:e2005>
+								<c:e2380>20161018</c:e2380>
+								<c:e2379>102</c:e2379>
+							</c:C507>
+						</desadv:DTM>
+						<desadv:Segment_group_1>
+							<desadv:RFF>
+								<c:C506>
+									<c:e1153>ON</c:e1153>
+									<c:e1154>76540056</c:e1154>
+								</c:C506>
+							</desadv:RFF>
+							<desadv:DTM>
+								<c:C507>
+									<c:e2005>171</c:e2005>
+									<c:e2380>20161011</c:e2380>
+									<c:e2379>102</c:e2379>
+								</c:C507>
+							</desadv:DTM>
+						</desadv:Segment_group_1>
+						<desadv:Segment_group_1>
+							<desadv:RFF>
+								<c:C506>
+									<c:e1153>DQ</c:e1153>
+									<c:e1154>LF09879</c:e1154>
+								</c:C506>
+							</desadv:RFF>
+						</desadv:Segment_group_1>
+						<desadv:Segment_group_2>
+							<desadv:NAD>
+								<c:e3035>SU</c:e3035>
+								<c:C082>
+									<c:e3039>1111100000001</c:e3039>
+									<c:e3055>ZZZ</c:e3055>
+								</c:C082>
+							</desadv:NAD>
+						</desadv:Segment_group_2>
+						<desadv:Segment_group_2>
+							<desadv:NAD>
+								<c:e3035>BY</c:e3035>
+								<c:C082>
+									<c:e3039>2222200000002</c:e3039>
+									<c:e3055>ZZZ</c:e3055>
+								</c:C082>
+							</desadv:NAD>
+						</desadv:Segment_group_2>
+						<desadv:Segment_group_2>
+							<desadv:NAD>
+								<c:e3035>DP</c:e3035>
+								<c:C082>
+									<c:e3039>2222200000002</c:e3039>
+									<c:e3055>ZZZ</c:e3055>
+								</c:C082>
+							</desadv:NAD>
+						</desadv:Segment_group_2>
+						<desadv:Segment_group_10>
+							<desadv:CPS>
+								<c:e7164>1</c:e7164>
+							</desadv:CPS>
+							<desadv:Segment_group_11>
+								<desadv:PAC>
+									<c:e7224>1</c:e7224>
+									<c:C202>
+										<c:e7065>201</c:e7065>
+									</c:C202>
+								</desadv:PAC>
+								<desadv:Segment_group_13>
+									<desadv:PCI>
+										<c:e4233>33E</c:e4233>
+									</desadv:PCI>
+									<desadv:Segment_group_15>
+										<desadv:GIN>
+											<c:e7405>BJ</c:e7405>
+											<c:C208_-_-1>
+												<c:e7402_-_-1>321098765432101234</c:e7402_-_-1>
+											</c:C208_-_-1>
+										</desadv:GIN>
+									</desadv:Segment_group_15>
+								</desadv:Segment_group_13>
+							</desadv:Segment_group_11>
+						</desadv:Segment_group_10>
+						<desadv:Segment_group_10>
+							<desadv:CPS>
+								<c:e7164>2</c:e7164>
+								<c:e7166>1</c:e7166>
+							</desadv:CPS>
+							<desadv:Segment_group_11>
+								<desadv:PAC>
+									<c:e7224>5</c:e7224>
+									<c:C202>
+										<c:e7065>CT</c:e7065>
+									</c:C202>
+								</desadv:PAC>
+							</desadv:Segment_group_11>
+						</desadv:Segment_group_10>
+						<desadv:Segment_group_10>
+							<desadv:CPS>
+								<c:e7164>3</c:e7164>
+								<c:e7166>2</c:e7166>
+							</desadv:CPS>
+							<desadv:Segment_group_11>
+								<desadv:PAC>
+									<c:e7224>1</c:e7224>
+									<c:C202>
+										<c:e7065>CT</c:e7065>
+									</c:C202>
+								</desadv:PAC>
+								<desadv:Segment_group_13>
+									<desadv:PCI>
+										<c:e4233>33E</c:e4233>
+									</desadv:PCI>
+									<desadv:Segment_group_15>
+										<desadv:GIN>
+											<c:e7405>BJ</c:e7405>
+											<c:C208_-_-1>
+												<c:e7402_-_-1>321098765432100001</c:e7402_-_-1>
+											</c:C208_-_-1>
+										</desadv:GIN>
+									</desadv:Segment_group_15>
+								</desadv:Segment_group_13>
+							</desadv:Segment_group_11>
+							<desadv:Segment_group_17>
+								<desadv:LIN>
+									<c:e1082>1</c:e1082>
+									<c:C212>
+										<c:e7140>1111111111111</c:e7140>
+										<c:e7143>SRV</c:e7143>
+									</c:C212>
+								</desadv:LIN>
+								<desadv:PIA>
+									<c:e4347>5</c:e4347>
+									<c:C212_-_-1>
+										<c:e7140>111111</c:e7140>
+										<c:e7143>BP</c:e7143>
+									</c:C212_-_-1>
+									<c:C212_-_-2>
+										<c:e7140>321312</c:e7140>
+										<c:e7143>SA</c:e7143>
+									</c:C212_-_-2>
+								</desadv:PIA>
+								<desadv:QTY>
+									<c:C186>
+										<c:e6063>12</c:e6063>
+										<c:e6060>3</c:e6060>
+										<c:e6411>PCE</c:e6411>
+									</c:C186>
+								</desadv:QTY>
+								<desadv:Segment_group_18>
+									<desadv:RFF>
+										<c:C506>
+											<c:e1153>ON</c:e1153>
+											<c:e1154>76540056</c:e1154>
+											<c:e1156>1</c:e1156>
+										</c:C506>
+									</desadv:RFF>
+								</desadv:Segment_group_18>
+							</desadv:Segment_group_17>
+						</desadv:Segment_group_10>
+						<desadv:CNT>
+							<c:C270>
+								<c:e6069>2</c:e6069>
+								<c:e6066>7</c:e6066>
+							</c:C270>
+						</desadv:CNT>
+					</desadv:DESADV>
+					<env:UNT>
+						<env:segmentCount>71</env:segmentCount>
+						<env:messageRefNum>1</env:messageRefNum>
+					</env:UNT>
+				</env:interchangeMessage>
+				<env:UNE>
+					<env:controlCount>1</env:controlCount>
+					<env:groupRef>1000045</env:groupRef>
+				</env:UNE>
+			</env:group>
+			<env:UNZ>
+				<env:controlCount>1</env:controlCount>
+				<env:controlRef>1012</env:controlRef>
+			</env:UNZ>
+		</env:unEdifact>
+	 * */
 	
 	private List<UNEdifactMessage41> buildInterchanges(String xml) throws Exception	{
 		
@@ -351,10 +704,17 @@ public class Xml2UnEDIfactConverter {
 			throw new Exception("message section not found !!!") ;
 		}
 
+		// with custom bindingconfigs
 		smooksConfig = this.smooksConfigPath + "/" +
 					unh.getMessageIdentifier().getVersionNum().toUpperCase()  +					// D 
 					unh.getMessageIdentifier().getReleaseNum().toUpperCase() + "-" +			// 96A
 					unh.getMessageIdentifier().getId().toUpperCase() + "-bindingconfig.xml" ;   // DESADV-bindingconfig.xml"
+		
+		
+		//without custom bindingconfigs -- error: Caused by: java.lang.IllegalStateException: Invalid EDI mapping model config specified for org.milyn.edisax.EDIParser.  Unable to access URI based mapping model [org/milyn/edi/unedifact/d01b/DESADV/edimappingconfig.xml].
+//		smooksConfig = "/org/milyn/edi/unedifact/d"+ 
+//				unh.getMessageIdentifier().getReleaseNum().toLowerCase() + "/" +
+//				unh.getMessageIdentifier().getId().toUpperCase() + "/bindingconfig.xml" ;
 		
 		currentMessageVersion = unh.getMessageIdentifier().getVersionNum().toLowerCase() +  
 				unh.getMessageIdentifier().getReleaseNum().toLowerCase();
@@ -439,6 +799,78 @@ public class Xml2UnEDIfactConverter {
 	    unh = new UNH41();
 	    unh.setMessageIdentifier(this.messageIdentifier) ;
 	    unh.setMessageRefNum(msgRefNum) ;
+	    
+	    //
+	    
+	    this.xpathExpressionUNH1 = this.xpathUNH1.compile("/env:UNH/env:commonAccessRef/text()");
+		unh.setCommonAccessRef((String) this.xpathExpressionUNH1.evaluate(document, XPathConstants.STRING)) ;
+		
+		//
+	    
+	    this.transferStatus = new TransferStatus();
+	    
+	    this.xpathExpressionUNH1 = this.xpathUNH1.compile("/env:UNH/env:transferStatus/env:sequence/text()");
+	    this.transferStatus.setSequence((String) this.xpathExpressionUNH1.evaluate(document, XPathConstants.STRING)) ;
+	    
+	    this.xpathExpressionUNH1 = this.xpathUNH1.compile("/env:UNH/env:transferStatus/env:firstAndLast/text()");
+	    this.transferStatus.setFirstAndLast((String) this.xpathExpressionUNH1.evaluate(document, XPathConstants.STRING)) ;
+	    
+	    unh.setTransferStatus(transferStatus);
+
+	    //
+	    
+	    this.subset = new SourceIdentifier();
+	    
+	    this.xpathExpressionUNH1 = this.xpathUNH1.compile("/env:UNH/env:subset/env:id/text()");
+	    this.subset.setId((String) this.xpathExpressionUNH1.evaluate(document, XPathConstants.STRING)) ;
+	    
+	    this.xpathExpressionUNH1 = this.xpathUNH1.compile("/env:UNH/env:subset/env:versionNum/text()");
+	    this.subset.setVersionNum((String) this.xpathExpressionUNH1.evaluate(document, XPathConstants.STRING)) ;
+	    
+	    this.xpathExpressionUNH1 = this.xpathUNH1.compile("/env:UNH/env:subset/env:releaseNum/text()");
+	    this.subset.setReleaseNum((String) this.xpathExpressionUNH1.evaluate(document, XPathConstants.STRING)) ;
+	    
+	    this.xpathExpressionUNH1 = this.xpathUNH1.compile("/env:UNH/env:subset/env:controllingAgencyCode/text()");
+	    this.subset.setControllingAgencyCode((String) this.xpathExpressionUNH1.evaluate(document, XPathConstants.STRING)) ;
+	    	    
+	    unh.setSubset(this.subset);
+	    
+	    // 
+	    
+	    this.implementationGuideline = new SourceIdentifier();
+	    
+	    this.xpathExpressionUNH1 = this.xpathUNH1.compile("/env:UNH/env:implementationGuideline/env:id/text()");
+	    this.implementationGuideline.setId((String) this.xpathExpressionUNH1.evaluate(document, XPathConstants.STRING)) ;
+	    
+	    this.xpathExpressionUNH1 = this.xpathUNH1.compile("/env:UNH/env:implementationGuideline/env:versionNum/text()");
+	    this.implementationGuideline.setVersionNum((String) this.xpathExpressionUNH1.evaluate(document, XPathConstants.STRING)) ;
+	    
+	    this.xpathExpressionUNH1 = this.xpathUNH1.compile("/env:UNH/env:implementationGuideline/env:releaseNum/text()");
+	    this.implementationGuideline.setReleaseNum((String) this.xpathExpressionUNH1.evaluate(document, XPathConstants.STRING)) ;
+	    
+	    this.xpathExpressionUNH1 = this.xpathUNH1.compile("/env:UNH/env:implementationGuideline/env:controllingAgencyCode/text()");
+	    this.implementationGuideline.setControllingAgencyCode((String) this.xpathExpressionUNH1.evaluate(document, XPathConstants.STRING)) ;
+	    
+	    unh.setImplementationGuideline(this.implementationGuideline);
+	    
+	    //
+	    
+	    this.scenario = new SourceIdentifier();
+	    
+	    
+	    this.xpathExpressionUNH1 = this.xpathUNH1.compile("/env:UNH/env:scenario/env:id/text()");
+	    this.scenario.setId((String) this.xpathExpressionUNH1.evaluate(document, XPathConstants.STRING)) ;
+	    
+	    this.xpathExpressionUNH1 = this.xpathUNH1.compile("/env:UNH/env:scenario/env:versionNum/text()");
+	    this.scenario.setVersionNum((String) this.xpathExpressionUNH1.evaluate(document, XPathConstants.STRING)) ;
+	    
+	    this.xpathExpressionUNH1 = this.xpathUNH1.compile("/env:UNH/env:scenario/env:releaseNum/text()");
+	    this.scenario.setReleaseNum((String) this.xpathExpressionUNH1.evaluate(document, XPathConstants.STRING)) ;
+	    
+	    this.xpathExpressionUNH1 = this.xpathUNH1.compile("/env:UNH/env:scenario/env:controllingAgencyCode/text()");
+	    this.scenario.setControllingAgencyCode((String) this.xpathExpressionUNH1.evaluate(document, XPathConstants.STRING)) ;
+	    
+	    unh.setScenario(this.scenario);
 	}	
 	
 	private void setNamespaceContext()	{
@@ -476,4 +908,3 @@ public class Xml2UnEDIfactConverter {
 		
 	}
 }
-

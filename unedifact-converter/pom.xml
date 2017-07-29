@@ -23,7 +23,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.mescedia.unedifact</groupId>
 	<artifactId>converter</artifactId>
-	<version>1.1.4</version>
+	<version>1.1.6</version>
 	<description>mescedia::unedifact-converter</description>
 	<url>https://www.mescedia.com</url>
 	<name>mescedia :: Open Source EDI server [converter] </name>
@@ -500,6 +500,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	</dependencies>
 
 	<build>
+		<!-- 
 		<resources>
 			<resource>
 				<directory>${project.basedir}/src/main/resources</directory>
@@ -512,6 +513,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 				</includes>
 			</resource>
 		</resources>
+		-->
 		<extensions>
 			<extension>
 				<groupId>org.apache.maven.archetype</groupId>
