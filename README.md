@@ -3,7 +3,7 @@ mescedia :: Open Source EDI
 
 <p>    
     <img src="https://img.shields.io/badge/Version-1.1.6-blue.svg" alt="mescedia-1.1.6" title="mescedia-1.1.6">
-    <img src="https://img.shields.io/badge/BTC-1MEscEdiAkacRStk57FFb7MAd5rYSAYF7n-orange.svg" title="donate Bitcoin" alt="donate Bitcoin">    
+    <img src="https://mescedia.com/btc.svg" title="donate Bitcoin" alt="donate Bitcoin">    
 </p>
 
 
