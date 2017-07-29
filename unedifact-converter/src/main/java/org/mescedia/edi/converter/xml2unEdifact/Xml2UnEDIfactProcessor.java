@@ -18,8 +18,6 @@ https://www.gnu.org/licenses/lgpl-3.0.txt
 
 package org.mescedia.edi.converter.xml2unEdifact;
 
-//import java.io.File;
-
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.mescedia.edi.converter.helper.StackTrace;
@@ -31,8 +29,6 @@ public class Xml2UnEDIfactProcessor implements Processor {
 private String interchangeControlReference = null ;
 private String ediMessage = null;
 private String inMessage = null;
-//private String bindingconfigPath = null;
-//private File file = null;
 
 private static final Logger log = LoggerFactory.getLogger(Xml2UnEDIfactProcessor.class);
 
@@ -45,32 +41,15 @@ public synchronized void process(Exchange exchange) throws Exception {
 		else
 			this.interchangeControlReference = exchange.getIn().getHeaders().get("X_MESCEDIA_interchangeControlReference").toString();
 		
-//		if (exchange.getIn().getHeaders().get("X_MESCEDIA_bindingconfigPath") == null) 	
-//			throw new Exception("bindingconfigPath not set - expected it in camel-header X_MESCEDIA_bindingconfigPath ") ;
-//		else
-//			this.bindingconfigPath = exchange.getIn().getHeaders().get("X_MESCEDIA_bindingconfigPath").toString();
-		
 		this.inMessage = exchange.getIn().getBody(String.class) ;		
-						
-//		this.file = new File(this.bindingconfigPath);
-//		if(this.file.exists() && !this.file.isDirectory()) {
-//			log.error("bindingconfigPath not found:" + this.bindingconfigPath);
-//			throw new Exception("bindingconfigPath not found:" + this.bindingconfigPath) ;
-//		}
-				
-		// this.ediMessage = Xml2UnEDIfactConverter.getInstance().convertToUNEdifact( this.inMessage, this.bindingconfigPath, this.interchangeControlReference);
 		this.ediMessage = Xml2UnEDIfactConverter.getInstance().convertToUNEdifact( this.inMessage,  this.interchangeControlReference);
 		
-		// exchange.getIn().setHeader("X_MESCEDIA_EdifactValidationMessage", "OK" ) ;
 		exchange.getIn().setBody(this.ediMessage);
 	
 	}
 	catch (Exception ex)	{
 		
 		String msgE = ex.getMessage();						
-    	
-		
-		//exchange.getIn().setHeader("X_MESCEDIA_EdifactValidationMessage", msgE ) ;
 		
 		log.error(msgE);
 		log.error(StackTrace.getStackTrace(ex));
