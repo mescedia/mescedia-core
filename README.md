@@ -90,8 +90,8 @@ For an initial test run the following commands from $karaf.home
 	$ cp testfiles/INVOIC.xml CAMEL_FS/INVOIC_XML_IN/
 	$ cp testfiles/ORDERS.csv CAMEL_FS/ORDERS_CSV_IN/
 
-and watch the data logs and output folders for results. 
-
+and watch the logs and output folders for details on each interim and final message format used during processing.
+ 
 
 #### message routing and processing 
 
@@ -100,8 +100,8 @@ mescedia comes with some basic message routing and message processing examples.
 This requires some basic knowledge about Apache-Camel since this framework offers a lot of different techniques 
 for message processing like XSLT, XQuery, custom Java-Processors, and more ...
 
-For an initial impression you may refer to the corresponding camel-routes in $karaf.home/deploy/edi-routes.xml and the contents of the 
-$karaf.home/mapping folder which contains the message mappings used in these examples.
+For an initial impression you may refer to the corresponding camel-routes in $karaf.home/deploy/edi-routes.xml and 
+the contents of the $karaf.home/mapping folder which contains the message mappings used in these examples.
   
  
 Enjoy
