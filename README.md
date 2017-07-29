@@ -3,28 +3,7 @@ mescedia :: Open Source EDI
 
 <p>    
     <img src="https://img.shields.io/badge/Version-1.1.6-blue.svg" alt="mescedia-1.1.6" title="mescedia-1.1.6">
-    		<script src="//blockr.io/js_external/coinwidget/coin.js"></script>
-		<script>
-			CoinWidgetCom.go({
-				wallet_address: '1MEscEdiAkacRStk57FFb7MAd5rYSAYF7n',
-				currency: 'bitcoin',
-				counter: 'count',
-				lbl_button: 'Donate',
-				lbl_count: 'donations',
-				lbl_amount: 'BTC',
-				lbl_address: 'Use address below to donate. Thanks!',
-				qrcode: true,
-				alignment: 'bl',
-				decimals: 8,
-				size: "small",
-				color: "dark",
-				countdownFrom: "0",
-				element: "#coinwidget-bitcoin-1MEscEdiAkacRStk57FFb7MAd5rYSAYF7n",
-				onShow: function(){},
-				onHide: function(){}
-			});
-		</script>
-		<div id="coinwidget-bitcoin-1MEscEdiAkacRStk57FFb7MAd5rYSAYF7n"></div>    
+    <img src="https://img.shields.io/badge/BTC-1MEscEdiAkacRStk57FFb7MAd5rYSAYF7n-orange.svg" title="donate Bitcoin" alt="donate Bitcoin">    
 </p>
 
 
