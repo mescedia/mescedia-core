@@ -5,7 +5,7 @@ mescedia :: Open Source EDI
 <a href="https://www.mescedia.org/?mescedia-1.1.6" title="http://www.mescedia.org"><img src="https://img.shields.io/badge/Version-1.1.6-blue.svg" alt="mescedia-1.1.6" title="mescedia-1.1.6"></a></span>
 &nbsp;
 <span>
-<a href="https://www.mescedia.org/?btc" title="http://www.mescedia.org"><img src="https://img.shields.io/badge/BTC-1MEscEdiAkacRStk57FFb7MAd5rYSAYF7n-orange.svg" title="donate Bitcoin" alt="donate Bitcoin"></a>
+<a href="https://blockchain.info/address/1MEscEdiAkacRStk57FFb7MAd5rYSAYF7n" title="http://www.mescedia.org"><img src="https://img.shields.io/badge/BTC-1MEscEdiAkacRStk57FFb7MAd5rYSAYF7n-orange.svg" title="donate Bitcoin" alt="donate Bitcoin"></a>
 </span>
 
 
