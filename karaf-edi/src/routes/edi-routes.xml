@@ -78,9 +78,6 @@
 		    <setHeader headerName="X_MESCEDIA_interchangeControlReference"> 	<!-- optional  -->
 		    	<constant>999</constant>
 		    </setHeader>	 				
-		    <setHeader headerName="X_MESCEDIA_bindingconfigPath"> 				<!-- required  -->
-		    	<constant>{{edifact.bindingconfigs}}</constant>
-		    </setHeader>	
 		    <bean ref="xml2unedifact" />		    
 		<to uri="file://./CAMEL_FS/XML_2_UNEDIFACT_OUT"/>
 	</route>
@@ -99,9 +96,6 @@
 			<to uri="xslt://file:{{path.mappings}}/ORDERS_XML_SMOOKSXML_V01.xslt?saxon=true"/>		  
 			
 			<log message="3. transform SMOOKSXML ORDERS to UN/EDIFACT .... "/>
-			<setHeader headerName="X_MESCEDIA_bindingconfigPath"> 				<!-- required  -->
-				  <constant>{{edifact.bindingconfigs}}</constant>
-			  </setHeader>	
 			<bean ref="xml2unedifact" />			
 			  
 			<log message="${body}"/>
@@ -141,9 +135,6 @@
 			<setHeader headerName="X_MESCEDIA_interchangeControlReference"> 	<!-- optional - otherwise random value set  -->
 					<constant>99999</constant>
 			</setHeader>	 				
-			<setHeader headerName="X_MESCEDIA_bindingconfigPath"> 				<!-- required  -->
-				  <constant>{{edifact.bindingconfigs}}</constant>
-			</setHeader>
 			<bean ref="xml2unedifact" />
 			
 			<log message="${body}"/>

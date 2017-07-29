@@ -1,6 +1,10 @@
-mescedia :: Open Source EDI [![Version](https://img.shields.io/badge/Version-1.1.6-blue.svg)](https://github.com/mescedia/mescedia-edi-server) [![BTC](https://img.shields.io/badge/BTC-1MEscEdiAkacRStk57FFb7MAd5rYSAYF7n-orange.svg)]  
-============================
+mescedia :: Open Source EDI  
+===========================
 
+<p align="center">    
+    <img src="https://img.shields.io/badge/Version-1.1.6-blue.svg" alt="mescedia-1.1.6">
+    <img src="https://img.shields.io/badge/฿-1MEscEdiAkacRStk57FFb7MAd5rYSAYF7n-orange.svg" alt="donate-BTC">    
+</p>
 
 
 ### about 
