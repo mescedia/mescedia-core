@@ -619,10 +619,10 @@
 						<artifactItem>
 							<groupId>org.mescedia.edi</groupId>
 							<artifactId>branding</artifactId>
-							<version>1.1.6</version>
+							<version>1.1.6.1</version>
 							<outputDirectory>target/dependencies/apache-karaf-${karaf.version}/lib/ext
 							</outputDirectory>
-							<destFileName>karaf-org.mescedia.edi.branding-1.1.6.jar
+							<destFileName>karaf-org.mescedia.edi.branding-1.1.6.1.jar
 							</destFileName>
 						</artifactItem>
 						

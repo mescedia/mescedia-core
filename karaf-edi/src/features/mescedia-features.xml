@@ -30,7 +30,7 @@
 		<bundle start-level="85">wrap:mvn:mysql/mysql-connector-java/5.1.34</bundle>
 		<bundle start-level="85">mvn:commons-dbcp/commons-dbcp/1.4</bundle>
 		<bundle start-level="85">wrap:mvn:org.mvel/mvel2/2.2.4.Final</bundle>
-		<bundle start-level="85">wrap:mvn:org.mescedia.unedifact/converter/1.1.6</bundle>
+		<bundle start-level="85">wrap:mvn:org.mescedia.unedifact/converter/1.1.6.1</bundle>
 
 		<bundle start-level="90">mvn:org.milyn.edi.unedifact/d99a-mapping/1.6</bundle>
 		<bundle start-level="90">mvn:org.milyn.edi.unedifact/d99a-binding/1.6</bundle>		
