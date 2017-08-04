@@ -276,8 +276,11 @@ public class Xml2UnEDIfactConverter {
 	    this.recipientRef.setRef((String) this.xpathExpressionUNB.evaluate(document, XPathConstants.STRING));
 	    this.xpathExpressionUNB = this.xpathUNB.compile("/env:UNB/env:recipientRef/env:refQualifier/text()");
 	    this.recipientRef.setRefQualifier((String) this.xpathExpressionUNB.evaluate(document, XPathConstants.STRING));
-	    this.unb.setRecipientRef(this.recipientRef);	    
-		this.unb.setApplicationRef("MESCEDIA");
+	    this.unb.setRecipientRef(this.recipientRef);
+	    this.xpathExpressionUNB = this.xpathUNB.compile("/env:UNB/env:applicationRef/text()");
+	    this.appRef = (String) this.xpathExpressionUNB.evaluate(document, XPathConstants.STRING);
+	    if (this.appRef.equals(""))
+	    	this.appRef = "MESCEDIA" ;
 		this.xpathExpressionUNB = this.xpathUNB.compile("/env:UNB/env:processingPriorityCode/text()");
 		this.unb.setProcessingPriorityCode((String) this.xpathExpressionUNB.evaluate(document, XPathConstants.STRING));
 		this.xpathExpressionUNB = this.xpathUNB.compile("/env:UNB/env:ackRequest/text()");
@@ -357,6 +360,8 @@ public class Xml2UnEDIfactConverter {
 		}
 
 		smooksConfig = this.smooksConfigPath + "/" +
+					unh.getMessageIdentifier().getVersionNum().toUpperCase()  +					// D 
+					unh.getMessageIdentifier().getReleaseNum().toUpperCase() + "/" +			// 96A
 					unh.getMessageIdentifier().getVersionNum().toUpperCase()  +					// D 
 					unh.getMessageIdentifier().getReleaseNum().toUpperCase() + "-" +			// 96A
 					unh.getMessageIdentifier().getId().toUpperCase() + "-bindingconfig.xml" ;   // DESADV-bindingconfig.xml"

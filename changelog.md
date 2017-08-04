@@ -1,3 +1,6 @@
+## 1.1.6.1 (04.08.2017)
+ - fixed broken unedifact bindingconfig jar
+
 ## 1.1.6 (29.07.2017)
 
  - added unedifact-bindinconfigs as jar file in classpath (instead of single files on filesystem)   
