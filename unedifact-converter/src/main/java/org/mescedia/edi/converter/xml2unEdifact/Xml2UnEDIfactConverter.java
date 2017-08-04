@@ -281,6 +281,7 @@ public class Xml2UnEDIfactConverter {
 	    this.appRef = (String) this.xpathExpressionUNB.evaluate(document, XPathConstants.STRING);
 	    if (this.appRef.equals(""))
 	    	this.appRef = "MESCEDIA" ;
+	    this.unb.setApplicationRef(this.appRef);
 		this.xpathExpressionUNB = this.xpathUNB.compile("/env:UNB/env:processingPriorityCode/text()");
 		this.unb.setProcessingPriorityCode((String) this.xpathExpressionUNB.evaluate(document, XPathConstants.STRING));
 		this.xpathExpressionUNB = this.xpathUNB.compile("/env:UNB/env:ackRequest/text()");
