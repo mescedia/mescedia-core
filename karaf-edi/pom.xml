@@ -29,7 +29,7 @@
 	<name>mescedia :: Open Source EDI server [apache-karaf] </name>
 	
 	<properties>
-		<karaf.version>4.0.8</karaf.version>
+		<karaf.version>4.2.3</karaf.version>
   		<mysql.version>5.1.34</mysql.version>
 		<smooks.version>1.6</smooks.version>
   		<hawtio.version>1.4.66</hawtio.version>
