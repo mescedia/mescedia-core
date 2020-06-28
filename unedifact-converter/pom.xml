@@ -32,7 +32,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<smooks.version>1.6</smooks.version>
-		<camel.version>2.16.4</camel.version>
+		<camel.version>3.4.0</camel.version>
 	</properties>
 
 	<dependencies>
