@@ -30,7 +30,7 @@
 	
 	<properties>
 		<karaf.version>4.0.8</karaf.version>
-  		<mysql.version>5.1.34</mysql.version>
+  		<mysql.version>8.0.16</mysql.version>
 		<smooks.version>1.6</smooks.version>
   		<hawtio.version>1.4.66</hawtio.version>
 		<camel.version>2.16.4</camel.version>
