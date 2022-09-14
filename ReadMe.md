@@ -28,7 +28,7 @@ This project targets a wide range of interest from small business to large enter
 - {todo} REST interface to all affected services
 - {todo} WebGUI for configuration, mapping-development, monitoring,  etc.
 - {todo} automated installation scrips (ansible) and prebuild docker images
-- {todo} examples & documentation 
+- {todo} documentation, howto's & examples 
 - {planned} commercial support
     
 
