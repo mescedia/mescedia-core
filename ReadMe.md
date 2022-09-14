@@ -27,11 +27,10 @@ Due to its high performance this project targets a wide range of interest from s
 - {todo} customisable message validation
 - {todo} extensible XML based data-transformation using Open-Standards (XSLT, XQuery, Java, ...) 
 - {todo} secure communication protocol integration: OpenAS2 (AS2), OpenSSH (SFTP), vsftpd (FTPS), nginx (HTTPS, WebDav), ... 
-- {todo} REST interface to all affected services
+- {todo} REST interface for managing affected services
 - {todo} WebGUI for configuration, development, monitoring,  etc.
 - {todo} automated installation scrips (ansible) and prebuild docker images
-- {todo} documentation, howto's & examples 
-- {planned} commercial support
+- {todo} documentation, howtos & examples
     
 
 ### setup
