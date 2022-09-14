@@ -14,7 +14,7 @@ It is build upon existing powerful production proved Open-Source frameworks and 
 
 The aim of this project is to offer a 'free' and 'ready to use' EDI-System that comes up with all tools required in order to make EDI data-exchange highly customisable, secure, transparent, affordable and easy manageable using Open-Source and Open-Standards ...
 
-... in contrary to conventional EDI systems witch usually are Closed-Source, Non-Standard and usually very expensive.
+... in contrary to conventional EDI systems witch traditionally are Closed-Source, Non-Standard and usually very expensive.
 
 Due to its high performance this project targets a wide range of interest from small business to large enterprises and service providers with high message load.
 
