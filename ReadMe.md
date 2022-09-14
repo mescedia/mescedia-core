@@ -24,7 +24,7 @@ This project targets a wide range of interest from small business to large enter
 - {todo} content based dynamic message routing/processing
 - {todo} customisable message validation
 - {todo} extensible XML based data-transformation using open standards (XSLT, XQuery, Java, ...) 
-- {todo} secure communication (AS2, SFTP, FTPS, HTTPS, WebDav, ... )
+- {todo} secure communication protocol integration: OpenAS2 (AS2), OpenSSH (SFTP), vsftpd (FTPS), nginx (HTTPS, WebDav) 
 - {todo} REST interface to all affected services
 - {todo} WebGUI for configuration, mapping-development, monitoring,  etc.
 - {todo} automated installation scrips (ansible) and prebuild docker images
