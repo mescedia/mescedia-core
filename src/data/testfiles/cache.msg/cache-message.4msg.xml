@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+    <message>
+        <![CDATA[
+            UNA:+.? 'UNB+UNOC:3+MESCEDIA-INITIALIZER:14+MESCEDIA-INITIALIZER:14+181028:1714+991'UNH+1+DESADV:D:93A:UN:EAN006'BGM+351+INITIALIZER+9'UNT+51+1'UNZ+1+991'
+            ]]>
+    </message>
+    <message>
+        <![CDATA[
+            UNA:+.? 'UNB+UNOA:4+MESCEDIA-INITIALIZER:02+MESCEDIA-INITIALIZER:02+140912:2000+16++++++1'UNH+54321+PAXLST:D:03B:UN'BGM+10+INITIALIZER+4'TDT+11++++XXXX:123'DTM+133:20210901:102'UNT+5+54321'UNZ+1+16'
+            ]]>
+    </message>
+    <message>
+        <![CDATA[
+            <D93A:Interchange xmlns:D93A="http://www.ibm.com/dfdl/edi/un/edifact/D93A" xmlns:srv="http://www.ibm.com/dfdl/edi/un/service/4.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><UNA><CompositeSeparator>:</CompositeSeparator><FieldSeparator>+</FieldSeparator><DecimalSeparator>.</DecimalSeparator><EscapeCharacter>?</EscapeCharacter><RepeatSeparator> </RepeatSeparator><SegmentTerminator>'</SegmentTerminator></UNA><UNB><S001><E0001>UNOC</E0001><E0002>3</E0002></S001><S002><E0004>MESCEDIA-INITIALIZER</E0004><E0007>14</E0007></S002><S003><E0010>MESCEDIA-INITIALIZER</E0010><E0007>14</E0007></S003><S004><E0017>181028</E0017><E0019>1714</E0019></S004><E0020>991</E0020></UNB><D93A:Message><UNH><E0062>1</E0062><S009><E0065>DESADV</E0065><E0052>D</E0052><E0054>93A</E0054><E0051>UN</E0051><E0057>EAN006</E0057></S009></UNH><D93A:DESADV><BGM><C002><E1001>351</E1001></C002><E1004>INITIALIZER</E1004><E1225>9</E1225></BGM></D93A:DESADV><UNT><E0074>51</E0074><E0062>1</E0062></UNT></D93A:Message><UNZ><E0036>1</E0036><E0020>991</E0020></UNZ></D93A:Interchange>
+            ]]>
+    </message>
+    <message>
+        <![CDATA[
+            <D03B:Interchange xmlns:D03B="http://www.ibm.com/dfdl/edi/un/edifact/D03B" xmlns:srv="http://www.ibm.com/dfdl/edi/un/service/4.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><UNA><CompositeSeparator>:</CompositeSeparator><FieldSeparator>+</FieldSeparator><DecimalSeparator>.</DecimalSeparator><EscapeCharacter>?</EscapeCharacter><RepeatSeparator> </RepeatSeparator><SegmentTerminator>'</SegmentTerminator></UNA><UNB><S001><E0001>UNOA</E0001><E0002>4</E0002></S001><S002><E0004>MESCEDIA-INITIALIZER</E0004><E0007>02</E0007></S002><S003><E0010>MESCEDIA-INITIALIZER</E0010><E0007>02</E0007></S003><S004><E0017>140912</E0017><E0019>2000</E0019></S004><E0020>16</E0020><S005><E0022></E0022></S005><E0035>1</E0035></UNB><D03B:Message><UNH><E0062>54321</E0062><S009><E0065>PAXLST</E0065><E0052>D</E0052><E0054>03B</E0054><E0051>UN</E0051></S009></UNH><D03B:PAXLST><BGM><C002><E1001>10</E1001></C002><C106><E1004>INITIALIZER</E1004></C106><E1225>4</E1225></BGM><SegGrp-2><TDT><E8051>11</E8051><C040><E3127>XXXX</E3127><E1131>123</E1131></C040></TDT><DTM><C507><E2005>133</E2005><E2380>20210901</E2380><E2379>102</E2379></C507></DTM></SegGrp-2></D03B:PAXLST><UNT><E0074>5</E0074><E0062>54321</E0062></UNT></D03B:Message><UNZ><E0036>1</E0036><E0020>16</E0020></UNZ></D03B:Interchange>
+            ]]>
+    </message>
+</configuration>

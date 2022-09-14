@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
+
+    <routeContext xmlns="http://camel.apache.org/schema/spring" id="rest">
+
+        <route id="http_edifact2xml"  errorHandlerRef="deadLetterErrorHandler">
+            <from uri="rest_edifact2xml" />
+                <setHeader name="X-MESCEDIA-DEBUG">
+                    <simple>${header.debug}</simple>
+                </setHeader>
+                <setHeader name="X-MESCEDIA-FORMAT">
+                    <simple>${header.format}</simple>
+                </setHeader>
+                <setHeader name="Exchange.CONTENT_TYPE">
+                    <constant>application/xml</constant>
+                </setHeader>
+                <bean ref="edifact2xml" />
+                <removeHeaders pattern="X-MESCEDIA-*"/>
+        </route>
+
+        <route id="http_xml2edifact"  errorHandlerRef="deadLetterErrorHandler">
+            <from uri="rest_xml2edifact" />
+                <setHeader name="X-MESCEDIA-DEBUG">
+                    <simple>${header.debug}</simple>
+                </setHeader>
+                <setHeader name="Exchange.CONTENT_TYPE">
+                    <constant>application/edifact</constant>
+                </setHeader>
+                <bean ref="xml2edifact" />
+                <removeHeaders pattern="X-MESCEDIA-*"/>
+        </route>
+
+        <route id="http_cache_add"  errorHandlerRef="deadLetterErrorHandler">
+            <from uri="rest_cache_add" />
+                <setHeader name="X-MESCEDIA-ADD">
+                    <constant>1</constant>
+                </setHeader>
+                <setHeader name="Exchange.CONTENT_TYPE">
+                    <constant>application/xml</constant>
+                </setHeader>
+                <process ref="cacheManager" />
+                <removeHeaders pattern="X-MESCEDIA-*"/>
+        </route>
+
+        <route id="http_cache_list"  errorHandlerRef="deadLetterErrorHandler">
+            <from uri="rest_cache_list" />
+                <setHeader name="X-MESCEDIA-LIST">
+                    <constant>1</constant>
+                </setHeader>
+                <setHeader name="Exchange.CONTENT_TYPE">
+                    <constant>application/xml</constant>
+                </setHeader>
+                <process ref="cacheManager" />
+                <removeHeaders pattern="X-MESCEDIA-*"/>
+        </route>
+
+        <route id="http_cache_clear"  errorHandlerRef="deadLetterErrorHandler">
+            <from uri="rest_cache_clear" />
+                <setHeader name="X-MESCEDIA-CLEAR">
+                    <constant>1</constant>
+                </setHeader>
+                <setHeader name="Exchange.CONTENT_TYPE">
+                    <constant>application/xml</constant>
+                </setHeader>
+                <process ref="cacheManager" />
+                <removeHeaders pattern="X-MESCEDIA-*"/>
+        </route>
+
+    </routeContext>
+
+</beans>

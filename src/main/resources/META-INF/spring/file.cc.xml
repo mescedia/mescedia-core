@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
+
+
+    <routeContext xmlns="http://camel.apache.org/schema/spring" id="file">
+
+        <route id="edifact2xml" errorHandlerRef="deadLetterErrorHandler" autoStartup="true">
+            <from uri="file:{{fs.root}}/edifact2xml.in/" />
+            <process ref="edifact2xml" />
+            <to uri="file:{{fs.root}}/edifact2xml.out/" />
+        </route>
+
+        <route id="xml2edifact" errorHandlerRef="deadLetterErrorHandler" autoStartup="true">
+          <from uri="file:{{fs.root}}/xml2edifact.in/" />
+          <process ref="xml2edifact" />
+          <to uri="file:{{fs.root}}/xml2edifact.out/" />
+        </route>
+
+
+    </routeContext>
+
+</beans>

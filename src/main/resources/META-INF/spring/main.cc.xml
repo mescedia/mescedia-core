@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
+
+    <!-- -->
+    <bean id="deadLetterErrorHandler" class="org.apache.camel.builder.DeadLetterChannelBuilder">
+        <property name="deadLetterUri"
+                  value="file:///{{fs.root}}/error.raw.in/?fileName=${date:now:yyyyMMddHHmmssSSS}-${file:name}" />
+    </bean>
+
+    <bean id="properties" class="org.apache.camel.component.properties.PropertiesComponent">
+        <property name="location" value="classpath:application.properties"/>
+    </bean>
+
+    <!-- bean instances  -->
+    <bean id="edifact2xml" class="org.mescedia.processors.Edifact2Xml"/>
+    <bean id="xml2edifact" class="org.mescedia.processors.Xml2Edifact"/>
+    <bean id="cacheManager" class="org.mescedia.processors.CacheManager"/>
+    <bean id="xmlformatter" class="org.mescedia.processors.XmlFormatter"/>
+
+    <camelContext  id="main" allowUseOriginalMessage="false" useMDCLogging="false" messageHistory="true" streamCache="true"
+                   xmlns="http://camel.apache.org/schema/spring">
+
+        <routeContextRef ref="error"/>
+        <routeContextRef ref="rest"/>
+        <routeContextRef ref="file"/>
+
+        <endpoint id="rest_edifact2xml" uri="netty-http:http://{{rest.listen.ip}}:{{rest.listen.port}}/edifact2xml?httpMethodRestrict=POST&amp;encoding=UTF-8&amp;receiveBufferSizePredictor=10485760&amp;chunkedMaxContentLength=10485760&amp;connectTimeout=60000&amp;compressed=true" />
+        <endpoint id="rest_xml2edifact" uri="netty-http:http://{{rest.listen.ip}}:{{rest.listen.port}}/xml2edifact?httpMethodRestrict=POST&amp;encoding=UTF-8&amp;receiveBufferSizePredictor=10485760&amp;chunkedMaxContentLength=10485760&amp;connectTimeout=60000&amp;compressed=true" />
+        <endpoint id="rest_cache_add" uri="netty-http:http://{{rest.listen.ip}}:{{rest.listen.port}}/cache/add?httpMethodRestrict=POST&amp;encoding=UTF-8&amp;receiveBufferSizePredictor=10485760&amp;chunkedMaxContentLength=10485760&amp;connectTimeout=60000&amp;compressed=true" />
+        <endpoint id="rest_cache_list" uri="netty-http:http://{{rest.listen.ip}}:{{rest.listen.port}}/cache/list?httpMethodRestrict=POST&amp;encoding=UTF-8&amp;receiveBufferSizePredictor=10485760&amp;chunkedMaxContentLength=10485760&amp;connectTimeout=60000&amp;compressed=true" />
+        <endpoint id="rest_cache_clear" uri="netty-http:http://{{rest.listen.ip}}:{{rest.listen.port}}/cache/clear?httpMethodRestrict=POST&amp;encoding=UTF-8&amp;receiveBufferSizePredictor=10485760&amp;chunkedMaxContentLength=10485760&amp;connectTimeout=60000&amp;compressed=true" />
+
+        <onException useOriginalMessage="false" >
+            <exception>java.io.IOException</exception>
+            <exception>java.lang.Exception</exception>
+            <exception>javax.xml.xpath.XPathExpressionException</exception>
+            <exception>org.xml.sax.SAXParseException</exception>
+            <exception>org.smooks.api.SmooksException</exception>
+
+            <redeliveryPolicy maximumRedeliveries="0" />
+
+            <handled>
+                <constant>true</constant>
+            </handled>
+
+            <marshal>
+                <base64/>
+            </marshal>
+
+            <setBody>
+                <simple trim="true">
+                    &lt;?xml version="1.0" encoding="UTF-8"?&gt;
+                    &lt;errorReport&gt;
+                        &lt;transaction-id&gt;${headers.Transaction-Id}&lt;/transaction-id&gt;
+                        &lt;reporting-instance&gt;${headers.X-MESCEDIA-MESSAGE-IN-REPORTING-INSTANCE}&lt;/reporting-instance&gt;
+                        &lt;analyser&gt;${headers.X-MESCEDIA-MESSAGE-IN-ANALYSER}&lt;/analyser&gt;
+                        &lt;duration-ms&gt;${headers.X-MESCEDIA-MESSAGE-PROCESSING-DURATION}&lt;/duration-ms&gt;
+                        &lt;data&gt;
+                            &lt;format&gt;${headers.X-MESCEDIA-MESSAGE-IN-FORMAT}&lt;/format&gt;
+                            &lt;version&gt;${headers.X-MESCEDIA-MESSAGE-IN-VERSION}&lt;/version&gt;
+                            &lt;type&gt;${headers.X-MESCEDIA-MESSAGE-IN-TYPE}&lt;/type&gt;
+                            &lt;sender&gt;${headers.X-MESCEDIA-MESSAGE-IN-SENDER}&lt;/sender&gt;
+                            &lt;receiver&gt;${headers.X-MESCEDIA-MESSAGE-IN-RECEIVER}&lt;/receiver&gt;
+                            &lt;originalMessage encoding="base64"&gt;&lt;![CDATA[${body}]]&gt;&lt;/originalMessage&gt;
+                        &lt;/data&gt;
+                        &lt;exception&gt;
+                            &lt;message&gt;${exception.message}&lt;/message&gt;
+                            &lt;stackTrace&gt;
+                                ${exception.stacktrace}
+                            &lt;/stackTrace&gt;
+                        &lt;/exception&gt;
+                    &lt;/errorReport&gt;
+                </simple>
+            </setBody>
+
+            <!-- <setHeader name="CamelHttpResponseCode"><constant>400</constant></setHeader> -->
+            <setHeader name="Exchange.HTTP_RESPONSE_CODE">
+                <constant>400</constant>
+            </setHeader>
+            <setHeader name="Exchange.CONTENT_TYPE">
+                <constant>application/xml</constant>
+            </setHeader>
+
+            <setHeader name="X-MESCEDIA-XML-FORMATTER-TYPE">
+                <constant>XSLT</constant>
+            </setHeader>
+            <process ref="xmlformatter" />
+
+            <to uri="file:{{fs.root}}/error.reports?fileName=${date:now:yyyyMMddHHmmssSSS}-${headers.Transaction-Id}.xml" />
+
+            <log loggingLevel="ERROR" message="${file:name} ${exception.message}" />
+            <log loggingLevel="ERROR" message="${file:name} ${exception.stacktrace}" />
+
+            <removeHeaders pattern="X-MESCEDIA-*"/>
+        </onException>
+
+  </camelContext>
+
+</beans>

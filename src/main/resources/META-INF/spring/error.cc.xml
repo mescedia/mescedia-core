@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
+
+    <routeContext xmlns="http://camel.apache.org/schema/spring" id="error">
+
+        <!-- todo: error handler implementation -->
+        <route id="errorHandler" autoStartup="false">
+            <from uri="file:{{fs.root}}/error.reports" />
+            <log loggingLevel="INFO" message="... and here comes an error.handler {todo} -> ${file:name} ..." />
+            <!-- <to uri="file:{{fs.root}}/error.report.handled" /> -->
+        </route>
+
+    </routeContext>
+
+</beans>
