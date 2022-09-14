@@ -35,6 +35,16 @@ CREATE TABLE `contentAnalyserRule` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `contentAnalyserRule`
+--
+
+LOCK TABLES `contentAnalyserRule` WRITE;
+/*!40000 ALTER TABLE `contentAnalyserRule` DISABLE KEYS */;
+INSERT INTO `contentAnalyserRule` VALUES (1,1,'senderId','regex','UNB\\+.+?\\+(.*?)[\\:|\\+]',1),(2,1,'receiverId','regex','UNB\\+.+?[\\+].+?[\\+](.*?)[\\:|\\+]',1),(3,1,'messageType','regex','UNH.+?\\+(.+?)\\:',1),(4,1,'messageVersion','regex','UNH.+?\\+[A-Z]{6}\\:([D])\\:([0-9]{2}[A|B|C]{1})\\:',1),(5,2,'senderId','regex','<E0004>(.+?)</E0004>',1),(6,2,'receiverId','regex','<E0010>(.+?)</E0010>',1),(7,2,'messageType','regex','<UNH>.+?<E0065>(.+?)</E0065>',1),(8,2,'messageVersion','regex','<UNH>.+?<E0052>(.+?)</E0052>.*?<E0054>(.+?)</E0054>',1),(9,3,'senderId','regex','<SNDPRN>(.+?)</SNDPRN>',1),(10,3,'receiverId','regex','<RCVPRN>(.+?)</RCVPRN>',1),(11,3,'messageType','regex','<MESTYP>(.+?)</MESTYP>',1),(12,3,'messageVersion','regex','<IDOCTYP>(.+?)</IDOCTYP>',1);
+/*!40000 ALTER TABLE `contentAnalyserRule` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `formatAnalyserRule`
 --
 
@@ -51,6 +61,16 @@ CREATE TABLE `formatAnalyserRule` (
   KEY `formatId` (`formatId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `formatAnalyserRule`
+--
+
+LOCK TABLES `formatAnalyserRule` WRITE;
+/*!40000 ALTER TABLE `formatAnalyserRule` DISABLE KEYS */;
+INSERT INTO `formatAnalyserRule` VALUES (1,1,'indexof','UNB+',1),(2,1,'indexof','UNH+',1),(3,1,'indexof','BGM+',1),(4,2,'indexof','<UNB>',1),(5,2,'indexof','<UNH>',1),(6,2,'indexof','<BGM>',1),(7,3,'indexof','<IDOC BEGIN=',1),(8,3,'indexof','<EDI_DC40',1);
+/*!40000 ALTER TABLE `formatAnalyserRule` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `messageFormat`
@@ -71,6 +91,16 @@ CREATE TABLE `messageFormat` (
   KEY `formatName_2` (`formatName`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `messageFormat`
+--
+
+LOCK TABLES `messageFormat` WRITE;
+/*!40000 ALTER TABLE `messageFormat` DISABLE KEYS */;
+INSERT INTO `messageFormat` VALUES (1,'Edifact',0,400,NULL,1),(2,'DfdlXmlEdifact',0,NULL,'</BGM>',1),(3,'SapIdocXml',0,NULL,'</EDI_DC40',1);
+/*!40000 ALTER TABLE `messageFormat` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -81,4 +111,4 @@ CREATE TABLE `messageFormat` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-09-14  9:33:16
+-- Dump completed on 2022-09-14 10:04:18
