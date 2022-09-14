@@ -16,7 +16,7 @@ The aim of this project is to offer a 'free' and 'ready to use' EDI-System that 
 
 ... in contrary to conventional EDI systems witch usually are Closed-Source, Non-Standard and usually very expensive.
 
-This project targets a wide range of interest from small business to large enterprises and service providers with high message load.
+Due to its high performance this project targets a wide range of interest from small business to large enterprises and service providers with high message load.
 
 
 ### features & roadmap
