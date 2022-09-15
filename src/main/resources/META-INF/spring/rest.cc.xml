@@ -19,7 +19,7 @@
                 <setHeader name="Exchange.CONTENT_TYPE">
                     <constant>application/xml</constant>
                 </setHeader>
-                <bean ref="edifact2xml" />
+                <process ref="edifact2xml" />
                 <removeHeaders pattern="X-MESCEDIA-*"/>
         </route>
 
@@ -31,7 +31,7 @@
                 <setHeader name="Exchange.CONTENT_TYPE">
                     <constant>application/edifact</constant>
                 </setHeader>
-                <bean ref="xml2edifact" />
+                <process ref="xml2edifact" />
                 <removeHeaders pattern="X-MESCEDIA-*"/>
         </route>
 

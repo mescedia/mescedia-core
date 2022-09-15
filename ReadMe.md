@@ -16,9 +16,6 @@ The aim of this project is to offer a 'free' and 'ready to use' EDI-System that 
 
 ... in contrary to conventional EDI systems witch traditionally are Closed-Source, Non-Standard and usually very expensive.
 
-Due to its high performance this project targets a wide range of interest from small business to large enterprises and service providers with high message load.
-
-
 ### features & roadmap
 
 - **_Edifact-To-Xml_** and **_Xml-To-Edifact_** (vice versa) message transformation, versions **_(D93A-D19B)_**
