@@ -21,6 +21,12 @@
             <to uri="mock:xsltExtensionFunctionTestOut" />
         </route>
 
+        <route id="xquerySimpleTransformerTest"  autoStartup="true" >
+            <from uri="direct:xquerySimpleTransformerTestIn" />
+            <to uri="xquery:file:data/mapping/d96a-header.simple.xquery" />
+            <to uri="mock:xquerySimpleTransformerTestOut" />
+        </route>
+
     </camelContext>
 
 </beans>
