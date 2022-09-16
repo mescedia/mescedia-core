@@ -11,28 +11,19 @@
 
     <xsl:template match="/">
         <root>
-
             <xsl:variable name="messageFormat" select="java:translate('messageFormat','id', '2', 'formatName')" />
-
             <messageFormat value="{$messageFormat}" />
-
             <xsl:variable name="vQ">"</xsl:variable>
-
-
             <xsl:value-of select="java:log('INFO', $messageFormat )" />
 
             <xsl:comment>=======================</xsl:comment>
             <xsl:comment>input analyser result file</xsl:comment>
-
             <xsl:comment>
                 <xsl:value-of select="java:log('DEBUG','this is a debug message')" />
                 <xsl:value-of select="java:log('INFO','this is an info message')" />
                 <xsl:value-of select="java:log('WARN','this is a warning message')" />
                 <xsl:value-of select="java:log('ERROR','this is an error message')" />
             </xsl:comment>
-
-
-
 
             <xsl:comment>=======================</xsl:comment>
             <interface type="inbound" user="test">AS2-TEST</interface>
