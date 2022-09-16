@@ -17,6 +17,9 @@
     </bean>
 
     <!-- bean instances  -->
+    <bean id="translate" class="org.mescedia.xsltExtensions.dbTranslate"/>
+    <bean id="log" class="org.mescedia.xsltExtensions.logger"/>
+
     <bean id="edifact2xml" class="org.mescedia.processors.Edifact2Xml"/>
     <bean id="xml2edifact" class="org.mescedia.processors.Xml2Edifact"/>
     <bean id="cacheManager" class="org.mescedia.processors.CacheManager"/>

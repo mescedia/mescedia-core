@@ -1,0 +1,26 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
+
+    <bean id="translate" class="org.mescedia.xsltExtensions.dbTranslate"/>
+    <bean id="log" class="org.mescedia.xsltExtensions.logger"/>
+
+    <camelContext  id="tests" xmlns="http://camel.apache.org/schema/spring">
+
+        <route id="xsltSimpleTransformerTest"  autoStartup="true" >
+            <from uri="direct:xsltSimpleTransformerTestIn" />
+            <to uri="xslt:file:data/mapping/d96a-header.simple.xslt" />
+            <to uri="mock:xsltSimpleTransformerTestOut" />
+        </route>
+
+        <route id="xsltExtensionFunctionsTest"  autoStartup="true">
+            <from uri="direct:xsltExtensionFunctionTestIn" />
+            <to uri="xslt-saxon:file:data/mapping/d96a-header.extensionFunctions.xslt?saxonExtensionFunctions=#translate,#log" />
+            <to uri="mock:xsltExtensionFunctionTestOut" />
+        </route>
+
+    </camelContext>
+
+</beans>

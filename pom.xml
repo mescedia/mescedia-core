@@ -15,6 +15,7 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <log4j2-version>2.18.0</log4j2-version>
     <camel.version>3.14.4</camel.version>
+    <!-- <camel.version>3.18.2</camel.version> -->
   </properties>
 
   <dependencyManagement>
@@ -85,6 +86,16 @@
       <artifactId>camel-test-spring-junit5</artifactId>
       <version>${camel.version}</version>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.camel</groupId>
+      <artifactId>camel-xslt-saxon</artifactId>
+      <version>${camel.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.camel</groupId>
+      <artifactId>camel-componentdsl</artifactId>
+      <version>${camel.version}</version>
     </dependency>
     <dependency>
       <groupId>org.smooks</groupId>

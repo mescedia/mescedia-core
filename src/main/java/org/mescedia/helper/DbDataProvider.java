@@ -54,6 +54,12 @@ public class DbDataProvider  {
         }
     }
 
+    public Connection getConnection() throws SQLException {
+
+        this.checkDbConnection();
+        return this.connection;
+    }
+
     public static DbDataProvider getInstance() throws IOException, SQLException {
 
         if (instance == null)   {
