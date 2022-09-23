@@ -87,7 +87,6 @@ public class camelJavaDslTests extends  CamelTestSupport  {
                 context.setPropertiesComponent(pc);
 
                 context.getRegistry().bind("log", org.mescedia.xsltExtensions.logger.class);
-                context.getRegistry().bind("translate", org.mescedia.xsltExtensions.dbTranslate.class);
 
                 context.getRegistry().bind("edifact2xml", org.mescedia.processors.Edifact2Xml.class);
                 context.getRegistry().bind("xml2edifact", org.mescedia.processors.Xml2Edifact.class);

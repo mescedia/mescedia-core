@@ -11,10 +11,6 @@
 
     <xsl:template match="/">
         <root>
-            <xsl:variable name="messageFormat" select="java:translate('messageFormat','id', '2', 'formatName')" />
-
-            <messageFormat value="{$messageFormat}" />
-            <xsl:value-of select="java:log('INFO', $messageFormat )" />
 
             <xsl:value-of select="java:log('DEBUG','this is a debug message')" />
             <xsl:value-of select="java:log('INFO','this is an info message')" />
@@ -26,25 +22,10 @@
 
             <message type="{$msgType}" version="{$msgVersion}" content-type="application/edifact" />
 
-            <recordList>
-                <xsl:for-each select="java:listDemo('dbUrl','dbUser','dbPass')">
-                        <xsl:call-template name="displayRecord">
-                            <xsl:with-param name="line" select="."/>
-                        </xsl:call-template>
-                </xsl:for-each>
-            </recordList>
-
-
             <dbList>
-                <xsl:variable name="sql">select id, formatName, extractStartIndex, extractEndIndex, extractEndIndexString from messageFormat;</xsl:variable>
-                <xsl:variable name="columnSeparator">&#059;</xsl:variable>
-                <xsl:variable name="nameValueSeparator">&#058;</xsl:variable>
-                <xsl:value-of select="java:log('INFO',$sql)" />
-                <xsl:for-each select="java:dbQuery($sql, ';', ':')">
+                <xsl:for-each select="java:dbQuery('dbDemoERP', 'select * from articles;', ';', ':')">
                     <xsl:call-template name="displayDbRecord">
                         <xsl:with-param name="line" select="."/>
-                        <xsl:with-param name="columnSeparator" select="$columnSeparator"/>
-                        <xsl:with-param name="nameValueSeparator" select="$nameValueSeparator"/>
                     </xsl:call-template>
                 </xsl:for-each>
             </dbList>
@@ -52,19 +33,10 @@
         </root>
     </xsl:template>
 
-    <xsl:template name="displayRecord" >
-        <xsl:param name="line"/>
-        <record>
-            <id><xsl:value-of select="tokenize($line,';')[1]" /></id>
-            <name><xsl:value-of select="tokenize($line,';')[2]" /></name>
-            <key><xsl:value-of select="tokenize($line,';')[3]" /></key>
-        </record>
-    </xsl:template>
-
     <xsl:template name="displayDbRecord" >
         <xsl:param name="line"/>
-        <xsl:param name="columnSeparator"/>
-        <xsl:param name="nameValueSeparator"/>
+        <xsl:variable name="columnSeparator">&#059;</xsl:variable> <!-- must match specialChar in dbQuery() arg -->
+        <xsl:variable name="nameValueSeparator">&#058;</xsl:variable> <!-- must match specialChar in dbQuery() arg -->
         <record>
             <xsl:for-each select="tokenize($line,$columnSeparator)">
                 <xsl:variable name="nameValue" select="." />

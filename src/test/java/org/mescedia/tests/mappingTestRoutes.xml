@@ -4,9 +4,8 @@
        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
 
-    <bean id="translate" class="org.mescedia.xsltExtensions.dbTranslate"/>
+
     <bean id="log" class="org.mescedia.xsltExtensions.logger"/>
-    <bean id="listDemo" class="org.mescedia.xsltExtensions.listDemo"/>
     <bean id="dbQuery" class="org.mescedia.xsltExtensions.dbQuery"/>
 
     <camelContext  id="tests" xmlns="http://camel.apache.org/schema/spring">
@@ -19,14 +18,14 @@
 
         <route id="xsltExtensionFunctionsTest"  autoStartup="true">
             <from uri="direct:xsltExtensionFunctionTestIn" />
-            <to uri="xslt-saxon:file:data/mapping/d96a-header.extensionFunctions.xslt?saxonExtensionFunctions=#translate,#log" />
+            <to uri="xslt-saxon:file:data/mapping/d96a-header.logger.extensionFunc.xslt?saxonExtensionFunctions=#log" />
             <to uri="mock:xsltExtensionFunctionTestOut" />
         </route>
 
 
         <route id="xsltExtensionFunctionsListTest"  autoStartup="true">
             <from uri="direct:xsltExtensionFunctionListTestIn" />
-            <to uri="xslt-saxon:file:data/mapping/xsltExtensionFunctionsList.xslt?saxonExtensionFunctions=#translate,#log,#listDemo,#dbQuery" />
+            <to uri="xslt-saxon:file:data/mapping/d96a-header.dbquery.logger.extensionFunc.xslt?saxonExtensionFunctions=#log,#dbQuery" />
             <log loggingLevel="INFO" message="${body}" />
             <to uri="mock:xsltExtensionFunctionListTestOut" />
         </route>

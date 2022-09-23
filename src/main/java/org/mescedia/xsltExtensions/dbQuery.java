@@ -13,10 +13,7 @@ import org.mescedia.helper.DbDataProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.io.IOException;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +32,7 @@ public class dbQuery extends ExtensionFunctionDefinition {
     public SequenceType[] getArgumentTypes() {
 
         return new SequenceType[]{
+                SequenceType.SINGLE_STRING,  // connectionName
                 SequenceType.SINGLE_STRING,  // sql
                 SequenceType.SINGLE_STRING,  // columnSeparator
                 SequenceType.SINGLE_STRING   // nameValueSaparator
@@ -55,9 +53,10 @@ public class dbQuery extends ExtensionFunctionDefinition {
             @Override
             public Sequence<?> call(XPathContext context, Sequence[] arguments) throws XPathException {
 
-                String sql = arguments[0].toString().trim().replace("\"", "");
-                String fieldSeparator = arguments[1].toString().trim().replace("\"", "");
-                String nameValueSeparator = arguments[2].toString().trim().replace("\"", "");
+                String connectionName = arguments[0].toString().trim().replace("\"", "");
+                String sql = arguments[1].toString().trim().replace("\"", "");
+                String fieldSeparator = arguments[2].toString().trim().replace("\"", "");
+                String nameValueSeparator = arguments[3].toString().trim().replace("\"", "");
 
                 Statement stm = null;
                 String val = null;
@@ -66,12 +65,10 @@ public class dbQuery extends ExtensionFunctionDefinition {
                 List<StringValue> list = new ArrayList<StringValue>();
 
                 try {
-
-                    DbDataProvider dataProvider = DbDataProvider.getInstance();
-
+                    Connection connection = DbDataProvider.createConnection(connectionName);
                     log.debug("execute dbQuery: " + sql);
 
-                    stm = dataProvider.getConnection().createStatement();
+                    stm = connection.createStatement();
                     rs = stm.executeQuery(sql);
                     ResultSetMetaData md = rs.getMetaData();
 

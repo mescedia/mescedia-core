@@ -68,6 +68,43 @@ public class DbDataProvider  {
         return instance ;
     }
 
+    // todo: test if connectionCache required ...
+    public static Connection createConnection(String connName) throws SQLException, IOException {
+
+        DbConnectionData dbConnData = DbDataProvider.getInstance().getDbConnectionData(connName);
+
+        BasicDataSource dSource = new BasicDataSource();
+        dSource.setUrl(dbConnData.getUri());
+        dSource.setUsername(dbConnData.getUser());
+        dSource.setPassword(dbConnData.getPassword());
+
+        return dSource.getConnection() ;
+    }
+
+    public DbConnectionData getDbConnectionData(String connName) throws SQLException {
+
+        this.checkDbConnection();
+
+        String query = "SELECT name, url, user, passwd from dbConnections where name = '"+connName+"';";
+
+        log.debug(query);
+
+        this.sql = this.connection.createStatement();
+        this.resultSet = this.sql.executeQuery(query);
+
+        DbConnectionData dbConn = null;
+        if (resultSet.next())   {
+
+            dbConn = new DbConnectionData();
+            dbConn.setName( resultSet.getString("name")  );
+            dbConn.setUri( resultSet.getString("url")  );
+            dbConn.setUser( resultSet.getString("user")  );
+            dbConn.setPassword( resultSet.getString("passwd")  );
+
+        }
+        return dbConn;
+    }
+
     public List<MessageFormat> getMessageFormatTable() {
 
         return this.messageFormatList;
