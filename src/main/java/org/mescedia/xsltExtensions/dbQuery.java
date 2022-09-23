@@ -9,6 +9,8 @@ import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.value.SequenceExtent;
 import net.sf.saxon.value.SequenceType;
 import net.sf.saxon.value.StringValue;
+import org.apache.commons.dbcp2.BasicDataSource;
+import org.mescedia.helper.DbConnectionData;
 import org.mescedia.helper.DbDataProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,10 +67,18 @@ public class dbQuery extends ExtensionFunctionDefinition {
                 List<StringValue> list = new ArrayList<StringValue>();
 
                 try {
-                    Connection connection = DbDataProvider.createConnection(connectionName);
+
+                    // todo: check if caching required ...
+                    DbConnectionData dbConnData = DbDataProvider.getInstance().getDbConnectionData(connectionName);
+
+                    BasicDataSource dSource = new BasicDataSource();
+                    dSource.setUrl(dbConnData.getUri());
+                    dSource.setUsername(dbConnData.getUser());
+                    dSource.setPassword(dbConnData.getPassword());
+
                     log.debug("execute dbQuery: " + sql);
 
-                    stm = connection.createStatement();
+                    stm = dSource.getConnection().createStatement();
                     rs = stm.executeQuery(sql);
                     ResultSetMetaData md = rs.getMetaData();
 

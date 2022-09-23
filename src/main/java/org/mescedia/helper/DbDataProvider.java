@@ -68,19 +68,6 @@ public class DbDataProvider  {
         return instance ;
     }
 
-    // todo: test if connectionCache required ...
-    public static Connection createConnection(String connName) throws SQLException, IOException {
-
-        DbConnectionData dbConnData = DbDataProvider.getInstance().getDbConnectionData(connName);
-
-        BasicDataSource dSource = new BasicDataSource();
-        dSource.setUrl(dbConnData.getUri());
-        dSource.setUsername(dbConnData.getUser());
-        dSource.setPassword(dbConnData.getPassword());
-
-        return dSource.getConnection() ;
-    }
-
     public DbConnectionData getDbConnectionData(String connName) throws SQLException {
 
         this.checkDbConnection();
