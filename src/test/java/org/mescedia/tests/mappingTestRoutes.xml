@@ -6,6 +6,8 @@
 
     <bean id="translate" class="org.mescedia.xsltExtensions.dbTranslate"/>
     <bean id="log" class="org.mescedia.xsltExtensions.logger"/>
+    <bean id="listDemo" class="org.mescedia.xsltExtensions.listDemo"/>
+    <bean id="dbQuery" class="org.mescedia.xsltExtensions.dbQuery"/>
 
     <camelContext  id="tests" xmlns="http://camel.apache.org/schema/spring">
 
@@ -20,6 +22,15 @@
             <to uri="xslt-saxon:file:data/mapping/d96a-header.extensionFunctions.xslt?saxonExtensionFunctions=#translate,#log" />
             <to uri="mock:xsltExtensionFunctionTestOut" />
         </route>
+
+
+        <route id="xsltExtensionFunctionsListTest"  autoStartup="true">
+            <from uri="direct:xsltExtensionFunctionListTestIn" />
+            <to uri="xslt-saxon:file:data/mapping/xsltExtensionFunctionsList.xslt?saxonExtensionFunctions=#translate,#log,#listDemo,#dbQuery" />
+            <log loggingLevel="INFO" message="${body}" />
+            <to uri="mock:xsltExtensionFunctionListTestOut" />
+        </route>
+
 
         <route id="xquerySimpleTransformerTest"  autoStartup="true" >
             <from uri="direct:xquerySimpleTransformerTestIn" />
