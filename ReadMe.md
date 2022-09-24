@@ -18,23 +18,24 @@ The aim of this project is to offer a 'free' and 'ready to use' EDI-System that 
 
 ### features & roadmap
 
-- **_Edifact-To-Xml_** and **_Xml-To-Edifact_** (vice versa) message transformation, versions **_(D93A-D19B)_**
-- customized CSV, XML, fixed-length and other common message formats used in EDI are available through various frameworks
-- {todo} content based dynamic message routing/processing
-- {todo} customisable message validation
-- {todo} extensible XML based data-transformation using Open-Standards (XSLT, XQuery, Java, ...) 
-- {todo} secure communication protocol integration: OpenAS2 (AS2), OpenSSH (SFTP), vsftpd (FTPS), nginx (HTTPS, WebDav), ... 
-- {todo} REST interface for managing affected services
-- {todo} WebGUI for configuration, development, monitoring,  etc.
-- {todo} automated installation scrips (ansible) and prebuild docker images
-- {todo} documentation, howtos & examples
+- [x] **_Edifact-To-Xml_** and **_Xml-To-Edifact_** (vice versa) message transformation, versions **_D.93A - D.19B, all message types_**
+- [x] customized CSV, XML, fixed-length and other common message formats used in EDI are available through various frameworks
+- [ ] content based dynamic message routing/processing
+- [ ] customisable message validation
+- [x] extensible XML based data-transformation using Open-Standards (XSLT, XQuery, Java, ...)
+- [x] MariaDB/MySQL, PostgreSQL & SQLite support for system-database and external RDBMS
+- [ ] secure communication protocol integration: OpenAS2 (AS2), OpenSSH (SFTP), vsftpd (FTPS), nginx (HTTPS, WebDav), ... 
+- [ ] REST interface for managing affected services
+- [ ] WebGUI for configuration, development, monitoring,  etc.
+- [ ] automated installation scrips (ansible) and docker images
+- [ ] documentation, howtos & various examples
     
 
 ### setup
 
 ###### database
 
-mescedia requires a running rdbms instance (in this case mariadb/mysql, other rdbms are also possible)
+mescedia requires a running rdbms instance (MariaDB/MySQL, PostgreSQL or SQLite = default )
 
 {todo}
 
