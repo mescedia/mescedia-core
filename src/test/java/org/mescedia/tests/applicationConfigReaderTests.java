@@ -45,9 +45,9 @@ public class applicationConfigReaderTests {
 
          ApplicationProperties appp = ApplicationProperties.getInstance();
 
-         assertEquals(appp.getDbUrl(), "jdbc:mysql://localhost:3306/mescedia2");
-         assertEquals(appp.getDbUsername(), "mescedia");
-         assertEquals(appp.getDbPassword(), "mescedia");
+         assertEquals(appp.getDbUrl(), "jdbc:sqlite:data/database/sqlite/mescedia2.db");
+         assertEquals(appp.getDbUsername(), "dummy");
+         assertEquals(appp.getDbPassword(), "dummy");
 
      }
 }

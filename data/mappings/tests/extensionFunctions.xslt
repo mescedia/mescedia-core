@@ -26,8 +26,12 @@
                 <!-- mariabd/mysql
                 <xsl:for-each select="java:dbQuery('dbMariaDbDemoERP', 'select * from articles order by id;', ';', ':')">
                 -->
-                <!-- postgresql -->
+                <!-- postgresql
                 <xsl:for-each select="java:dbQuery('dbPostgresDemoERP', 'select * from articles order by id;', ';', ':')">
+                -->
+                <!-- sqlite -->
+                <xsl:for-each select="java:dbQuery('dbSqliteDemoERP', 'select * from articles order by id;', ';', ':')">
+
 
                     <xsl:call-template name="displayDbRecord">
                         <xsl:with-param name="line" select="."/>
