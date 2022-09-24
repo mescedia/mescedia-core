@@ -1,5 +1,9 @@
-## mescedia :: Open Source EDI
 
+<p align="center">
+<img src="https://www.mescedia.org/img/mescedia-logo.png" alt="mescedia::Open Source EDI" />
+</p>
+
+## mescedia :: Open Source EDI
 
 ### about
 
@@ -22,7 +26,7 @@ The aim of this project is to offer a 'free' and 'ready to use' EDI-System that 
 - [x] customized CSV, XML, fixed-length and other common message formats used in EDI are available through various frameworks
 - [ ] content based dynamic message routing/processing
 - [ ] customisable message validation
-- [x] extensible XML based data-transformation using Open-Standards (XSLT, XQuery, Java, ...)
+- [x] extensible XML based data-transformation using Open-Standards (XSLT, XQuery, Java, ...) 
 - [x] MariaDB/MySQL, PostgreSQL & SQLite support for system-database and external RDBMS
 - [ ] secure communication protocol integration: OpenAS2 (AS2), OpenSSH (SFTP), vsftpd (FTPS), nginx (HTTPS, WebDav), ... 
 - [ ] REST interface for managing affected services
