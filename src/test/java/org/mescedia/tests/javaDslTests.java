@@ -13,7 +13,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
-public class camelJavaDslTests extends  CamelTestSupport  {
+public class javaDslTests extends  CamelTestSupport  {
 
     private static final String dfdlXmlEdifact = "<D03B:Interchange xmlns:D03B=\"http://www.ibm.com/dfdl/edi/un/edifact/D03B\" xmlns:srv=\"http://www.ibm.com/dfdl/edi/un/service/4.1\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"><UNB><S001><E0001>UNOA</E0001><E0002>4</E0002></S001><S002><E0004>MESCEDIA-INITIALIZER</E0004><E0007>1</E0007></S002><S003><E0010>MESCEDIA-INITIALIZER</E0010><E0007>1</E0007></S003><S004><E0017>20051107</E0017><E0019>1159</E0019></S004><E0020>6002123</E0020></UNB><D03B:Message><UNH><E0062>1222222</E0062><S009><E0065>ORDERS</E0065><E0052>D</E0052><E0054>03B</E0054><E0051>UN</E0051><E0057>EAN008</E0057></S009></UNH><D03B:ORDERS><BGM><C002><E1001>220</E1001></C002><C106><E1004>MESCEDIA-655</E1004></C106><E1225>9</E1225></BGM><DTM><C507><E2005>137</E2005><E2380>20051107</E2380><E2379>102</E2379></C507></DTM><SegGrp-2><NAD><E3035>BY</E3035><C082><E3039>5432101234567</E3039><E3055>9</E3055></C082></NAD></SegGrp-2><SegGrp-2><NAD><E3035>SU</E3035><C082><E3039>4321012345678</E3039><E3055>9</E3055></C082></NAD><SegGrp-5><CTA><E3139>AA</E3139></CTA><COM><C076><E3148>s11</E3148><E3155>AA</E3155></C076><C076><E3148>s21</E3148><E3155>AA</E3155></C076><C076><E3148>s31</E3148><E3155>AA</E3155></C076></COM></SegGrp-5></SegGrp-2><SegGrp-28><LIN><E1082>1</E1082><E1229>1</E1229><C212><E7140>0007456104</E7140><E7143>IB</E7143></C212></LIN><QTY><C186><E6063>1</E6063><E6060>25</E6060></C186></QTY><FTX><E4451>AFM</E4451><E4453>1</E4453><C107><E4441></E4441></C107><C108><E4440>Sort of Things</E4440></C108></FTX></SegGrp-28><SegGrp-28><LIN><E1082>2</E1082><E1229>1</E1229><C212><E7140>0074569099</E7140><E7143>IB</E7143></C212></LIN><QTY><C186><E6063>1</E6063><E6060>25</E6060></C186></QTY><FTX><E4451>AFM</E4451><E4453>1</E4453><C107><E4441></E4441></C107><C108><E4440>The Mobbit</E4440></C108></FTX></SegGrp-28><SegGrp-28><LIN><E1082>3</E1082><E1229>1</E1229><C212><E7140>007004656</E7140><E7143>IB</E7143></C212></LIN><QTY><C186><E6063>1</E6063><E6060>16</E6060></C186></QTY><FTX><E4451>AFM</E4451><E4453>1</E4453><C107><E4441></E4441></C107><C108><E4440>The Gilmarillion</E4440></C108></FTX></SegGrp-28><SegGrp-28><LIN><E1082>4</E1082><E1229>1</E1229><C212><E7140>00076006777</E7140><E7143>IB</E7143></C212></LIN><QTY><C186><E6063>1</E6063><E6060>10</E6060></C186></QTY><FTX><E4451>AFM</E4451><E4453>1</E4453><C107><E4441></E4441></C107><C108><E4440>The Sons of the Desert</E4440></C108></FTX></SegGrp-28><UNS><E0081>S</E0081></UNS><CNT><C270><E6069>2</E6069><E6066>4</E6066></C270></CNT></D03B:ORDERS><UNT><E0074>22</E0074><E0062>1222222</E0062></UNT></D03B:Message><UNZ><E0036>1</E0036><E0020>6002123</E0020></UNZ></D03B:Interchange>";
     private static final String edifactD96A ="UNA:+.? 'UNB+UNOC:3+MESCEDIA-INITIALIZER:14+MESCEDIA-INITIALIZER:14+181028:1714+9910577901341'UNH+1+DESADV:D:96A:UN:EAN006'BGM+351+INITIALIZER+9'UNT+51+1'UNZ+1+9910577901341'";
@@ -111,13 +111,13 @@ public class camelJavaDslTests extends  CamelTestSupport  {
                 from("direct:simpleXsltTransform")
                         .log("input message:")
                         .log("${body}")
-                        .to("xslt:file:data/mapping/d96a-header.simple.xslt")
+                        .to("xslt:file:data/mappings/tests/simple.xslt")
                         .log("output message:")
                         .log("${body}")
                         .to("mock:result");
 
                 from("direct:routingSlipTransform")
-                        .setHeader("processing-pipeline").simple("bean:edifact2xml?method=process;xslt-saxon:file:data/mapping/d96a-header.simple.xslt")
+                        .setHeader("processing-pipeline").simple("bean:edifact2xml?method=process;xslt-saxon:file:data/mappings/tests/simple.xslt")
                         .log("input message:")
                         .log("${body}")
                         .routingSlip(header("processing-pipeline")).uriDelimiter(";").ignoreInvalidEndpoints(false)

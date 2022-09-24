@@ -21,15 +21,13 @@
           <to uri="file:{{fs.root}}/xml2edifact.out/" />
         </route>
 
-
+        <!--
         <route id="xsltExtensionFunctionsTest" errorHandlerRef="deadLetterErrorHandler" autoStartup="true">
             <from uri="file:{{fs.root}}/xslt-test.in/" />
-            <to uri="xslt-saxon:file:data/mapping/d96a-header.extensionFunctions.xslt?saxonExtensionFunctions=#translate,#log" />
+            <to uri="xslt-saxon:file:data/mappings/tests/extensionFunctions.xslt?saxonExtensionFunctions=#translate,#log" />
             <to uri="file:{{fs.root}}/xslt-test.out/" />
         </route>
-
-
-
+        -->
 
     </routeContext>
 

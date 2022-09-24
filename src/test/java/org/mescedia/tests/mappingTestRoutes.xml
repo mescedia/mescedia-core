@@ -12,28 +12,20 @@
 
         <route id="xsltSimpleTransformerTest"  autoStartup="true" >
             <from uri="direct:xsltSimpleTransformerTestIn" />
-            <to uri="xslt:file:data/mapping/d96a-header.simple.xslt" />
+            <to uri="xslt:file:data/mappings/tests/simple.xslt" />
             <to uri="mock:xsltSimpleTransformerTestOut" />
         </route>
 
-        <route id="xsltExtensionFunctionsTest"  autoStartup="true">
-            <from uri="direct:xsltExtensionFunctionTestIn" />
-            <to uri="xslt-saxon:file:data/mapping/d96a-header.logger.extensionFunc.xslt?saxonExtensionFunctions=#log" />
-            <to uri="mock:xsltExtensionFunctionTestOut" />
-        </route>
-
-
         <route id="xsltExtensionFunctionsListTest"  autoStartup="true">
             <from uri="direct:xsltExtensionFunctionListTestIn" />
-            <to uri="xslt-saxon:file:data/mapping/d96a-header.dbquery.logger.extensionFunc.xslt?saxonExtensionFunctions=#log,#dbQuery" />
+            <to uri="xslt-saxon:file:data/mappings/tests/extensionFunctions.xslt?saxonExtensionFunctions=#log,#dbQuery" />
             <log loggingLevel="INFO" message="${body}" />
             <to uri="mock:xsltExtensionFunctionListTestOut" />
         </route>
 
-
         <route id="xquerySimpleTransformerTest"  autoStartup="true" >
             <from uri="direct:xquerySimpleTransformerTestIn" />
-            <to uri="xquery:file:data/mapping/d96a-header.simple.xquery" />
+            <to uri="xquery:file:data/mappings/tests/simple.xquery" />
             <to uri="mock:xquerySimpleTransformerTestOut" />
         </route>
 
