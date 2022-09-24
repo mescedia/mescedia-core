@@ -24,7 +24,7 @@ The aim of this project is to offer a 'free' and 'ready to use' EDI-System that 
 
 - [x] **_Edifact-To-Xml_** and **_Xml-To-Edifact_** (vice versa) message transformation, versions **_D.93A - D.19B, all message types_**
 - [x] customized CSV, XML, fixed-length and other common message formats used in EDI are available through various frameworks
-- [ ] content based dynamic message routing/processing
+- [ ] content based, dynamic message routing and processing 
 - [ ] customisable message validation
 - [x] extensible XML based data-transformation using Open-Standards (XSLT, XQuery, Java, ...) 
 - [x] MariaDB/MySQL, PostgreSQL & SQLite support for system-database and external RDBMS
@@ -33,6 +33,7 @@ The aim of this project is to offer a 'free' and 'ready to use' EDI-System that 
 - [ ] WebGUI for configuration, development, monitoring,  etc.
 - [ ] automated installation scrips (ansible) and docker images
 - [ ] documentation, howtos & various examples
+- [ ] commercial support
     
 
 ### setup
