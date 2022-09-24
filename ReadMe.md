@@ -22,7 +22,7 @@ The aim of this project is to offer a 'free' and 'ready to use' EDI-System that 
 
 ### features & roadmap
 
-- [x] **_Edifact-To-Xml_** and **_Xml-To-Edifact_** (vice versa) message transformation, versions **_D.93A - D.19B, all message types_**
+- [x] **_Edifact-To-Xml_** and **_Xml-To-Edifact_** (vice versa) message transformation, versions **_D.93A - D.19B, all messages_**
 - [x] customized CSV, XML, fixed-length and other common message formats used in EDI are available through various frameworks
 - [ ] content based, dynamic message routing and processing 
 - [ ] customisable message validation
