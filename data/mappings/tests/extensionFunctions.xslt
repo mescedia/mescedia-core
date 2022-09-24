@@ -23,7 +23,12 @@
             <message type="{$msgType}" version="{$msgVersion}" content-type="application/edifact" />
 
             <dbList>
-                <xsl:for-each select="java:dbQuery('dbDemoERP', 'select * from articles;', ';', ':')">
+                <!-- mariabd/mysql
+                <xsl:for-each select="java:dbQuery('dbMariaDbDemoERP', 'select * from articles order by id;', ';', ':')">
+                -->
+                <!-- postgresql -->
+                <xsl:for-each select="java:dbQuery('dbPostgresDemoERP', 'select * from articles order by id;', ';', ':')">
+
                     <xsl:call-template name="displayDbRecord">
                         <xsl:with-param name="line" select="."/>
                     </xsl:call-template>

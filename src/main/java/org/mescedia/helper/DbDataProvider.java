@@ -74,7 +74,7 @@ public class DbDataProvider  {
 
         String query = "SELECT name, url, username, passwd from dbConnections where name = '"+connName+"';";
 
-        log.debug(query);
+        log.info(query);
 
         this.sql = this.connection.createStatement();
         this.resultSet = this.sql.executeQuery(query);

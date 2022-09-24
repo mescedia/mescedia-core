@@ -67,7 +67,7 @@ CREATE TABLE `dbConnections` (
   `passwd` text NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `ukeyName` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -76,7 +76,7 @@ CREATE TABLE `dbConnections` (
 
 LOCK TABLES `dbConnections` WRITE;
 /*!40000 ALTER TABLE `dbConnections` DISABLE KEYS */;
-INSERT INTO `dbConnections` VALUES (1,'dbDemoERP','jdbc:mysql://localhost/demoerp','erp','erp');
+INSERT INTO `dbConnections` VALUES (1,'dbMariaDbDemoERP','jdbc:mysql://localhost:3306/demoerp','erp','erp'),(2,'dbPostgresDemoERP','jdbc:postgresql://localhost:5433/demoerp','mescedia','mescedia');
 /*!40000 ALTER TABLE `dbConnections` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -147,4 +147,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-09-24  9:46:12
+-- Dump completed on 2022-09-24 10:22:20

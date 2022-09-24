@@ -35,8 +35,8 @@ CREATE TABLE `articles` (
   `name` varchar(50) NOT NULL,
   `size` char(1) NOT NULL,
   `color` varchar(6) NOT NULL,
-  `measureUnit` varchar(50) NOT NULL,
-  `stockAvailable` int(5) DEFAULT 0,
+  `measureunit` varchar(50) DEFAULT NULL,
+  `stockavailable` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `ukeyName` (`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
@@ -61,4 +61,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-09-24  9:46:07
+-- Dump completed on 2022-09-24 10:22:22
