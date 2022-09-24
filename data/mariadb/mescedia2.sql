@@ -63,7 +63,7 @@ CREATE TABLE `dbConnections` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
   `url` text NOT NULL,
-  `user` text NOT NULL,
+  `username` varchar(100) DEFAULT NULL,
   `passwd` text NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `ukeyName` (`name`)
@@ -76,7 +76,7 @@ CREATE TABLE `dbConnections` (
 
 LOCK TABLES `dbConnections` WRITE;
 /*!40000 ALTER TABLE `dbConnections` DISABLE KEYS */;
-INSERT INTO `dbConnections` VALUES (1,'dbDemoERP','jdbc:mysql://localhost/demoERP','erp','erp');
+INSERT INTO `dbConnections` VALUES (1,'dbDemoERP','jdbc:mysql://localhost/demoerp','erp','erp');
 /*!40000 ALTER TABLE `dbConnections` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -147,4 +147,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-09-23 22:09:29
+-- Dump completed on 2022-09-24  9:46:12

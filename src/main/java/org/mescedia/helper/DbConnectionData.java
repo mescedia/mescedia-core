@@ -4,7 +4,7 @@ public class DbConnectionData {
 
     private String name;
     private String uri;
-    private String user;
+    private String username;
     private String password ;
 
     public void setName(String name) {
@@ -15,8 +15,8 @@ public class DbConnectionData {
         this.uri = uri;
     }
 
-    public void setUser(String user) {
-        this.user = user;
+    public void setUserName(String username) {
+        this.username = username;
     }
 
     public void setPassword(String password) {
@@ -31,8 +31,8 @@ public class DbConnectionData {
         return uri;
     }
 
-    public String getUser() {
-        return user;
+    public String getUserName() {
+        return username;
     }
 
     public String getPassword() {

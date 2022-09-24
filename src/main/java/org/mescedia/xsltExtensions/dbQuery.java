@@ -73,7 +73,7 @@ public class dbQuery extends ExtensionFunctionDefinition {
 
                     BasicDataSource dSource = new BasicDataSource();
                     dSource.setUrl(dbConnData.getUri());
-                    dSource.setUsername(dbConnData.getUser());
+                    dSource.setUsername(dbConnData.getUserName());
                     dSource.setPassword(dbConnData.getPassword());
 
                     log.debug("execute dbQuery: " + sql);

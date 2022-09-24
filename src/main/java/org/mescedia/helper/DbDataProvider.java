@@ -72,7 +72,7 @@ public class DbDataProvider  {
 
         this.checkDbConnection();
 
-        String query = "SELECT name, url, user, passwd from dbConnections where name = '"+connName+"';";
+        String query = "SELECT name, url, username, passwd from dbConnections where name = '"+connName+"';";
 
         log.debug(query);
 
@@ -85,7 +85,7 @@ public class DbDataProvider  {
             dbConn = new DbConnectionData();
             dbConn.setName( resultSet.getString("name")  );
             dbConn.setUri( resultSet.getString("url")  );
-            dbConn.setUser( resultSet.getString("user")  );
+            dbConn.setUserName( resultSet.getString("username")  );
             dbConn.setPassword( resultSet.getString("passwd")  );
 
         }

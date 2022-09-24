@@ -1,6 +1,6 @@
 -- MySQL dump 10.19  Distrib 10.3.36-MariaDB, for debian-linux-gnu (x86_64)
 --
--- Host: localhost    Database: demoERP
+-- Host: localhost    Database: demoerp
 -- ------------------------------------------------------
 -- Server version	10.3.36-MariaDB-0+deb10u1-log
 
@@ -16,12 +16,12 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Current Database: `demoERP`
+-- Current Database: `demoerp`
 --
 
-CREATE DATABASE /*!32312 IF NOT EXISTS*/ `demoERP` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/ `demoerp` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
 
-USE `demoERP`;
+USE `demoerp`;
 
 --
 -- Table structure for table `articles`
@@ -61,4 +61,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-09-23 22:09:45
+-- Dump completed on 2022-09-24  9:46:07
