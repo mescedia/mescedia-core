@@ -29,10 +29,20 @@
                 <!-- postgresql
                 <xsl:for-each select="java:dbQuery('dbPostgresDemoERP', 'select * from articles order by id;', ';', ':')">
                 -->
+
                 <!-- sqlite -->
-                <xsl:for-each select="java:dbQuery('dbSqliteDemoERP', 'select * from articles order by id;', ';', ':')">
+                <xsl:variable name="insertSql">INSERT INTO articles ( name, size, color, measureunit, stockavailable) values ('CCCCC','L','112123','PCE',222);</xsl:variable>
+                <xsl:value-of select="java:dbQuery('dbSqliteDemoERP', $insertSql, '', '')"/>
+
+                <xsl:variable name="updateSql">update articles set name='DDDDD' where name='CCCCC';</xsl:variable>
+                <xsl:value-of select="java:dbQuery('dbSqliteDemoERP', $updateSql, '', '')"/>
+
+                <xsl:variable name="deleteSql">delete from articles where id > 5;</xsl:variable>
+                <xsl:value-of select="java:dbQuery('dbSqliteDemoERP', $deleteSql, '', '')"/>
 
 
+                <xsl:variable name="selectSql">select * from articles order by id;</xsl:variable>
+                <xsl:for-each select="java:dbQuery('dbSqliteDemoERP', $selectSql, ';', ':')">
                     <xsl:call-template name="displayDbRecord">
                         <xsl:with-param name="line" select="."/>
                     </xsl:call-template>

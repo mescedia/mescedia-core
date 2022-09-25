@@ -68,7 +68,7 @@ public class dbQuery extends ExtensionFunctionDefinition {
 
                 try {
 
-                    // todo: check if caching required ...
+                    // todo: cache dbConnections ...
                     DbConnectionData dbConnData = DbDataProvider.getInstance().getDbConnectionData(connectionName);
 
                     BasicDataSource dSource = new BasicDataSource();
@@ -79,6 +79,16 @@ public class dbQuery extends ExtensionFunctionDefinition {
                     log.debug("execute dbQuery: " + sql);
 
                     stm = dSource.getConnection().createStatement();
+
+                    if ( sql.trim().toUpperCase().startsWith("INSERT")
+                        || sql.trim().toUpperCase().startsWith("UPDATE")
+                        || sql.trim().toUpperCase().startsWith("DELETE") )
+                    {
+                        stm.executeUpdate(sql);
+                        stm.close();
+                        return new SequenceExtent(list);
+                    }
+
                     rs = stm.executeQuery(sql);
                     ResultSetMetaData md = rs.getMetaData();
 
