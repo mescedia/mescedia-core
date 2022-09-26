@@ -23,26 +23,28 @@
             <message type="{$msgType}" version="{$msgVersion}" content-type="application/edifact" />
 
             <dbList>
-                <!-- mariabd/mysql
-                <xsl:for-each select="java:dbQuery('dbMariaDbDemoERP', 'select * from articles order by id;', ';', ':')">
-                -->
-                <!-- postgresql
-                <xsl:for-each select="java:dbQuery('dbPostgresDemoERP', 'select * from articles order by id;', ';', ':')">
+                <!--
+                    <xsl:variable name="dbConName">dbMariaDbDemoERP</xsl:variable>
+                    <xsl:variable name="dbConName">dbPostgresDemoERP</xsl:variable>
+                    <xsl:variable name="dbConName">dbSqliteDemoERP</xsl:variable>
                 -->
 
-                <!-- sqlite -->
+                <xsl:variable name="dbConName">dbSqliteDemoERP</xsl:variable>
+
                 <xsl:variable name="insertSql">INSERT INTO articles ( name, size, color, measureunit, stockavailable) values ('CCCCC','L','112123','PCE',222);</xsl:variable>
-                <xsl:value-of select="java:dbQuery('dbSqliteDemoERP', $insertSql, '', '')"/>
+                <xsl:value-of select="java:dbQuery($dbConName, $insertSql, '', '')"/>
 
                 <xsl:variable name="updateSql">update articles set name='DDDDD' where name='CCCCC';</xsl:variable>
-                <xsl:value-of select="java:dbQuery('dbSqliteDemoERP', $updateSql, '', '')"/>
+                <xsl:value-of select="java:dbQuery($dbConName, $updateSql, '', '')"/>
+
 
                 <xsl:variable name="deleteSql">delete from articles where id > 5;</xsl:variable>
-                <xsl:value-of select="java:dbQuery('dbSqliteDemoERP', $deleteSql, '', '')"/>
+                <xsl:value-of select="java:dbQuery($dbConName, $deleteSql, '', '')"/>
+
 
 
                 <xsl:variable name="selectSql">select * from articles order by id;</xsl:variable>
-                <xsl:for-each select="java:dbQuery('dbSqliteDemoERP', $selectSql, ';', ':')">
+                <xsl:for-each select="java:dbQuery($dbConName, $selectSql, ';', ':')">
                     <xsl:call-template name="displayDbRecord">
                         <xsl:with-param name="line" select="."/>
                     </xsl:call-template>

@@ -9,8 +9,6 @@ import net.sf.saxon.trans.XPathException;
 import net.sf.saxon.value.SequenceExtent;
 import net.sf.saxon.value.SequenceType;
 import net.sf.saxon.value.StringValue;
-import org.apache.commons.dbcp2.BasicDataSource;
-import org.mescedia.helper.DbConnectionData;
 import org.mescedia.helper.DbDataProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -68,17 +66,9 @@ public class dbQuery extends ExtensionFunctionDefinition {
 
                 try {
 
-                    // todo: cache dbConnections ...
-                    DbConnectionData dbConnData = DbDataProvider.getInstance().getDbConnectionData(connectionName);
+                    stm = DbDataProvider.getInstance().getExternalDbConnection(connectionName).createStatement();
 
-                    BasicDataSource dSource = new BasicDataSource();
-                    dSource.setUrl(dbConnData.getUri());
-                    dSource.setUsername(dbConnData.getUserName());
-                    dSource.setPassword(dbConnData.getPassword());
-
-                    log.debug("execute dbQuery: " + sql);
-
-                    stm = dSource.getConnection().createStatement();
+                    log.info("["+connectionName+"] SQL: " + sql);
 
                     if ( sql.trim().toUpperCase().startsWith("INSERT")
                         || sql.trim().toUpperCase().startsWith("UPDATE")
@@ -115,6 +105,8 @@ public class dbQuery extends ExtensionFunctionDefinition {
                 } catch (SQLException | IOException e) {
                     log.error(e.getMessage());
                     e.printStackTrace();
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
                 }
 
                 return new SequenceExtent(list);

@@ -24,6 +24,8 @@ public class DbDataProvider  {
     private BasicDataSource dataSource = new BasicDataSource();
     private List<MessageFormat> messageFormatList = new ArrayList<MessageFormat>() ;
 
+    private List<DbDataSource> dbDataSourceList = new ArrayList<DbDataSource>() ;
+
     private static final Logger log = LoggerFactory.getLogger(DbDataProvider.class);
 
     private DbDataProvider() throws SQLException, IOException {
@@ -44,11 +46,11 @@ public class DbDataProvider  {
     private void checkDbConnection() throws SQLException	{
 
         if (this.connection == null)	{
-            log.info("Initialise database connection ...");
+            log.info("Initialize new SystemDatabase connection ...");
             this.connection = this.dataSource.getConnection() ;
         }
         else if (!this.connection.isValid(300))	{
-            log.info("Create new database connection ...");
+            log.info("Create new SystemDatabase connection ...");
             this.connection.close();
             this.connection = this.dataSource.getConnection() ;
         }
@@ -68,28 +70,42 @@ public class DbDataProvider  {
         return instance ;
     }
 
-    public DbConnectionData getDbConnectionData(String connName) throws SQLException {
+    public Connection getExternalDbConnection(String connName) throws Exception {
+
+        for (DbDataSource ds : this.dbDataSourceList)  {
+
+            if (ds.getName().toUpperCase().equals(connName.toUpperCase())) {
+
+                log.info("["+connName+"] using cached dbConnection ...");
+                return ds.getConnection();
+            }
+        }
+
+        return this.createNewExternalConnection(connName);
+    }
+
+    private Connection createNewExternalConnection(String connName) throws Exception {
 
         this.checkDbConnection();
-
         String query = "SELECT name, url, username, passwd from dbConnections where name = '"+connName+"';";
-
-        log.info(query);
 
         this.sql = this.connection.createStatement();
         this.resultSet = this.sql.executeQuery(query);
 
-        DbConnectionData dbConn = null;
         if (resultSet.next())   {
+            DbDataSource db = new DbDataSource();
+            db.setName( resultSet.getString("name")  );
+            db.setUri( resultSet.getString("url")  );
+            db.setUserName( resultSet.getString("username")  );
+            db.setPassword( resultSet.getString("passwd")  );
 
-            dbConn = new DbConnectionData();
-            dbConn.setName( resultSet.getString("name")  );
-            dbConn.setUri( resultSet.getString("url")  );
-            dbConn.setUserName( resultSet.getString("username")  );
-            dbConn.setPassword( resultSet.getString("passwd")  );
+            this.dbDataSourceList.add(db) ;
 
+            log.info("["+connName+"] initialized new dbConnection ...");
+            return db.getConnection();
         }
-        return dbConn;
+
+        throw new Exception("["+connName+"] dataSource not defined ...");
     }
 
     public List<MessageFormat> getMessageFormatTable() {
