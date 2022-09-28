@@ -78,6 +78,9 @@ public class dbQuery extends ExtensionFunctionDefinition {
                         stm.close();
                         return new SequenceExtent(list);
                     }
+                    else if ( ! sql.trim().toUpperCase().startsWith("SELECT"))   {
+                        throw new Exception("Query not allowed ...") ;
+                    }
 
                     rs = stm.executeQuery(sql);
                     ResultSetMetaData md = rs.getMetaData();
