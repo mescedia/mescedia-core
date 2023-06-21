@@ -28,7 +28,11 @@ The aim of this project is to offer a 'free' and 'ready to use' EDI-System that 
 - [ ] customisable message validation
 - [x] extensible XML based data-transformation using Open-Standards (XSLT, XQuery, Java, ...) 
 - [x] MariaDB/MySQL, PostgreSQL & SQLite support for system-database and external RDBMS
-- [ ] secure communication protocol integration: OpenAS2 (AS2), OpenSSH (SFTP), vsftpd (FTPS), nginx (HTTPS, WebDav), ... 
+- [o] secure communication protocol integration:
+  - [x] AS2 (see mescedia-openAS2 fork -> https://github.com/mescedia/mescedia-openAS2-Server) 
+  - [ ] SFTP (OpenSSH)  
+  - [ ] FTPS (vsftpd )
+  - [ ] HTTPS/WebDAV (nginx)  
 - [ ] REST interface for managing affected services
 - [ ] WebGUI for configuration, development, monitoring,  etc.
 - [ ] automated installation scrips (ansible) and docker images
