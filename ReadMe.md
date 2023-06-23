@@ -66,8 +66,8 @@ mescedia requires a running rdbms instance (MariaDB/MySQL, PostgreSQL or SQLite 
 ### donate
  
 In case you like to support development on this project you may send some $bitcoin (BTC) or $ada (ADA) (Cardano's principal currency) to the corresponding address below:
- - BTC: 
- - ADA: 
+ - BTC: {todo}
+ - ADA: {todo}
 
 ### License
 
