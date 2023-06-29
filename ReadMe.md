@@ -44,7 +44,7 @@ The aim of this project is to offer a 'free' and 'ready to use' EDI-System that 
 
 ###### database
 
-mescedia requires a running rdbms instance (MariaDB/MySQL, PostgreSQL or SQLite = default )
+mescedia requires a running rdbms instance (MariaDB/MySQL, PostgreSQL or SQLite )
 
 {todo}
 
