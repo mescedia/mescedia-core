@@ -60,8 +60,15 @@ mescedia requires a running rdbms instance (MariaDB/MySQL, PostgreSQL or SQLite 
 
 	$ mvn camel:run
 
-### examples/szenarios
-{todo}
+### EDIFact/Xml Conversion Examples 
+
+#### EDIFact-To-Xml
+
+    $ curl -X POST -H "Content-Type: application/edifact" -d @"./src/test/resources/files/desadv-d11b.edifact" http://127.0.0.1:8585/edifact2xml
+
+#### Xml-To-EDIFact
+
+    $ curl -X POST -H "Content-Type: application/xml" -d @"./src/test/resources/files/desadv-d11b.xml" http://127.0.0.1:8585/xml2edifact    
 
 ### donate
  
