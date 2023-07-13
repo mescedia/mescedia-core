@@ -22,9 +22,6 @@
 
             <message type="{$msgType}" version="{$msgVersion}" content-type="application/edifact" />
 
-
-            <xsl:value-of select="java:log('INFO', concat('processing message: ',  $msgVersion, '.', $msgType) )" />
-
             <dbList>
                 <!--
                     <xsl:variable name="dbConName">dbMariaDbDemoERP</xsl:variable>
@@ -64,7 +61,7 @@
         <record>
             <xsl:for-each select="tokenize($line,$columnSeparator)">
                 <xsl:variable name="nameValue" select="." />
-                    <column name="{tokenize($nameValue,$nameValueSeparator)[1]}"><xsl:value-of select="tokenize($nameValue,$nameValueSeparator)[2]"/></column>
+                <column name="{tokenize($nameValue,$nameValueSeparator)[1]}"><xsl:value-of select="tokenize($nameValue,$nameValueSeparator)[2]"/></column>
             </xsl:for-each>
         </record>
 
