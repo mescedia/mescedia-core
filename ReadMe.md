@@ -63,7 +63,9 @@ mescedia requires a running rdbms instance (MariaDB/MySQL, PostgreSQL or SQLite 
 ### EDIFact/Xml Conversion Examples 
 
 mescedia uses a **dynamic data-model loading mechanism** (per type/version) which are loaded when needed and unloaded when others (types/versions) are used more often.
+
 As a result the first conversion of an EDIFact or Xml message of  a certain type/version may take some time since its corresponding data-model needs to be loaded into memory (cache) first.
+
 Once this has happend any other conversion of the same type/version will be superfast.
 
 #### EDIFact-To-Xml
