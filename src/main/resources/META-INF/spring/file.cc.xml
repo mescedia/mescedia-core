@@ -29,6 +29,23 @@
         </route>
         -->
 
+
+        <route id="demoRoutingSlip" errorHandlerRef="deadLetterErrorHandler" autoStartup="true">
+            <from uri="file:{{fs.root}}/routingSlipIn/" />
+
+            <setHeader name="X-MESCEDIA-RoutingSlipDemo">
+                <simple>bean:org.mescedia.processors.Edifact2Xml#xslt:file:src/test/resources/files/test.mapping.xslt</simple>
+            </setHeader>
+
+            <log message="processing routingSlip: ${header.X-MESCEDIA-RoutingSlipDemo}" />
+
+            <routingSlip uriDelimiter="#" ignoreInvalidEndpoints="false">
+                <header>X-MESCEDIA-RoutingSlipDemo</header>
+            </routingSlip>
+
+            <to uri="file:{{fs.root}}/routingSlipOut/" />
+        </route>
+
     </routeContext>
 
 </beans>
