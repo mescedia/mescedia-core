@@ -43,6 +43,43 @@
             <to uri="file:{{fs.root}}/routingSlipOut/?fileName=${date:now:yyyyMMddHHmmssSSS}-${header.Transaction-Id}" />
         </route>
 
+
+        <!-- polling only in folders in ftps user path -> /opt/COM/ftps/$user/in/ -->
+        <route id="allFtpsInFolders" errorHandlerRef="deadLetterErrorHandler" autoStartup="true" >
+            <from uri="file:///opt/COM/ftps/?recursive=true&amp;antInclude=**/in**/*&amp;minDepth=2&amp;maxDepth=3" />
+
+
+                <log message="CamelFileNameOnly: ${header.CamelFileNameOnly} " />
+                <log message="CamelFileParent: ${header.CamelFileParent} " />
+                <log message="Searching rule for [Path: ${header.CamelFileParent} - FileName: ${header.CamelFileNameOnly}]" />
+
+
+
+                <log message="messageHistory: ${messageHistory(true)} " />
+
+
+                <!--
+                    get workflow -switch ( genericRouter, PatternRouter, directRoute )
+                    fnr: getProcessstepByFileNamePattern
+
+                          - senderId (Pattern)
+                          - senderPattern
+
+                          - receiverId
+                          - receiverPattern
+
+                          - MsgFormat, MsgType, MsgVersion
+
+                    gr: runAnalyser: returns SenderId, ReceiverId, MsgFormat, MsgType, MsgVersion
+                        rubnProcessingRules: (edifact2Xml, ORDERS2XML Maopping, UTF-8 to ISO-8859-1)
+                        toDestination
+
+                -->
+
+
+            <to uri="mock:devnull"/>
+        </route>
+
     </routeContext>
 
 </beans>
