@@ -12,7 +12,7 @@ public class Edifact2XmlReaderCache {
 
     private static final Logger log = LoggerFactory.getLogger(Edifact2XmlReaderCache.class);
     private static Edifact2XmlReaderCache instance = null;
-    private static int maxEntries = 10 ;
+    private static int maxEntries = 100 ;
     private List<Edifact2XmlReaderItem> readerConfigurationList = new ArrayList<Edifact2XmlReaderItem>(); ;
 
     public static synchronized Edifact2XmlReaderCache getInstance()	{

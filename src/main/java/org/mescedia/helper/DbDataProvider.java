@@ -240,4 +240,80 @@ public class DbDataProvider  {
 
         return mca;
     }
+
+    public String[] getDestinationProcessSetId(MessageMetaInfo mi, String interfaceIn) throws SQLException {
+
+        this.checkDbConnection();
+
+        String query = "select iOut.destination as destination, pr.processSetId as processSetId from processRules pr left join interfaceOut iOut " +
+            " ON iOut.id = pr.interfaceOutId " +
+            " where " +
+                "     interfaceInId  = (select id from interfaceIn  where source = '"+interfaceIn+"') " +
+                " and senderUserId   = (select id from user  where value = '"+mi.getSenderId()+"') " +
+                " and receiverUserId = (select id from user  where value = '"+mi.getReceiverId()+"') " +
+                " and msgFormatId    = (select id from messageFormat where formatName = '"+mi.getMessageFormat()+"') " +
+                " and msgTypeId      = (select id from messageTypes  where typeName = '"+mi.getMessageType()+"') " +
+                " and msgVersionId   = (select id from messageVersions  where versionName = '"+mi.getMessageVersion()+"' ) ; " ;
+
+        Statement sqlStat = this.connection.createStatement();
+        ResultSet resultSet = sqlStat.executeQuery(query);
+
+        String destination = null ;
+        String processSetId =  null; // actually int
+
+        if (resultSet.next()) {
+            destination = String.valueOf(resultSet.getString("destination")) ;
+            processSetId = String.valueOf(resultSet.getInt("processSetId")) ;
+        }
+
+        if (resultSet != null) 	{
+            if (resultSet.isClosed())	{
+                resultSet.close();
+            }
+        }
+
+        if (sqlStat != null )	{
+            if (sqlStat.isClosed())
+                sqlStat.close();
+        }
+
+        return new String[]{destination,processSetId} ;
+    }
+
+    public String getRoutingSlip(String processSetId) throws SQLException {
+
+        this.checkDbConnection();
+        String sql = "select ps.command cmd from processSteps pss left join processStep ps " +
+            " on pss.processStepId = ps.id " +
+            " where " +
+            " pss.processSetId=" + processSetId +
+            " order by " +
+            " pss.processOrderId asc ;" ;
+
+        Statement sqlStat = this.connection.createStatement();
+        ResultSet resultSet = sqlStat.executeQuery(sql);
+
+        String routingSlip = "" ;
+        String separator= "§" ;
+
+        while (resultSet.next()) {
+            routingSlip += resultSet.getString("cmd") + separator ;
+        }
+
+        if(!routingSlip.equals(""))
+            routingSlip = routingSlip.substring(0,routingSlip.length()-1) ;
+
+        if (resultSet != null) 	{
+            if (resultSet.isClosed())	{
+                resultSet.close();
+            }
+        }
+
+        if (sqlStat != null )	{
+            if (sqlStat.isClosed())
+                sqlStat.close();
+        }
+
+        return routingSlip;
+    }
 }

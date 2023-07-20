@@ -87,6 +87,7 @@ public class javaDslTests extends  CamelTestSupport  {
                 context.setPropertiesComponent(pc);
 
                 context.getRegistry().bind("log", org.mescedia.xsltExtensions.logger.class);
+                context.getRegistry().bind("messageAnalyser", org.mescedia.processors.MessageAnalyser.class);
 
                 context.getRegistry().bind("edifact2xml", org.mescedia.processors.Edifact2Xml.class);
                 context.getRegistry().bind("xml2edifact", org.mescedia.processors.Xml2Edifact.class);
@@ -94,8 +95,10 @@ public class javaDslTests extends  CamelTestSupport  {
                 from("direct:edifactIn")
                         .log("input message:")
                         .log("${body}")
+                        .bean("messageAnalyser","process")
+                        .log("metaInfo:")
+                        .log("${header.X-MESCEDIA-MESSAGE-META-INFO}")
                         .bean("edifact2xml","process")
-//                        .process("edifact2xml")
                         .log("output message:")
                         .log("${body}")
                         .to("mock:result");

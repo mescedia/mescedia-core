@@ -15,7 +15,8 @@ public class MessageAnalyser {
 
     private static final Logger log = LoggerFactory.getLogger(MessageAnalyser.class);
 
-    private String messageFormat, messageType, messageVersion, senderId, receiverId ;
+    // private String messageFormat, messageType, messageVersion, senderId, receiverId ;
+    private MessageMetaInfo metaInfo = null ;
 
     private MessageAnalyser()   {}
 
@@ -43,32 +44,39 @@ public class MessageAnalyser {
 
     public String getSender()   {
 
-        return this.senderId;
+        return this.metaInfo.getSenderId();
     }
 
     public String getReceiver()   {
 
-        return this.receiverId;
+        return this.metaInfo.getReceiverId();
     }
 
     public String getMessageType()   {
 
-        return this.messageType;
+        return this.metaInfo.getMessageType();
     }
 
     public String getMessageVersion()   {
 
-        return this.messageVersion;
+        return this.metaInfo.getMessageVersion();
     }
 
     public String getMessageFormat()   {
 
-        return this.messageFormat;
+        return this.metaInfo.getMessageFormat();
+    }
+
+    public MessageMetaInfo getMetaInfo()    {
+
+        return this.metaInfo;
     }
 
     public void analyse() throws Exception {
 
-        this.messageFormat = "Unknown";
+        this.metaInfo = new MessageMetaInfo();
+
+        this.metaInfo.setMessageFormat("Unknown");
 
         ApplicationConfig appConfig =  ApplicationConfig.getInstance();
 
@@ -88,11 +96,11 @@ public class MessageAnalyser {
 
             if (mfAnalyser.analyse())   {
 
-                this.messageFormat = configFormat.getName();
+                this.metaInfo.setMessageFormat(configFormat.getName());
 
                 log.debug("--------------------------------------------------------");
                 log.debug(mfAnalyser.getMessageExtract() );
-                log.info("Analysed message format: " + this.messageFormat);
+                log.info("Analysed message format: " + this.metaInfo.getMessageFormat());
 
                 mcAnalyser = new MessageContentAnalyser();
                 mcAnalyser.setRuleList(configFormat.getContentAnalyser().getRuleList());
@@ -100,15 +108,15 @@ public class MessageAnalyser {
 
                 if (mcAnalyser.analyse()) {
 
-                    this.senderId = mcAnalyser.getSender() ;
-                    this.receiverId = mcAnalyser.getReceiver();
-                    this.messageType = mcAnalyser.getMessageType();
-                    this.messageVersion = mcAnalyser.getVersion();
+                    this.metaInfo.setSenderId( mcAnalyser.getSender() ) ;
+                    this.metaInfo.setReceiverId(mcAnalyser.getReceiver() );
+                    this.metaInfo.setMessageType(mcAnalyser.getMessageType());
+                    this.metaInfo.setMessageVersion(mcAnalyser.getVersion());
 
-                    log.debug("found GenericMessageContentAnalyser - sender: " + this.senderId);
-                    log.debug("found GenericMessageContentAnalyser - receiver: " + this.receiverId);
-                    log.debug("found GenericMessageContentAnalyser - messageType: " + this.messageType);
-                    log.debug("found GenericMessageContentAnalyser - messageVersion: " + this.messageVersion);
+                    log.debug("found GenericMessageContentAnalyser - sender: " + this.metaInfo.getSenderId());
+                    log.debug("found GenericMessageContentAnalyser - receiver: " + this.metaInfo.getReceiverId());
+                    log.debug("found GenericMessageContentAnalyser - messageType: " + this.metaInfo.getMessageType());
+                    log.debug("found GenericMessageContentAnalyser - messageVersion: " + this.metaInfo.getMessageVersion());
                 }
                 break;
             }

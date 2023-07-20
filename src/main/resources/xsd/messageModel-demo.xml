@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<messageModels>
+    <processor type="xml2edifact">
+        <reader messageType="ORDERS" messageVersion="d01b" />
+        <reader messageType="ORDRSP" messageVersion="d01b" />
+        <reader messageType="INVOIC" messageVersion="d01b" />
+        <reader messageType="DESADV" messageVersion="d01b" />
+    </processor>
+    <processor type="edifact2xml">
+        <reader messageType="PRICAT" messageVersion="d96a" />
+        <reader messageType="ORDERS" messageVersion="d96a" />
+        <reader messageType="INVOIC" messageVersion="d96a" />
+        <reader messageType="DESADV" messageVersion="d96a" />
+        <reader messageType="SLSRPT" messageVersion="d96a" />
+        <reader messageType="INVRPT" messageVersion="d96a" />
+    </processor>
+</messageModels>

@@ -32,15 +32,19 @@
 
         <route id="demoRoutingSlip" errorHandlerRef="deadLetterErrorHandler" autoStartup="true">
             <from uri="file:{{fs.root}}/routingSlipIn/" />
-                <setHeader name="X-MESCEDIA-RoutingSlipDemo">
-                    <simple>bean:org.mescedia.processors.Edifact2Xml§xslt-saxon:file:data/mappings/tests/extensionFunctions.xslt?saxonExtensionFunctions=#translate,#log </simple>
-                </setHeader>
-                <log message="processing routingSlip: ${header.X-MESCEDIA-RoutingSlipDemo}" />
+
+                <process ref="messageAnalyser" />
+                <process ref="messageProcessorRuleLoader" />
+
                 <routingSlip uriDelimiter="§" ignoreInvalidEndpoints="false">
-                    <header>X-MESCEDIA-RoutingSlipDemo</header>
+                    <header>X-MESCEDIA-RoutingSlip</header>
                 </routingSlip>
+
                 <log message="header.Transaction-Id: ${header.Transaction-Id}" />
-            <to uri="file:{{fs.root}}/routingSlipOut/?fileName=${date:now:yyyyMMddHHmmssSSS}-${header.Transaction-Id}" />
+                <log message="header.X-MESCEDIA-RoutingSlipDestination: ${header.X-MESCEDIA-RoutingSlipDestination}" />
+            <!-- <to uri="file:{{fs.root}}/routingSlipOut/?fileName=${date:now:yyyyMMddHHmmssSSS}-${header.Transaction-Id}" /> -->
+
+            <toD uri="${header.X-MESCEDIA-RoutingSlipDestination}" />
         </route>
 
 

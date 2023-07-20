@@ -1,9 +1,12 @@
 package org.mescedia.processors;
 
+import com.google.gson.Gson;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
+import org.apache.camel.console.DevConsole;
 import org.apache.daffodil.japi.ValidationMode;
 import org.mescedia.analyser.MessageAnalyser;
+import org.mescedia.analyser.MessageMetaInfo;
 import org.mescedia.helper.XmlFormatter;
 import org.mescedia.readerCache.Edifact2XmlReaderCache;
 import org.slf4j.Logger;
@@ -14,6 +17,7 @@ import org.smooks.api.SmooksException;
 import org.smooks.cartridges.edifact.EdifactReaderConfigurator;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
+import java.awt.*;
 import java.io.ByteArrayInputStream;
 import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
@@ -37,107 +41,38 @@ public class Edifact2Xml  implements Processor {
         startTs = System.currentTimeMillis();
         stateMsg = "Success";
 
-        boolean debug = (exchange.getIn().getHeaders().get("X-MESCEDIA-DEBUG")!=null)
-                ? (exchange.getIn().getHeaders().get("X-MESCEDIA-DEBUG").toString().equals("1"))
-                : false;
-        boolean format = (exchange.getIn().getHeaders().get("X-MESCEDIA-FORMAT")!=null)
-                ? (exchange.getIn().getHeaders().get("X-MESCEDIA-FORMAT").toString().equals("1"))
-                : false;
-
         String xmlEdifact = null;
-        String mVersion = null, mType = null, mFormat = null, sender=null, receiver=null;
         String messageIn = exchange.getIn().getBody(String.class) ;
 
         final StringWriter result = new StringWriter();
 
-        MessageAnalyser gmAnalyser = MessageAnalyser.getInstance();
-        gmAnalyser.setMessage(messageIn);
-        gmAnalyser.analyse();
-
-        mFormat = gmAnalyser.getMessageFormat();
-
-        if (!mFormat.equals("Edifact"))
-            throw new Exception("Invalid message format: " + mFormat + "; expected: Edifact");
-
-        try {
-
-            mVersion = gmAnalyser.getMessageVersion().toLowerCase();
-            mType = gmAnalyser.getMessageType().toUpperCase();
-            sender = gmAnalyser.getSender();
-            receiver = gmAnalyser.getReceiver();
-
-            exchange.getIn().setHeader("X-MESCEDIA-MESSAGE-IN-REPORTING-INSTANCE", "Edifact2Xml");
-            exchange.getIn().setHeader("X-MESCEDIA-MESSAGE-IN-VERSION", mVersion.toUpperCase());
-            exchange.getIn().setHeader("X-MESCEDIA-MESSAGE-IN-TYPE", mType);
-            exchange.getIn().setHeader("X-MESCEDIA-MESSAGE-IN-FORMAT", mFormat);
-            exchange.getIn().setHeader("X-MESCEDIA-MESSAGE-IN-SENDER", sender);
-            exchange.getIn().setHeader("X-MESCEDIA-MESSAGE-IN-RECEIVER", receiver);
-
-            log.info("Initialising reader " + mVersion.toUpperCase() + "/" + mType +" (this might take a while) ... ");
-
-            // ========================================
-            // debugging information goes to stdout !!!
-            // ========================================
-            if (!debug) {
-                smooks = Edifact2XmlReaderCache.getInstance().getSmooks(mVersion, mType);
-
-                execContext = smooks.createExecutionContext();
-                execContext.setContentEncoding("UTF-8");
-
-                smooks.filterSource(
-                        execContext,
-                        new StreamSource(new ByteArrayInputStream( messageIn.getBytes(StandardCharsets.UTF_8) )),
-                        new StreamResult(result)
-                );
-
-                xmlEdifact = result.toString();
-
-                if (format) {
-                    xmlEdifact = XmlFormatter.getInstance().format(xmlEdifact, "UTF-8");
-                }
-
-                if (xmlEdifact.indexOf(mVersion.toUpperCase() + ":BadMessage") > -1) {
-
-                    throw new Exception("Error in Message-Structure or Segment-Layout ...") ;
-                }
-
-                exchange.getIn().setBody(xmlEdifact);
-            } else {
-                smooks = new Smooks();
-
-                EdifactReaderConfigurator readerConfigurator = new EdifactReaderConfigurator(
-                        "/" + mVersion + "/EDIFACT-Messages.dfdl.xsd")
-                        .setMessageTypes(Arrays.asList(mType) );
-
-                readerConfigurator.setCacheOnDisk(false);
-                readerConfigurator.setDebugging(true);
-                readerConfigurator.setValidationMode( ValidationMode.Off);
-                smooks.setReaderConfig(readerConfigurator) ;
-
-                execContext = smooks.createExecutionContext();
-                execContext.setContentEncoding("UTF-8");
-
-                smooks.filterSource(
-                        execContext,
-                        new StreamSource(new ByteArrayInputStream( messageIn.getBytes(StandardCharsets.UTF_8) )),
-                        new StreamResult(result)
-                );
-
-                xmlEdifact = result.toString();
-
-                if (format) {
-                    xmlEdifact = XmlFormatter.getInstance().format(xmlEdifact, "UTF-8");
-                }
-
-                if (xmlEdifact.indexOf(mVersion.toUpperCase() + ":BadMessage") > -1) {
-                    throw new Exception("Error in message-structure or segment-layout ...") ;
-                }
-                exchange.getIn().setBody(xmlEdifact);
-            }
+        // check for meta-info
+        String metaInfo = exchange.getIn().getHeaders().get("X-MESCEDIA-MESSAGE-META-INFO").toString() ;
+        if ( metaInfo == null || metaInfo.equals("") )    {
+            throw new Exception("Message-Header X-MESCEDIA-MESSAGE-META-INFO not set!");
         }
 
-        catch (SmooksException se)  {
+        Gson gson = new Gson();
+        MessageMetaInfo mmi = gson.fromJson(metaInfo, MessageMetaInfo.class);
 
+        if(!mmi.messageFormat.equals("Edifact"))    {
+            throw new Exception("Invalid message-format. Expected UN/Edifact !");
+        }
+
+        try {
+            smooks = Edifact2XmlReaderCache.getInstance().getSmooks(mmi.messageVersion, mmi.messageType);
+            execContext = smooks.createExecutionContext();
+            execContext.setContentEncoding("UTF-8");
+            smooks.filterSource(
+                    execContext,
+                    new StreamSource(new ByteArrayInputStream( messageIn.getBytes(StandardCharsets.UTF_8) )),
+                    new StreamResult(result)
+            );
+            xmlEdifact = result.toString();
+            exchange.getIn().setHeader(Exchange.CONTENT_TYPE, "application/xml");
+            exchange.getIn().setBody(xmlEdifact);
+        }
+        catch (SmooksException se)  {
             log.error("SmooksException *********************************************************"); ;
             log.error(se.getMessage()) ;
             log.error(se.getCause().toString()) ;
@@ -146,7 +81,6 @@ public class Edifact2Xml  implements Processor {
             throw se;
         }
         catch (Exception ex)  {
-
             log.error("Exception ***************************************************************");
             log.error(ex.getMessage()) ;
             log.error("*************************************************************************");
@@ -154,12 +88,9 @@ public class Edifact2Xml  implements Processor {
             throw ex;
         }
         finally {
-
             String duration = String.valueOf((System.currentTimeMillis() - startTs));
-            exchange.getIn().setHeader("X-MESCEDIA-MESSAGE-PROCESSING-DURATION", duration);
-
-            smooks.close();
             log.info("Message state: " +stateMsg+ "; transaction: "+uuid+"; processing duration: " + duration + " ms" )  ;
+            smooks.close();
         }
     }
 }

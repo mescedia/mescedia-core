@@ -1,0 +1,32 @@
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="messageModels">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="processor" maxOccurs="unbounded" minOccurs="0">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="reader" maxOccurs="unbounded" minOccurs="0">
+                                <xs:complexType>
+                                    <xs:simpleContent>
+                                        <xs:extension base="xs:string">
+                                            <xs:attribute type="xs:string" name="messageType" use="required"/>
+                                            <xs:attribute type="xs:string" name="messageVersion" use="required"/>
+                                        </xs:extension>
+                                    </xs:simpleContent>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                        <xs:attribute type="processorType" name="type" use="required"/>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:simpleType name="processorType">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:enumeration value="edifact2xml"/>
+            <xs:enumeration value="xml2edifact"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

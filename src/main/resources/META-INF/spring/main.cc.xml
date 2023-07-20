@@ -21,6 +21,9 @@
     <bean id="xml2edifact" class="org.mescedia.processors.Xml2Edifact"/>
     <bean id="cacheManager" class="org.mescedia.processors.CacheManager"/>
     <bean id="xmlformatter" class="org.mescedia.processors.XmlFormatter"/>
+    <bean id="messageAnalyser" class="org.mescedia.processors.MessageAnalyser"/>
+    <bean id="messageProcessorRuleLoader" class="org.mescedia.processors.MessageProcessorRuleLoader"/>
+    <bean id="messageModelLoader" class="org.mescedia.processors.MessageModelLoader"/>
 
     <!-- java extension-functions -->
     <bean id="translate" class="org.mescedia.xsltExtensions.dbQuery"/>
@@ -38,6 +41,9 @@
         <endpoint id="rest_cache_add" uri="netty-http:http://{{rest.listen.ip}}:{{rest.listen.port}}/cache/add?httpMethodRestrict=POST&amp;encoding=UTF-8&amp;receiveBufferSizePredictor=10485760&amp;chunkedMaxContentLength=10485760&amp;connectTimeout=60000&amp;compressed=true" />
         <endpoint id="rest_cache_list" uri="netty-http:http://{{rest.listen.ip}}:{{rest.listen.port}}/cache/list?httpMethodRestrict=POST&amp;encoding=UTF-8&amp;receiveBufferSizePredictor=10485760&amp;chunkedMaxContentLength=10485760&amp;connectTimeout=60000&amp;compressed=true" />
         <endpoint id="rest_cache_clear" uri="netty-http:http://{{rest.listen.ip}}:{{rest.listen.port}}/cache/clear?httpMethodRestrict=POST&amp;encoding=UTF-8&amp;receiveBufferSizePredictor=10485760&amp;chunkedMaxContentLength=10485760&amp;connectTimeout=60000&amp;compressed=true" />
+
+        <endpoint id="rest_messageprocessor" uri="netty-http:http://{{rest.listen.ip}}:{{rest.listen.port}}/messageprocessor?httpMethodRestrict=POST&amp;encoding=UTF-8&amp;receiveBufferSizePredictor=10485760&amp;chunkedMaxContentLength=10485760&amp;connectTimeout=60000&amp;compressed=true" />
+        <endpoint id="rest_messagemodelloader" uri="netty-http:http://{{rest.listen.ip}}:{{rest.listen.port}}/messagemodelloader?httpMethodRestrict=POST&amp;encoding=UTF-8&amp;receiveBufferSizePredictor=10485760&amp;chunkedMaxContentLength=10485760&amp;connectTimeout=60000&amp;compressed=true" />
 
         <onException useOriginalMessage="false" >
             <exception>java.io.IOException</exception>

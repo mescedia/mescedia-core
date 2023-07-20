@@ -8,20 +8,45 @@
 
     <routeContext xmlns="http://camel.apache.org/schema/spring" id="rest">
 
+        <route id="http_messagemodelloader"  errorHandlerRef="deadLetterErrorHandler">
+            <from uri="rest_messagemodelloader" />
+
+            <process ref="messageModelLoader" />
+
+            <removeHeaders pattern="X-MESCEDIA-*"/>
+        </route>
+
+        <route id="http_messageprocessor"  errorHandlerRef="deadLetterErrorHandler">
+            <from uri="rest_messageprocessor" />
+
+            <process ref="messageAnalyser" />
+            <log message="header.X-MESCEDIA-MESSAGE-META-INFO: ${header.X-MESCEDIA-MESSAGE-META-INFO}" />
+
+            <!-- required by ruleLoader -->
+            <setHeader name="X-MESCEDIA-INTERFACE-IN">
+                <constant>http_messageprocessor</constant>
+            </setHeader>
+
+            <process ref="messageProcessorRuleLoader" />
+            <log message="header.X-MESCEDIA-RoutingSlip: ${header.X-MESCEDIA-RoutingSlip}" />
+            <log message="header.X-MESCEDIA-RoutingSlipDestination: ${header.X-MESCEDIA-RoutingSlipDestination}" />
+
+            <routingSlip uriDelimiter="§" ignoreInvalidEndpoints="false">
+                <header>X-MESCEDIA-RoutingSlip</header>
+            </routingSlip>
+
+            <removeHeaders pattern="X-MESCEDIA-*"/>
+        </route>
+
+
         <route id="http_edifact2xml"  errorHandlerRef="deadLetterErrorHandler">
             <from uri="rest_edifact2xml" />
-                <setHeader name="X-MESCEDIA-DEBUG">
-                    <simple>${header.debug}</simple>
-                </setHeader>
-                <setHeader name="X-MESCEDIA-FORMAT">
-                    <simple>${header.format}</simple>
-                </setHeader>
-                <setHeader name="Exchange.CONTENT_TYPE">
-                    <constant>application/xml</constant>
-                </setHeader>
+                <process ref="messageAnalyser" />
                 <process ref="edifact2xml" />
                 <removeHeaders pattern="X-MESCEDIA-*"/>
         </route>
+
+
 
         <route id="http_xml2edifact"  errorHandlerRef="deadLetterErrorHandler">
             <from uri="rest_xml2edifact" />
