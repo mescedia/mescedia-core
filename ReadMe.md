@@ -34,7 +34,7 @@ The aim of this project is to offer a 'free' and 'ready to use' EDI-System that 
   - [x] HTTPS/WebDAV (see nginx scripts/configs -> https://github.com/mescedia/mescedia-HTTP-Server)  
 - [ ] REST interface for managing affected services
 - [ ] WebGUI for configuration, development, monitoring,  etc.
-- [x] automated installation scrips (ansible) and docker images (https://github.com/mescedia/mescedia-DevOps)
+- [x] automated setup -> https://github.com/mescedia/mescedia-DevOps
 - [ ] documentation, howtos & various examples
 - [ ] commercial support
     
