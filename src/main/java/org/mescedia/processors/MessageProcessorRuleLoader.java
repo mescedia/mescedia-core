@@ -43,7 +43,7 @@ public class MessageProcessorRuleLoader implements Processor {
         log.debug("messageVersion:   " +  mmi.messageVersion);
         log.debug("senderId:         " +  mmi.senderId);
         log.debug("receiverId:       " +  mmi.receiverId);
-        log.info("interfaceIn:      " +  interfaceIn);
+        log.debug("interfaceIn:      " +  interfaceIn);
 
         String[] destProcSetId = DbDataProvider.getInstance().getDestinationProcessSetId(mmi, interfaceIn);
 
@@ -51,7 +51,7 @@ public class MessageProcessorRuleLoader implements Processor {
         String processSetId = destProcSetId[1] ;
         String routingSlip = DbDataProvider.getInstance().getRoutingSlip(processSetId);
 
-        log.info("RoutingSlip: " + routingSlip + "; Destination: " + destination + "; processStepId: " + processSetId);
+        log.debug("RoutingSlip: " + routingSlip + "; Destination: " + destination + "; processStepId: " + processSetId);
 
         exchange.getIn().setHeader("X-MESCEDIA-RoutingSlip", routingSlip);
         exchange.getIn().setHeader("X-MESCEDIA-RoutingSlipDestination", destination);

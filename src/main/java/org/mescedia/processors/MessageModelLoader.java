@@ -83,26 +83,33 @@ public class MessageModelLoader implements Processor {
                     String processorType = element.getAttribute("type");
 
                     NodeList readerList = element.getElementsByTagName("reader");
-                    log.info(String.valueOf(readerList.getLength() ) + " entries ... ");
-
                     for (int j = 0; j < readerList.getLength(); j++) {
 
                         String msgType = readerList.item(j).getAttributes().getNamedItem("messageType").getTextContent().toUpperCase();
                         String msgVersion = readerList.item(j).getAttributes().getNamedItem("messageVersion").getTextContent().toUpperCase();
 
                         if (processorType.equals("edifact2xml")) {
-                            log.info("loading messageModel: edifact2xml -> " + msgType + "." + msgVersion);
+                            log.debug("Loading messageModel: edifact2xml -> " + msgType + "." + msgVersion);
                             Edifact2XmlReaderCache.getInstance().getSmooks(msgVersion, msgType).createExecutionContext();
                         }
                         else if (processorType.equals("xml2edifact")) {
-                            log.info("loading messageModel: xml2edifact -> " + msgType + "." + msgVersion);
+                            log.debug("Loading messageModel: xml2edifact -> " + msgType + "." + msgVersion);
                             Xml2EdifactReaderCache.getInstance().getSmooks(msgVersion, msgType).createExecutionContext();
                         }
                     }
                 }
             }
+
+            exchange.getIn().setHeader(Exchange.HTTP_RESPONSE_CODE, "200");
+            exchange.getIn().setHeader(Exchange.CONTENT_TYPE, "application/xml");
+            exchange.getIn().setBody("<?xml version=\"1.0\" encoding=\"UTF-8\"?><status>OK</status>");
+
         } catch (SAXException | IOException | ParserConfigurationException e) {
+            stateMsg = "Error";
             log.error(e.getMessage());
+            exchange.getIn().setHeader(Exchange.HTTP_RESPONSE_CODE, "400");
+            exchange.getIn().setHeader(Exchange.CONTENT_TYPE, "application/xml");
+            exchange.getIn().setBody("<?xml version=\"1.0\" encoding=\"UTF-8\"?><status>ERROR</status>");
         }
 
         String duration = String.valueOf((System.currentTimeMillis() - startTs));
