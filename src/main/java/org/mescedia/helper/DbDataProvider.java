@@ -245,7 +245,7 @@ public class DbDataProvider  {
 
         this.checkDbConnection();
 
-        String query = "select iOut.destination as destination, pr.processSetId as processSetId from processRules pr left join interfaceOut iOut " +
+        String query = "select iOut.contentType contentType, iOut.destination as destination, pr.processWflowId  as processWflowId  from processRules pr left join interfaceOut iOut " +
             " ON iOut.id = pr.interfaceOutId " +
             " where " +
                 "     interfaceInId  = (select id from interfaceIn  where source = '"+interfaceIn+"') " +
@@ -259,11 +259,13 @@ public class DbDataProvider  {
         ResultSet resultSet = sqlStat.executeQuery(query);
 
         String destination = null ;
-        String processSetId =  null; // actually int
+        String processWflowId = null; // actually int
+        String contentType = null;
 
         if (resultSet.next()) {
             destination = String.valueOf(resultSet.getString("destination")) ;
-            processSetId = String.valueOf(resultSet.getInt("processSetId")) ;
+            processWflowId  = String.valueOf(resultSet.getInt("processWflowId")) ;
+            contentType  = String.valueOf(resultSet.getString("contentType")) ;
         }
 
         if (resultSet != null) 	{
@@ -277,16 +279,17 @@ public class DbDataProvider  {
                 sqlStat.close();
         }
 
-        return new String[]{destination,processSetId} ;
+        return new String[]{ destination, processWflowId, contentType } ;
     }
 
-    public String getRoutingSlip(String processSetId) throws SQLException {
+    public String getRoutingSlip(String processWflowId ) throws SQLException {
 
         this.checkDbConnection();
+
         String sql = "select ps.command cmd from processSteps pss left join processStep ps " +
             " on pss.processStepId = ps.id " +
             " where " +
-            " pss.processSetId=" + processSetId +
+            " pss.processWflowId =" + processWflowId  +
             " order by " +
             " pss.processOrderId asc ;" ;
 

@@ -45,16 +45,17 @@ public class MessageProcessorRuleLoader implements Processor {
         log.debug("receiverId:       " +  mmi.receiverId);
         log.debug("interfaceIn:      " +  interfaceIn);
 
-        String[] destProcSetId = DbDataProvider.getInstance().getDestinationProcessSetId(mmi, interfaceIn);
+        String[] destSetValues = DbDataProvider.getInstance().getDestinationProcessSetId(mmi, interfaceIn);
 
-        String destination = destProcSetId[0] ;
-        String processSetId = destProcSetId[1] ;
+        String destination = destSetValues[0].trim() ;
+        String processSetId = destSetValues[1].trim() ;
+        String contentType = destSetValues[2].trim();
         String routingSlip = DbDataProvider.getInstance().getRoutingSlip(processSetId);
 
         log.debug("RoutingSlip: " + routingSlip + "; Destination: " + destination + "; processStepId: " + processSetId);
 
         exchange.getIn().setHeader("X-MESCEDIA-RoutingSlip", routingSlip);
         exchange.getIn().setHeader("X-MESCEDIA-RoutingSlipDestination", destination);
-
+        exchange.getIn().setHeader("X-MESCEDIA-DestinationContentType", contentType);
     }
 }

@@ -30,10 +30,15 @@
             <process ref="messageProcessorRuleLoader" />
             <log message="header.X-MESCEDIA-RoutingSlip: ${header.X-MESCEDIA-RoutingSlip}" />
             <log message="header.X-MESCEDIA-RoutingSlipDestination: ${header.X-MESCEDIA-RoutingSlipDestination}" />
+            <log message="header.X-MESCEDIA-DestinationContentType: ${header.X-MESCEDIA-DestinationContentType}" />
 
             <routingSlip uriDelimiter="§" ignoreInvalidEndpoints="false">
                 <header>X-MESCEDIA-RoutingSlip</header>
             </routingSlip>
+
+            <setHeader name="Exchange.CONTENT_TYPE">
+                <simple>${header.X-MESCEDIA-DestinationContentType}</simple>
+            </setHeader>
 
             <removeHeaders pattern="X-MESCEDIA-*"/>
         </route>
