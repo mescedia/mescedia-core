@@ -97,11 +97,9 @@
 
             <!-- optional step if bindy and jaxb class is the same
                  but this requires camel-jaxb in pom.xml in order to output xml: tested with camel v3.18.8
-
             <to uri="dataformat:ordersJaxb:unmarshal"/>
-            -->
-
             <log message="${body}"/>
+            -->
 
             <to uri="dataformat:ordersBindy:marshal"/>
 
