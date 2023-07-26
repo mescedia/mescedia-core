@@ -6,7 +6,6 @@
        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
 
-
     <routeContext xmlns="http://camel.apache.org/schema/spring" id="file">
 
         <route id="edifact2xml" errorHandlerRef="deadLetterErrorHandler" autoStartup="true">
@@ -57,31 +56,59 @@
                 <log message="CamelFileParent: ${header.CamelFileParent} " />
                 <log message="Searching rule for [Path: ${header.CamelFileParent} - FileName: ${header.CamelFileNameOnly}]" />
 
-
-
                 <log message="messageHistory: ${messageHistory(true)} " />
 
-
-                <!--
-                    get workflow -switch ( genericRouter, PatternRouter, directRoute )
-                    fnr: getProcessstepByFileNamePattern
-
-                          - senderId (Pattern)
-                          - senderPattern
-
-                          - receiverId
-                          - receiverPattern
-
-                          - MsgFormat, MsgType, MsgVersion
-
-                    gr: runAnalyser: returns SenderId, ReceiverId, MsgFormat, MsgType, MsgVersion
-                        rubnProcessingRules: (edifact2Xml, ORDERS2XML Maopping, UTF-8 to ISO-8859-1)
-                        toDestination
-
-                -->
-
-
             <to uri="mock:devnull"/>
+        </route>
+
+
+        <!-- fl orders 2 pojo -->
+        <!--
+        <route id="orders_fl_in" errorHandlerRef="deadLetterErrorHandler" autoStartup="true" >
+            <from uri="file:{{fs.root}}/ORDERS_FL.in/" />
+                <unmarshal>
+                    <bindy type="Fixed" locale="de-DE" classType="org.mescedia.bindings.ORDERS_FixedLength2Xml" unwrapSingleInstance="false" />
+                </unmarshal>
+                <convertBodyTo type="String"></convertBodyTo>
+                <log message="${body}"/>
+            <to uri="file:{{fs.root}}/ORDERS_FL.out/" />
+        </route>
+        -->
+
+
+
+        <route id="orders_fl_in" errorHandlerRef="deadLetterErrorHandler" autoStartup="true" >
+            <from uri="file:{{fs.root}}/ORDERS_FL.in/" />
+
+            <!--
+            <unmarshal>
+                <bindy type="Fixed" locale="de-DE" classType="org.mescedia.bindings.ORDERS_FixedLength2Xml"  />
+            </unmarshal>
+            <marshal>
+                <bindy type="Fixed" locale="de-DE" classType="org.mescedia.bindings.ORDERS_FixedLength2Xml"  />
+            </marshal>
+            <to uri="dataformat:ordersBindy:unmarshal?ref=ordersBindy"/>
+            type="Fixed" locale="de-DE" classType="org.mescedia.bindings.ORDERS_FixedLength2Xml"
+            -->
+
+            <to uri="dataformat:ordersBindy:unmarshal"/>
+
+            <log message="${body}"/>
+
+            <!-- optional step if bindy and jaxb class is the same
+                 but this requires camel-jaxb in pom.xml in order to output xml: tested with camel v3.18.8
+
+            <to uri="dataformat:ordersJaxb:unmarshal"/>
+            -->
+
+            <log message="${body}"/>
+
+            <to uri="dataformat:ordersBindy:marshal"/>
+
+            <log message="${body}"/>
+
+            <to uri="file:{{fs.root}}/ORDERS_FL.out/" />
+
         </route>
 
     </routeContext>

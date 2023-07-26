@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<beans
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/beans"
        xsi:schemaLocation="
        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
@@ -29,8 +29,12 @@
     <bean id="translate" class="org.mescedia.xsltExtensions.dbQuery"/>
     <bean id="log" class="org.mescedia.xsltExtensions.logger"/>
 
-    <camelContext  id="main" allowUseOriginalMessage="false" useMDCLogging="false" messageHistory="true" streamCache="true" sourceLocationEnabled="true"
+
+
+     <camelContext  id="main" allowUseOriginalMessage="false" useMDCLogging="false" messageHistory="true" streamCache="true" sourceLocationEnabled="true"
                    xmlns="http://camel.apache.org/schema/spring">
+
+
 
         <routeContextRef ref="error"/>
         <routeContextRef ref="rest"/>
@@ -44,6 +48,13 @@
 
         <endpoint id="rest_messageprocessor" uri="netty-http:http://{{rest.listen.ip}}:{{rest.listen.port}}/messageprocessor?httpMethodRestrict=POST&amp;encoding=UTF-8&amp;receiveBufferSizePredictor=10485760&amp;chunkedMaxContentLength=10485760&amp;connectTimeout=60000&amp;compressed=true" />
         <endpoint id="rest_messagemodelloader" uri="netty-http:http://{{rest.listen.ip}}:{{rest.listen.port}}/messagemodelloader?httpMethodRestrict=POST&amp;encoding=UTF-8&amp;receiveBufferSizePredictor=10485760&amp;chunkedMaxContentLength=10485760&amp;connectTimeout=60000&amp;compressed=true" />
+
+
+         <dataFormats>
+            <bindy  id="ordersBindy" type="Fixed" locale="de-DE" classType="org.mescedia.bindings.ORDERS_FixedLength2Xml"  />
+            <jaxb id="ordersJaxb" contextPath="org.mescedia.bindings.ORDERS_FixedLength2Xml" contextPathIsClassName="true"/>
+         </dataFormats>
+
 
         <onException useOriginalMessage="false" >
             <exception>java.io.IOException</exception>
