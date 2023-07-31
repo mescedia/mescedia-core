@@ -2,11 +2,13 @@ package org.mescedia.bindings;
 
 import org.apache.camel.dataformat.bindy.annotation.DataField;
 import org.apache.camel.dataformat.bindy.annotation.FixedLengthRecord;
+import org.apache.camel.dataformat.bindy.annotation.OneToMany;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.List;
 
 
 /*
@@ -99,27 +101,27 @@ UNZ+1+60001'
 
 @XmlRootElement(name = "ORDERS.Xml")
 @XmlAccessorType(XmlAccessType.FIELD)
-@FixedLengthRecord(length=80, paddingChar=' ')
-public class ORDERS_FixedLength2Xml {
+@FixedLengthRecord // (length=80, paddingChar=' ')
+public class Orders_Fl2Xml {
 
     @XmlElement(name="Sender")
-    @DataField(pos = 1, length = 10)
+    @DataField(pos = 1, length = 10, align = "L", trim = true)
     public String sender;
 
     @XmlElement(name="Receiver")
-    @DataField(pos = 10, length = 10)
+    @DataField(pos = 2, length = 10, align = "L", trim = true)
     public String receiver;
 
     @XmlElement(name="MessageFormat")
-    @DataField(pos = 20, length = 20)
+    @DataField(pos = 3, length = 20, align = "L", trim = true)
     public String messageFormat;
 
     @XmlElement(name="MessageType")
-    @DataField(pos = 40, length = 20, align = "L")
+    @DataField(pos = 4, length = 20, align = "L", trim = true)
     public String messageType;
 
     @XmlElement(name="MessageVersion")
-    @DataField(pos = 60, length = 20)
+    @DataField(pos = 5, length = 20, align = "L", trim = true)
     public String messageVersion;
 
     @Override
@@ -128,4 +130,11 @@ public class ORDERS_FixedLength2Xml {
                 + messageFormat + ", messageType=" + messageType
                 + ", messageVersion=" + messageVersion + "]";
     }
+
+
+//    @XmlElement(name="Positions")
+    @OneToMany(mappedTo = "org.mescedia.bindings.OrdersPosition")
+    public List<OrdersPosition> positions;
+
+
 }

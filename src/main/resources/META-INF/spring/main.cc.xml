@@ -51,8 +51,10 @@
 
 
          <dataFormats>
-            <bindy  id="ordersBindy" type="Fixed" locale="en-EN" classType="org.mescedia.bindings.ORDERS_FixedLength2Xml"  />
-            <jaxb id="ordersJaxb" contextPath="org.mescedia.bindings.ORDERS_FixedLength2Xml" contextPathIsClassName="true"/>
+            <bindy  id="ordersBindy" type="Fixed" locale="en-EN" classType="org.mescedia.bindings.Orders_Fl2Xml"  />
+            <bindy  id="ordersPosition" type="Fixed" locale="en-EN" classType="org.mescedia.bindings.OrdersPosition"  />
+            <jaxb id="ordersJaxb" contextPath="org.mescedia.bindings.Orders_Fl2Xml" contextPathIsClassName="true"/>
+            <jaxb id="ordersJaxbPositions" contextPath="org.mescedia.bindings.OrdersPosition" contextPathIsClassName="true"/>
          </dataFormats>
 
 

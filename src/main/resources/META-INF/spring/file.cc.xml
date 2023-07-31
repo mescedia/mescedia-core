@@ -67,7 +67,7 @@
         <route id="orders_fl_in" errorHandlerRef="deadLetterErrorHandler" autoStartup="true" >
             <from uri="file:{{fs.root}}/ORDERS_FL.in/" />
                 <unmarshal>
-                    <bindy type="Fixed" locale="de-DE" classType="org.mescedia.bindings.ORDERS_FixedLength2Xml" unwrapSingleInstance="false" />
+                    <bindy type="Fixed" locale="de-DE" classType="org.mescedia.bindings.Orders_Fl2Xml" unwrapSingleInstance="false" />
                 </unmarshal>
                 <convertBodyTo type="String"></convertBodyTo>
                 <log message="${body}"/>
@@ -76,34 +76,41 @@
         -->
 
 
-
+        <!--
+             todo: fixedLength not working jet ...
+        -->
         <route id="orders_fl_in" errorHandlerRef="deadLetterErrorHandler" autoStartup="true" >
             <from uri="file:{{fs.root}}/ORDERS_FL.in/" />
 
-            <!--
+
             <unmarshal>
-                <bindy type="Fixed" locale="de-DE" classType="org.mescedia.bindings.ORDERS_FixedLength2Xml"  />
+                <bindy type="Fixed" locale="de-DE" classType="org.mescedia.bindings.Orders_Fl2Xml"  />
             </unmarshal>
+            <!--
             <marshal>
-                <bindy type="Fixed" locale="de-DE" classType="org.mescedia.bindings.ORDERS_FixedLength2Xml"  />
+                <bindy type="Fixed" locale="de-DE" classType="org.mescedia.bindings.Orders_Fl2Xml"  />
             </marshal>
             <to uri="dataformat:ordersBindy:unmarshal?ref=ordersBindy"/>
-            type="Fixed" locale="de-DE" classType="org.mescedia.bindings.ORDERS_FixedLength2Xml"
-            -->
+            type="Fixed" locale="de-DE" classType="org.mescedia.bindings.Orders_Fl2Xml"
+
 
             <to uri="dataformat:ordersBindy:unmarshal"/>
-
+            -->
             <log message="${body}"/>
 
             <!-- optional step if bindy and jaxb class is the same
                  but this requires camel-jaxb in pom.xml in order to output xml: tested with camel v3.18.8
-            <to uri="dataformat:ordersJaxb:unmarshal"/>
+            <to uri="dataformat:ordersJaxbPositions:marshal"/>
+            <log message="${body}"/>
+
+            -->
+
+
+            <!--
+            <to uri="dataformat:ordersPosition:marshal"/>
             <log message="${body}"/>
             -->
 
-            <to uri="dataformat:ordersBindy:marshal"/>
-
-            <log message="${body}"/>
 
             <to uri="file:{{fs.root}}/ORDERS_FL.out/" />
 
