@@ -116,6 +116,22 @@
 
         </route>
 
+
+        <route id="schematronTest_ORDERS_D96A_UN">
+            <from uri="file:{{fs.root}}/schematronTest_ORDERS_D96A_UN.in/" />
+
+            <to uri="schematron:{{fs.root}}/schematron/schematronTest_ORDERS_D96A_UN.sch" />
+            <log message="${in.header.CamelSchematronValidationReport}"/>
+            <setBody>
+                <simple trim="true">
+                    ${in.header.CamelSchematronValidationReport}
+                </simple>
+            </setBody>
+            <log message="${body}"/>
+            <log message="${in.header.CamelSchematronValidationStatus}"/>
+            <to uri="file:{{fs.root}}/schematronTest_ORDERS_D96A_UN.out/" />
+        </route>
+
     </routeContext>
 
 </beans>
