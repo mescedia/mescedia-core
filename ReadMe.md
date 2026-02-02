@@ -1,8 +1,3 @@
-
-<p align="center">
-<img src="https://www.mescedia.org/img/mescedia-logo.png" alt="mescedia::Open Source EDI" />
-</p>
-
 ## mescedia :: Open Source EDI
 
 ### about
